@@ -1,8 +1,25 @@
+import "babel-polyfill";
 import React from "react";
 import ReactDOM from "react-dom";
+import { AppContainer } from 'react-hot-loader'
 
-const Index = () => {
-  return <div>Hello React!</div>;
-};
+import App from './App';
 
-ReactDOM.render(<Index />, document.getElementById("index"));
+const render = Component => {
+  ReactDOM.render(
+    <AppContainer>
+      <Component />
+    </AppContainer>,
+    document.getElementById('app')
+  )
+}
+
+render(App)
+
+// Webpack Hot Module Replacement API
+if (module.hot) {
+  module.hot.accept('./App', () => {
+  	const NextApp = require('./App').default;
+    render(NextApp)
+  })
+}

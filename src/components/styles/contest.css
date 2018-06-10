@@ -1,0 +1,83 @@
+.contest_container {
+  background-color: black;
+  min-height: 100vh;
+}
+
+.contest_image {
+  width: 100vw;
+  height: 75vw;
+  overflow: hidden;
+}
+
+.contest_frame {
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 100vh;
+}
+
+.contest_title {
+  padding: 10px;
+  text-align: center;
+}
+
+.contest_description {
+  text-align: center;
+}
+
+.voting_section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 200px;
+}
+
+.voting_option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contest_option_text {
+  margin-top: 10px;
+}
+
+.timer_section, .vote_count_section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 200px;
+  justify-content: center;
+}
+
+.timer_text, .vote_count_text {
+  margin-top: 20px;
+  font-size: 1.5em;
+}
+
+@media only screen and (min-width: 720px) {
+  .contest_frame {
+    width: 720px;
+  }
+
+  .contest_image {
+    width: 720px;
+    height: 180px;
+  }
+
+  .contest_image img {
+    object-fit: cover;
+    filter: blur(2px);
+  }
+
+  .contest_image:hover {
+    height: 720px;
+  }
+
+  .contest_image:hover img {
+    object-fit: fill;
+    filter: none;
+  }
+}
+

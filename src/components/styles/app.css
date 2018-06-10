@@ -1,0 +1,11 @@
+body {
+  font-family: Futura, "Trebuchet MS", sans-serif;
+}
+
+html, body, #app, .app_container {
+  height: 100%;
+}
+
+.navbar {
+  margin-bottom: 0px;
+}

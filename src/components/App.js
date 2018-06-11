@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import styles from "./styles/app.css"
+import styles from "./styles/app.less"
 
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
 

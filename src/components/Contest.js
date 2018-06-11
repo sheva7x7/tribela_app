@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import _ from 'lodash'
 
-import './styles/contest.css'
+import './styles/contest.less'
 
 const calcTimeLeft = date => {
   const now = moment()

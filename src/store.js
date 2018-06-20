@@ -7,6 +7,13 @@ import initialStore from './reducers/initialState'
 
 const history = createBrowserHistory()
 
+history.listen((location, action) => {
+  console.log(
+    `The current URL is ${location.pathname}${location.search}${location.hash}`
+  )
+  console.log(`The last navigation action was ${action}`)
+})
+
 let middlewares = [];
 
 middlewares.push(routerMiddleware(history));

@@ -2,7 +2,8 @@ import React from "react"
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { thousandSeparator } from '../utils/helper'
+import {Link} from 'react-router-dom'
+import { quantityFormat } from '../utils/helper'
 
 import './styles/home.less'
 
@@ -56,8 +57,8 @@ class Home extends React.Component {
               {
                 this.props.contests.map((contest, i) => {
                   return (
-                    <div key={i} className='tile'>
-                      <img src={contest.image} width='250px' height='250px' />
+                    <Link to={`/contest/${contest.id}`} key={i} className='tile'>
+                      <img src={contest.image} className='tile_image' />
                       <div className='tile_title'>
                         <p>
                           {contest.title}
@@ -76,11 +77,11 @@ class Home extends React.Component {
                         <div className='tile_description_right'>
                           <img src='./assets/votecount.png' height='20px' />
                           <p>
-                            {thousandSeparator(contest.vote_count)}
+                            {quantityFormat(contest.vote_count)}
                           </p>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   )
                 })
               }

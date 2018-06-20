@@ -1,10 +1,12 @@
+@import './colors';
+
 .home_container {
   background-color: black;
   min-height: 100vh;
 }
 
 .home_frame {
-  background-color: white;
+  background-color: @white;
   margin-left: auto;
   margin-right: auto;
   min-height: 100vh;
@@ -13,33 +15,38 @@
 .grid_title {
   padding: 10px;
   text-align: center;
+  font-size: 30px;
 }
 
 .grid_section {
   display: flex;
   margin: auto;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
 .tile {
   width: 250px;
   height: 300px;
-  margin-top: 20px;
+  margin: 20px 20px 0px 20px;
+  p {
+    margin-bottom: 0px;
+  }
+  img{
+    border-radius: 10px;
+  }
+  .tile_image {
+    width: 250px;
+    height: 250px;
+  }
 }
 
-.tile_title p {
-  white-space: nowrap; 
-  overflow: hidden; 
-  text-overflow: ellipsis;
-}
-
-.tile p {
-  margin-bottom: 0px;
-}
-
-.tile img{
-  border-radius: 10px;
+.tile_title {
+  p {
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+  }
 }
 
 .tile_description {
@@ -52,15 +59,14 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.tile_description p {
-  margin-left: 5px;
+  p {
+    margin-left: 5px;
+  }
 }
 
 .creation_time_text {
   font-size: 11px;
-  color: #cccccc;
+  color: @light_grey;
 }
 
 @media only screen and (min-width: 720px) {

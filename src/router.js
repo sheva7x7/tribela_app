@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Route, IndexRoute } from "react-router";
+import { Router, Route, IndexRoute, Switch } from "react-router";
 import { ConnectedRouter } from 'react-router-redux'
 import { history } from "./store.js";
 
@@ -11,7 +11,7 @@ const router = (
   <ConnectedRouter onUpdate={() => window.scrollTo(0, 0)} history={history}>
     <App path="/">
       <Route exact path="/" component={Home}/>
-      <Route path="/contest" component={Contest}/>
+      <Route path="/contest/:id" component={Contest}/>
     </App>
   </ConnectedRouter>
 );

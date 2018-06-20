@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import _ from 'lodash'
 
+import { getPath } from '../selectors';
+
 import './styles/contest.less'
 
 const calcTimeLeft = date => {
@@ -21,8 +23,9 @@ class Contest extends React.Component {
     super(props)
 
     console.log(this.props)
+    const id = this.props.match.params.id
     this.state = {}
-    this.state.contest = this.props.contests[0]
+    this.state.contest = this.props.contests[id-1]
     this.state.timeLeft = calcTimeLeft(this.state.contest.expiration_time)
     this.state.intervalId = ''
 
@@ -71,26 +74,26 @@ class Contest extends React.Component {
           </div>
           <div className='voting_section'>
             <div className='voting_option'>
-              <img src='./assets/option_1.png' width='100px' />
+              <img src='../assets/option_1.png' width='100px' />
               <p className='contest_option_text'>
                 {this.state.contest.options[0].text}
               </p>
             </div>
             <div className='voting_option'>
-              <img src='./assets/option_2.png' width='100px' />
+              <img src='../assets/option_2.png' width='100px' />
               <p className='contest_option_text'>
                 {this.state.contest.options[0].text}
               </p>
             </div>
           </div>
           <div className='vote_count_section'>
-            <img src='./assets/votecount.png' width='100px' />
+            <img src='../assets/votecount.png' width='100px' />
             <p className='vote_count_text'>
               {this.state.contest.vote_count} votes
             </p>
           </div>
           <div className='timer_section'>
-            <img src='./assets/timeleft.png' width='100px' />
+            <img src='../assets/timeleft.png' width='100px' />
             <p className='timer_text'>
               {calcTimeLeft(this.state.contest.expiration_time)}
             </p>
@@ -102,9 +105,9 @@ class Contest extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state)
   return {
-    contests: state.contests
+    contests: state.contests,
+    location: getPath(state)
   }
 }
 

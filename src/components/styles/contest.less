@@ -1,3 +1,5 @@
+@import './colors';
+
 .contest_container {
   background-color: black;
   min-height: 100vh;
@@ -10,7 +12,7 @@
 }
 
 .contest_frame {
-  background-color: white;
+  background-color: @white;
   margin-left: auto;
   margin-right: auto;
   min-height: 100vh;
@@ -64,20 +66,18 @@
   .contest_image {
     width: 720px;
     height: 180px;
-  }
-
-  .contest_image img {
-    object-fit: cover;
-    filter: blur(2px);
+    img {
+      object-fit: cover;
+      filter: blur(2px);
+    }
   }
 
   .contest_image:hover {
     height: 720px;
-  }
-
-  .contest_image:hover img {
-    object-fit: fill;
-    filter: none;
+    img {
+      object-fit: fill;
+      filter: none;
+    }
   }
 }
 

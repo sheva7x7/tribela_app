@@ -1,3 +1,5 @@
+@import './colors';
+
 body {
   font-family: Futura, "Trebuchet MS", sans-serif;
 }
@@ -8,4 +10,67 @@ html, body, #app, .app_container {
 
 .navbar {
   margin-bottom: 0px;
+}
+
+.modal_form {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: @white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 25%;
+}
+
+.app_modal {
+  padding: 0;
+}
+
+.modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255,255,255,0.5)
+}
+
+.form_field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  label {
+    color: @tribela;
+  }
+  input {
+    width: 200px;
+    border-radius: 20px;
+  }
+}
+
+.form_button {
+  input {
+    border-radius: 20px;
+    width: 100px;
+    background-color: @tribela;
+  }
+}
+
+.form_close_icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+@media only screen and (min-width: 720px) {
+  .modal_form {
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    bottom: 40px;
+  }
 }

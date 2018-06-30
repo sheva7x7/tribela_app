@@ -1,7 +1,6 @@
 @import './colors';
 
 .contest_container {
-  background-color: black;
   min-height: 100vh;
 }
 
@@ -39,6 +38,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  img {
+    width: 100px;
+  }
+}
+
+.voting_option.voting_option_big {
+  height: 300;
+  img {
+    width: 120px;
+  }
+  p {
+    font-size: 1.5em;
+  }
 }
 
 .contest_option_text {
@@ -51,6 +63,12 @@
   align-items: center;
   height: 200px;
   justify-content: center;
+}
+
+.vote_count_section {
+  img {
+    width: 100px;
+  }
 }
 
 .timer_text, .vote_count_text {
@@ -68,6 +86,10 @@
     height: 180px;
     img {
       object-fit: cover;
+      -webkit-filter: blur(2px);
+      -moz-filter: blur(2px);
+      -o-filter: blur(2px);
+      -ms-filter: blur(2px);
       filter: blur(2px);
     }
   }

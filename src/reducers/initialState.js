@@ -1,4 +1,7 @@
 export default {
+  user: {
+    
+  },
   contests: [{
     id: 1,
     title: 'Soulmate vs Phone',
@@ -7,15 +10,17 @@ export default {
     type: 'H',
     creator: 'Tribela',
     view_count: 0,
-    vote_count: 0,
+    vote_count: 1111111 + 1111111,
     creation_time: '2018-06-08 12:00:00',
     expiration_time: '2018-06-15 12:00:00',
     options: [
       {
-        text: 'Soulmate with no phone'
+        text: 'Soulmate with no phone',
+        vote_count: 1111111
       },
       {
-        text: 'Phone with no soulmate'
+        text: 'Phone with no soulmate',
+        vote_count: 1111111
       }
     ]
   },{
@@ -64,15 +69,17 @@ export default {
     type: 'H',
     creator: 'Tribela',
     view_count: 0,
-    vote_count: 0,
+    vote_count: 1708123 + 1111111,
     creation_time: '2018-06-08 12:00:00',
     expiration_time: '2018-06-15 12:00:00',
     options: [
       {
-        text: 'Soulmate with no phone'
+        text: 'Soulmate with no phone',
+        vote_count: 1708123
       },
       {
-        text: 'Phone with no soulmate'
+        text: 'Phone with no soulmate',
+        vote_count: 1111111
       }
     ]
   },{

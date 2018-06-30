@@ -2,14 +2,23 @@
 
 body {
   font-family: Futura, "Trebuchet MS", sans-serif;
-}
-
-html, body, #app, .app_container {
-  height: 100%;
+  background: -webkit-linear-gradient(@stuff_war_blue_black, @stuff_war_black);  
+  background: -moz-linear-gradient(@stuff_war_blue_black, @stuff_war_black);  
+  background: -o-linear-gradient(@stuff_war_blue_black, @stuff_war_black); 
+  background: linear-gradient(@stuff_war_blue_black, @stuff_war_black); 
+  overflow: scroll;
 }
 
 .navbar {
   margin-bottom: 0px;
+}
+
+.app_blur {
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
 }
 
 .modal_form {
@@ -21,9 +30,10 @@ html, body, #app, .app_container {
   background-color: @white;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  padding-bottom: 25%;
+  padding-top: 20px;
+  padding-bottom: 30vh;
 }
 
 .app_modal {
@@ -36,7 +46,7 @@ html, body, #app, .app_container {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255,255,255,0.5)
+  background-color: rgba(255,255,255,0.5);
 }
 
 .form_field {
@@ -49,6 +59,11 @@ html, body, #app, .app_container {
   input {
     width: 200px;
     border-radius: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  input:focus {
+    outline: none;
   }
 }
 
@@ -57,6 +72,9 @@ html, body, #app, .app_container {
     border-radius: 20px;
     width: 100px;
     background-color: @tribela;
+  }
+  input:focus {
+    outline: none;
   }
 }
 
@@ -69,8 +87,8 @@ html, body, #app, .app_container {
 @media only screen and (min-width: 720px) {
   .modal_form {
     top: 40px;
-    left: 40px;
-    right: 40px;
+    left: 33vw;
+    right: 33vw;
     bottom: 40px;
   }
 }

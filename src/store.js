@@ -3,6 +3,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { syncHistoryWithStore, routerMiddleware } from "react-router-redux";
 import { reducers } from "./reducers/index";
 import { createBrowserHistory } from 'history';
+import thunk from 'redux-thunk'
 import initialStore from './reducers/initialState'
 
 const history = createBrowserHistory()
@@ -14,7 +15,7 @@ history.listen((location, action) => {
   console.log(`The last navigation action was ${action}`)
 })
 
-let middlewares = [];
+let middlewares = [thunk];
 
 middlewares.push(routerMiddleware(history));
 

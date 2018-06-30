@@ -4,7 +4,9 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import _ from 'lodash'
 
-import { getPath } from '../selectors';
+import { getPath } from '../selectors'
+
+import {thousandSeparator} from '../utils/helper'
 
 import './styles/contest.less'
 
@@ -13,9 +15,16 @@ const calcTimeLeft = date => {
   const expiryTime = moment(date)
   const timeLeft = expiryTime.diff(now)
   if (moment.duration(timeLeft)._milliseconds <= 0){
-    return 'expired'
+    return 'Completed'
   }
   return `${moment.duration(timeLeft).get('days')} D, ${moment.duration(timeLeft).get('hours')} H, ${moment.duration(timeLeft).get('minutes')} M, ${moment.duration(timeLeft).get('seconds')} S`
+}
+
+const winningOptionClass = (date, option, other) => {
+  if (calcTimeLeft(date) === 'Completed' && option.vote_count >= other.vote_count){
+    return 'voting_option_big'
+  }
+  return ''
 }
 
 class Contest extends React.Component {
@@ -73,23 +82,37 @@ class Contest extends React.Component {
             </p>
           </div>
           <div className='voting_section'>
-            <div className='voting_option'>
-              <img src='../assets/option_1.png' width='100px' />
+            <div className={`voting_option ${winningOptionClass(this.state.contest.expiration_time, this.state.contest.options[0], this.state.contest.options[1])}`}>
+              <img src='../assets/option_1.png' />
               <p className='contest_option_text'>
                 {this.state.contest.options[0].text}
               </p>
+              {
+                calcTimeLeft(this.state.contest.expiration_time) === 'Completed' ? 
+                <p>
+                  {thousandSeparator(this.state.contest.options[0].vote_count)} votes
+                </p>:
+                null
+              }
             </div>
-            <div className='voting_option'>
-              <img src='../assets/option_2.png' width='100px' />
+            <div className={`voting_option ${winningOptionClass(this.state.contest.expiration_time, this.state.contest.options[1], this.state.contest.options[0])}`}>
+              <img src='../assets/option_2.png' />
               <p className='contest_option_text'>
-                {this.state.contest.options[0].text}
+                {this.state.contest.options[1].text}
               </p>
+              {
+                calcTimeLeft(this.state.contest.expiration_time) === 'Completed' ? 
+                <p>
+                  {thousandSeparator(this.state.contest.options[1].vote_count)} votes
+                </p>:
+                null
+              }
             </div>
           </div>
           <div className='vote_count_section'>
-            <img src='../assets/votecount.png' width='100px' />
+            <img src='../assets/votecount.png' />
             <p className='vote_count_text'>
-              {this.state.contest.vote_count} votes
+              {thousandSeparator(this.state.contest.vote_count)} votes
             </p>
           </div>
           <div className='timer_section'>
@@ -107,7 +130,8 @@ class Contest extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     contests: state.contests,
-    location: getPath(state)
+    location: getPath(state),
+    user: state.user
   }
 }
 

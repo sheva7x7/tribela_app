@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open  --hot --host 0.0.0.0",
-    "build": "webpack --mode production --config webpack.prod.config.js"
+    "dev": "webpack-dev-server --mode development --open  --hot --host 0.0.0.0",
+    "build": "webpack --mode production --config webpack.prod.config.js",
+    "heroku-postbuild": "cd client && yarn && yarn run build",
+    "start": "node server.js"
   },
   "author": "Tribela",
   "license": "MIT",
@@ -45,6 +47,7 @@
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^5.0.0-alpha.9",
     "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
     "reselect": "^3.0.1"
   }
 }

@@ -1,24 +1,43 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import Modal from 'react-modal'
-
+import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
 import styles from './styles/app.less'
 import CloseIcon from 'material-ui/svg-icons/navigation/close'
-
+import * as userActions from '../actions/user'
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
+import {validateEmail, validatePassword} from '../utils/helper'
 
 class App extends React.Component {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.user.loggedIn && !prevState.user.loggedIn){
+      return {
+        user: nextProps.user
+      }
+    }
+    return null
+  }
+
   constructor(props) {
     super(props)
 
     this.state = {}
-    this.state.isModalOpened = null
+    this.state.openedModel = null
+    this.state.loginEmail = ''
+    this.state.loginPassword = ''
+    this.state.signUpEmail = ''
+    this.state.signUpPassword = ''
+    this.state.signUpPasswordVerify = ''
+    this.state.user = this.props.user
 
     this.handleModalCloseRequest = this.handleModalCloseRequest.bind(this)
+    this._submitLogIn = this._submitLogIn.bind(this)
+    this._submitSignUp = this._submitSignUp.bind(this)
   }
 
 	componentWillMount() {
-		this.props.onCreate();
+		this.props.onCreate()
   }
 
   handleModalCloseRequest() {
@@ -27,9 +46,33 @@ class App extends React.Component {
     })
   }
 
+  _submitLogIn(event) {
+    event.preventDefault()
+    if (!validateEmail(this.state.loginEmail)){
+      alert("You have entered an invalid email address!")
+    }
+    else {
+      this.props.actions.userLogin({email: this.state.loginEmail}, this.handleModalCloseRequest)
+    }
+  }
+
+  _submitSignUp(event) {
+    event.preventDefault()
+    if (!validateEmail(this.state.loginEmail)){
+      alert("You have entered an invalid email address!")
+    }
+    if (this.state.signUpPassword !== this.state.signUpPasswordVerify){
+      alert('passwords do not match!')
+    } else if (!validatePassword(this.state.signUpPassword)){
+      alert('password is not secure')
+    }else {
+      this.props.actions.userRegister({email: this.state.signUpEmail, password: this.state.signUpPassword}, this.handleModalCloseRequest)
+    }
+  }
+
  	render() {
     	return (
-        <div className='app_container'>
+        <div className={`app_container ${this.state.openedModel !== null? 'app_blur' : ''}`}>
           <Navbar inverse collapseOnSelect>
             <Navbar.Header>
               <Navbar.Brand>
@@ -46,7 +89,7 @@ class App extends React.Component {
               <Nav pullRight>
                 <NavItem eventKey={1} onClick={() => {
                   console.log(this.state)
-                  if (this.state.isModalOpened !== true) {
+                  if (this.state.openedModel === null) {
                     this.setState({openedModel: 'signup'})
                   }
                 }}>
@@ -54,7 +97,7 @@ class App extends React.Component {
                 </NavItem>
                 <NavItem eventKey={1} onClick={() => {
                   console.log(this.state)
-                  if (this.state.isModalOpened !== true) {
+                  if (this.state.openedModel === null) {
                     this.setState({openedModel: 'login'})
                   }
                 }}>
@@ -77,33 +120,45 @@ class App extends React.Component {
             className='app_modal'
             overlayClassName='modal_overlay'
           >
-            <form className='modal_form'>
+            <div className='modal_form'>
                <CloseIcon className='form_close_icon' onClick={this.handleModalCloseRequest} style={{color: '#cccccc'}}/>
               <div>
                 Sign Up
               </div>
               <div className='form_field'>
-                <label htmlFor='username'>
-                  Username
-                </label>
-                <input type='text' name='username'/>
-              </div>
-              <div className='form_field'>
-                <label htmlFor='username'>
+                <label htmlFor='email'>
                   Email Address
                 </label>
-                <input type='text' name='email'/>
+                <input type='email' name='email' value={this.state.signUpEmail} onChange={(event) => {
+                  this.setState({
+                    signUpEmail: event.target.value
+                  })
+                }}/>
               </div>
               <div className='form_field'>
-                <label htmlFor='username'>
+                <label htmlFor='password'>
                   Password
                 </label>
-                <input type='text' name='password'/>
+                <input type='password' name='password' value={this.state.signUpPassword} onChange={(event) => {
+                  this.setState({
+                    signUpPassword: event.target.value
+                  })
+                }}/>
+              </div>
+              <div className='form_field'>
+                <label htmlFor='repeat-password'>
+                  Confirm Password
+                </label>
+                <input type='password' name='repeat-password' value={this.state.signUpPasswordVerify} onChange={(event) => {
+                  this.setState({
+                    signUpPasswordVerify: event.target.value
+                  })
+                }}/>
               </div>
               <div className='form_button'>
-                <input type='submit' value='Join' />
+                <input type='submit' value='Join' onClick={this._submitSignUp}/>
               </div>
-            </form>
+            </div>
           </Modal>
           <Modal
             ref='login_modal'
@@ -115,27 +170,35 @@ class App extends React.Component {
             className='app_modal'
             overlayClassName='modal_overlay'
           >
-            <form className='modal_form'>
+            <div className='modal_form'>
                <CloseIcon className='form_close_icon' onClick={this.handleModalCloseRequest} style={{color: '#cccccc'}}/>
               <div>
                 Login
               </div>
               <div className='form_field'>
-                <label htmlFor='username'>
-                  Username
+                <label htmlFor='email'>
+                  Email Address
                 </label>
-                <input type='text' name='username'/>
+                <input type='email' name='email' value={this.state.loginEmail} onChange={(event) => {
+                  this.setState({
+                    loginEmail: event.target.value
+                  })
+                }}/>
               </div>
               <div className='form_field'>
-                <label htmlFor='username'>
+                <label htmlFor='password'>
                   Password
                 </label>
-                <input type='text' name='password'/>
+                <input type='password' name='password' value={this.state.loginPassword} onChange={(event) => {
+                  this.setState({
+                    loginPassword: event.target.value
+                  })
+                }}/>
               </div>
               <div className='form_button'>
-                <input type='submit' value='Log In' />
+                <input type='submit' value='Log In' onClick={this._submitLogIn} />
               </div>
-            </form>
+            </div>
           </Modal>
         </div>
       )
@@ -148,8 +211,16 @@ App.propTypes = {
 	location: PropTypes.string
 }
 
-App.defaultProps = {
-
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.user
+  }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+		actions: bindActionCreators(userActions, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

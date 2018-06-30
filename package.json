@@ -8,6 +8,9 @@
     "heroku-postbuild": "yarn && yarn run build",
     "start": "node server.js"
   },
+  "engines": {
+    "yarn": "1.5.1"
+  },
   "author": "Tribela",
   "license": "MIT",
   "devDependencies": {

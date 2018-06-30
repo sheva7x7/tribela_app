@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "webpack-dev-server --mode development --open  --hot --host 0.0.0.0",
     "build": "webpack --mode production --config webpack.prod.config.js",
-    "heroku-postbuild": "cd client && yarn && yarn run build",
+    "heroku-postbuild": "yarn && yarn run build",
     "start": "node server.js"
   },
   "author": "Tribela",

@@ -1,10 +1,12 @@
-var webpack = require("webpack");
+require('dotenv').config()
+const webpack = require("webpack");
 
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-const config = require('./config-prod.json');
+console.log(process.env.ENV)
+const config = process.env.ENV === 'STAGING' ? require('./config-dev.json'): require('./config-prod.json');
 
 module.exports = require('./webpack.config.js');
 

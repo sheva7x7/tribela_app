@@ -2,7 +2,9 @@ import React from "react"
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import { bindActionCreators } from 'redux'
 import {Link} from 'react-router-dom'
+import * as campaignsActions from '../actions/campaigns' 
 import { quantityFormat } from '../utils/helper'
 
 import './styles/home.less'
@@ -36,10 +38,26 @@ const calcTimeSince = date => {
 }
 
 class Home extends React.Component {
+
+  static getDerivedStateFromProps(nextProps, prevState){
+    if (prevState.trendingCampaigns.length !== nextProps.trendingCampaigns.length){
+      return {
+        trendingCampaigns: nextProps.trendingCampaigns
+      }
+    }
+    return null
+  }
+  
   constructor(props){
     super(props)
 
-    console.log(props)
+    this.state = {}
+    this.state.trendingCampaigns = this.props.trendingCampaigns
+  }
+
+  componentDidMount() {
+    console.log('Will Mount')
+    this.props.actions.getTrendingCampaigns({offset: 0})
   }
 
   render (){
@@ -55,29 +73,29 @@ class Home extends React.Component {
             </div>
             <div className='grid_section'>
               {
-                this.props.contests.map((contest, i) => {
+                this.state.trendingCampaigns.map((campaign, i) => {
                   return (
-                    <Link to={`/contest/${contest.id}`} key={i} className='tile'>
-                      <img src={contest.image} className='tile_image' />
+                    <Link to={`/campaign/${campaign.id}`} key={i} className='tile'>
+                      <img src={campaign.featured_image} className='tile_image' />
                       <div className='tile_title'>
                         <p>
-                          {contest.title}
+                          {campaign.title}
                         </p>
                       </div>
                       <div className='tile_description'>
                         <div className='tile_description_left'>
                           <img src='./assets/timeleft.png' height='20px' />
                           <p className='creation_time_text'>
-                            {calcTimeSince(contest.creation_time)}
+                            {calcTimeSince(campaign.creation_time)}
                           </p>
                           <p>
-                            {contest.creator}
+                            {campaign.creator}
                           </p>
                         </div>
                         <div className='tile_description_right'>
                           <img src='./assets/votecount.png' height='20px' />
                           <p>
-                            {quantityFormat(contest.vote_count)}
+                            {quantityFormat(campaign.total_vote_count)}
                           </p>
                         </div>
                       </div>
@@ -94,15 +112,23 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
-	contests: PropTypes.array
+	trendingCampaigns: PropTypes.array
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    contests: state.contests
+    users: state.users,
+    trendingCampaigns: state.campaigns.trendingCampaigns
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+		actions: bindActionCreators(campaignsActions, dispatch)
+	}
+}
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Home)

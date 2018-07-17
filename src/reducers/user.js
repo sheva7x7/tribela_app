@@ -5,14 +5,16 @@ import _ from 'lodash'
 export default function (state = initialState.user, action) {
   switch (action.type){
     case types.USER_LOGIN:
-      return _.assign(state, {
-        user: action.user
-      })
+      return {
+        ...state,
+        ...action.user
+      }
 
     case types.USER_REGISTER:
-      return _.assign(state, {
-        user: action.user
-      })
+      return {
+        ...state,
+        ...action.user
+      }
 
     default: 
       return state

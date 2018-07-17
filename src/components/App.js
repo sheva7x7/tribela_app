@@ -10,8 +10,9 @@ import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
 import {validateEmail, validatePassword} from '../utils/helper'
 
 class App extends React.Component {
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.user.loggedIn && !prevState.user.loggedIn){
+
+  static getDerivedStateFromProps(nextProps, prevState){
+    if (prevState.user !== nextProps.user){
       return {
         user: nextProps.user
       }
@@ -52,16 +53,16 @@ class App extends React.Component {
       alert("You have entered an invalid email address!")
     }
     else {
-      this.props.actions.userLogin({email: this.state.loginEmail}, this.handleModalCloseRequest)
+      this.props.actions.userLogin({email: this.state.loginEmail, password: this.state.loginPassword}, this.handleModalCloseRequest)
     }
   }
 
   _submitSignUp(event) {
     event.preventDefault()
-    if (!validateEmail(this.state.loginEmail)){
+    if (!validateEmail(this.state.signUpEmail)){
       alert("You have entered an invalid email address!")
     }
-    if (this.state.signUpPassword !== this.state.signUpPasswordVerify){
+    else if (this.state.signUpPassword !== this.state.signUpPasswordVerify){
       alert('passwords do not match!')
     } else if (!validatePassword(this.state.signUpPassword)){
       alert('password is not secure')
@@ -86,27 +87,38 @@ class App extends React.Component {
                   Trending
                 </NavItem>
               </Nav>
-              <Nav pullRight>
-                <NavItem eventKey={1} onClick={() => {
-                  console.log(this.state)
-                  if (this.state.openedModel === null) {
-                    this.setState({openedModel: 'signup'})
-                  }
-                }}>
-                  Sign Up
-                </NavItem>
-                <NavItem eventKey={1} onClick={() => {
-                  console.log(this.state)
-                  if (this.state.openedModel === null) {
-                    this.setState({openedModel: 'login'})
-                  }
-                }}>
-                  Log In
-                </NavItem>
-                <NavItem eventKey={2} href="http://tribela.io">
-                  About Us
-                </NavItem>
-              </Nav>
+              {
+                this.state.user.loggedIn ? 
+                <Nav pullRight>
+                  <NavItem eventKey={2} href="/profile">
+                    Profile
+                  </NavItem>
+                  <NavItem eventKey={2} href="http://tribela.io">
+                    About Us
+                  </NavItem>
+                </Nav>:
+                <Nav pullRight>
+                  <NavItem eventKey={1} onClick={() => {
+                    console.log(this.state)
+                    if (this.state.openedModel === null) {
+                      this.setState({openedModel: 'signup'})
+                    }
+                  }}>
+                    Sign Up
+                  </NavItem>
+                  <NavItem eventKey={1} onClick={() => {
+                    console.log(this.state)
+                    if (this.state.openedModel === null) {
+                      this.setState({openedModel: 'login'})
+                    }
+                  }}>
+                    Log In
+                  </NavItem>
+                  <NavItem eventKey={2} href="http://tribela.io">
+                    About Us
+                  </NavItem>
+                </Nav>
+              }
             </Navbar.Collapse>
           </Navbar>
           {this.props.children}

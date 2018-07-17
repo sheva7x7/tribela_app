@@ -5,6 +5,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const BabelPluginTransformObjectRestSpread = require('babel-plugin-transform-object-rest-spread')
 
 const htmlWebpackPlugin = new HtmlWebPackPlugin({
   template: "./src/index.html",
@@ -39,7 +40,11 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: "babel-loader",
+          options: {
+              presets: ['env'],
+              plugins: [BabelPluginTransformObjectRestSpread] 
+          }
         }
       },
       {
@@ -59,12 +64,12 @@ module.exports = {
   },
   plugins: [
     htmlWebpackPlugin,
-    new webpack.DefinePlugin({
-        config: JSON.stringify(config)
-    }),
     new CopyWebpackPlugin([
       { from: 'src/assets', to: 'assets' }
     ]),
+    new webpack.DefinePlugin({
+        API: JSON.stringify(config)
+    }),
     new webpack.HotModuleReplacementPlugin()
   ]
 };

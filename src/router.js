@@ -11,7 +11,7 @@ const router = (
   <ConnectedRouter onUpdate={() => window.scrollTo(0, 0)} history={history}>
     <App path="/">
       <Route exact path="/" component={Home}/>
-      <Route path="/contest/:id" component={Contest}/>
+      <Route path="/campaign/:id" component={Contest}/>
     </App>
   </ConnectedRouter>
 );

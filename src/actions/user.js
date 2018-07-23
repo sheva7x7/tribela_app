@@ -8,7 +8,6 @@ export function userLogin(data, callback) {
     const userData = {
       user: {
         login_id: data.email,
-        email: data.email,
         password: data.password
       }
     }
@@ -18,7 +17,11 @@ export function userLogin(data, callback) {
                     alert('Username or Password Error')
                   }
                   else {
-                    dispatch(userLoginDispatch(res.data))
+                    const user = _.assign(res.data, {
+                      loggedIn: true
+                    })
+                    dispatch(userLoginDispatch(user))
+                    localStorage.setItem('user', JSON.stringify(user))
                     callback()
                   }
                 })
@@ -29,11 +32,7 @@ export function userLogin(data, callback) {
   }
 }
 
-function userLoginDispatch(data) {
-  console.log(data)
-  const user = _.assign(data, {
-    loggedIn: true
-  })
+function userLoginDispatch(user) {
   return {
     type: types.USER_LOGIN,
     user
@@ -45,12 +44,17 @@ export function userRegister(data, callback) {
     const userData = {
       user: {
         login_id: data.email,
+        email: data.email,
         password: data.password
       }
     }
     return axios.post(`${TRIBELA_URL}/newuser`, userData)
                 .then((res) => {
-                  dispatch(userRegisterDispatch(res.data))
+                  const user = _.assign({
+                    email: data.email,
+                    loggedIn: true
+                  })
+                  dispatch(userRegisterDispatch(user))
                   callback()
                 })
                 .catch((err) => {
@@ -60,11 +64,7 @@ export function userRegister(data, callback) {
   }
 }
 
-function userRegisterDispatch(data) {
-  const user = _.assign({
-    email: data.email,
-    loggedIn: true
-  })
+function userRegisterDispatch(user) {
   return {
     type: types.USER_REGISTER,
     user

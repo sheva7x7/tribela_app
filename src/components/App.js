@@ -12,6 +12,7 @@ import {validateEmail, validatePassword} from '../utils/helper'
 class App extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState){
+    console.log(nextProps.user)
     if (prevState.user !== nextProps.user){
       return {
         user: nextProps.user

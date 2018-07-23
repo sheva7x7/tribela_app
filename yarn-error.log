@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn version
+  /usr/local/bin/node /usr/local/bin/yarn run build
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin
@@ -24,16 +24,21 @@ npm manifest:
       "heroku-postbuild": "yarn && yarn run build",
       "start": "node server.js"
     },
+    "engines": {
+      "yarn": "1.5.1"
+    },
     "author": "Tribela",
     "license": "MIT",
     "devDependencies": {
       "babel-core": "^6.26.3",
       "babel-loader": "^7.1.4",
+      "babel-plugin-transform-object-rest-spread": "^6.26.0",
       "babel-preset-env": "^1.7.0",
       "babel-preset-react": "^6.24.1",
       "bootstrap": "^4.1.1",
       "clean-webpack-plugin": "^0.1.19",
       "css-loader": "^0.28.11",
+      "dotenv": "^6.0.0",
       "extract-text-webpack-plugin": "^3.0.2",
       "html-webpack-plugin": "^3.2.0",
       "less": "^3.0.4",
@@ -45,6 +50,7 @@ npm manifest:
       "webpack-dev-server": "^3.1.4"
     },
     "dependencies": {
+      "axios": "^0.18.0",
       "babel-polyfill": "^6.26.0",
       "connect-history-api-fallback": "^1.5.0",
       "copy-webpack-plugin": "^4.5.1",
@@ -62,6 +68,7 @@ npm manifest:
       "react-router": "^4.2.0",
       "react-router-dom": "^4.3.1",
       "react-router-redux": "^5.0.0-alpha.9",
+      "react-virtualized": "^9.20.1",
       "redux": "^4.0.0",
       "redux-thunk": "^2.3.0",
       "reselect": "^3.0.1"
@@ -470,6 +477,13 @@ Lockfile:
   aws4@^1.6.0:
     version "1.7.0"
     resolved "http://registry.npm.taobao.org/aws4/download/aws4-1.7.0.tgz#d4d0e9b9dbfca77bf08eeb0a8a471550fe39e289"
+  
+  axios@^0.18.0:
+    version "0.18.0"
+    resolved "http://registry.npm.taobao.org/axios/download/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
+    dependencies:
+      follow-redirects "^1.3.0"
+      is-buffer "^1.1.5"
   
   babel-code-frame@^6.26.0:
     version "6.26.0"
@@ -943,7 +957,7 @@ Lockfile:
       babel-plugin-syntax-flow "^6.18.0"
       babel-runtime "^6.22.0"
   
-  babel-plugin-transform-object-rest-spread@^6.22.0:
+  babel-plugin-transform-object-rest-spread@^6.22.0, babel-plugin-transform-object-rest-spread@^6.26.0:
     version "6.26.0"
     resolved "http://registry.npm.taobao.org/babel-plugin-transform-object-rest-spread/download/babel-plugin-transform-object-rest-spread-6.26.0.tgz#0f36692d50fef6b7e2d4b3ac1478137a963b7b06"
     dependencies:
@@ -1567,6 +1581,10 @@ Lockfile:
       define-property "^0.2.5"
       isobject "^3.0.0"
       static-extend "^0.1.1"
+  
+  classnames@^2.2.3:
+    version "2.2.6"
+    resolved "http://registry.npm.taobao.org/classnames/download/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   
   classnames@^2.2.5:
     version "2.2.5"
@@ -2220,7 +2238,7 @@ Lockfile:
     dependencies:
       utila "~0.3"
   
-  dom-helpers@^3.2.0, dom-helpers@^3.2.1, dom-helpers@^3.3.1:
+  "dom-helpers@^2.4.0 || ^3.0.0", dom-helpers@^3.2.0, dom-helpers@^3.2.1, dom-helpers@^3.3.1:
     version "3.3.1"
     resolved "http://registry.npm.taobao.org/dom-helpers/download/dom-helpers-3.3.1.tgz#fc1a4e15ffdf60ddde03a480a9c0fece821dd4a6"
   
@@ -2265,6 +2283,10 @@ Lockfile:
     dependencies:
       dom-serializer "0"
       domelementtype "1"
+  
+  dotenv@^6.0.0:
+    version "6.0.0"
+    resolved "http://registry.npm.taobao.org/dotenv/download/dotenv-6.0.0.tgz#24e37c041741c5f4b25324958ebbc34bca965935"
   
   duplexer3@^0.1.4:
     version "0.1.4"
@@ -2769,6 +2791,12 @@ Lockfile:
   follow-redirects@^1.0.0:
     version "1.5.0"
     resolved "http://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.5.0.tgz#234f49cf770b7f35b40e790f636ceba0c3a0ab77"
+    dependencies:
+      debug "^3.1.0"
+  
+  follow-redirects@^1.3.0:
+    version "1.5.1"
+    resolved "http://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.5.1.tgz#67a8f14f5a1f67f962c2c46469c79eaec0a90291"
     dependencies:
       debug "^3.1.0"
   
@@ -3766,6 +3794,10 @@ Lockfile:
     version "3.0.2"
     resolved "http://registry.npm.taobao.org/js-tokens/download/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
   
+  "js-tokens@^3.0.0 || ^4.0.0":
+    version "4.0.0"
+    resolved "http://registry.npm.taobao.org/js-tokens/download/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
+  
   js-yaml@~3.7.0:
     version "3.7.0"
     resolved "http://registry.npm.taobao.org/js-yaml/download/js-yaml-3.7.0.tgz#5c967ddd837a9bfdca5f2de84253abe8a1c03b80"
@@ -4088,6 +4120,12 @@ Lockfile:
     resolved "http://registry.npm.taobao.org/loose-envify/download/loose-envify-1.3.1.tgz#d1a8ad33fa9ce0e713d65fdd0ac8b748d478c848"
     dependencies:
       js-tokens "^3.0.0"
+  
+  loose-envify@^1.3.0:
+    version "1.4.0"
+    resolved "http://registry.npm.taobao.org/loose-envify/download/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
+    dependencies:
+      js-tokens "^3.0.0 || ^4.0.0"
   
   loud-rejection@^1.0.0, loud-rejection@^1.6.0:
     version "1.6.0"
@@ -5585,6 +5623,17 @@ Lockfile:
       dom-helpers "^3.3.1"
       loose-envify "^1.3.1"
       prop-types "^15.6.1"
+  
+  react-virtualized@^9.20.1:
+    version "9.20.1"
+    resolved "http://registry.npm.taobao.org/react-virtualized/download/react-virtualized-9.20.1.tgz#02dc08fe9070386b8c48e2ac56bce7af0208d22d"
+    dependencies:
+      babel-runtime "^6.26.0"
+      classnames "^2.2.3"
+      dom-helpers "^2.4.0 || ^3.0.0"
+      loose-envify "^1.3.0"
+      prop-types "^15.6.0"
+      react-lifecycles-compat "^3.0.4"
   
   react@^16.4.0:
     version "16.4.0"
@@ -7197,14 +7246,17 @@ Lockfile:
       yeoman-environment "^2.0.5"
 
 Trace: 
-  Error: canceled
-      at Interface.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:128791:13)
-      at emitNone (events.js:105:13)
-      at Interface.emit (events.js:207:7)
-      at Interface._ttyWrite (readline.js:769:16)
-      at ReadStream.onkeypress (readline.js:157:10)
+  Error: Command failed.
+  Exit code: 2
+  Command: sh
+  Arguments: -c webpack --mode production --config webpack.prod.config.js
+  Directory: /Users/amomynous/Projects/tribela_app
+  Output:
+  
+      at ProcessTermError.MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
+      at new ProcessTermError (/usr/local/lib/node_modules/yarn/lib/cli.js:226:113)
+      at ChildProcess.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:30281:17)
       at emitTwo (events.js:125:13)
-      at ReadStream.emit (events.js:213:7)
-      at emitKeys (internal/readline.js:420:14)
-      at emitKeys.next (<anonymous>)
-      at ReadStream.onData (readline.js:1006:36)
+      at ChildProcess.emit (events.js:213:7)
+      at maybeClose (internal/child_process.js:921:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)

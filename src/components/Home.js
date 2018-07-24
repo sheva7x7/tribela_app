@@ -129,6 +129,8 @@ class Home extends React.Component {
 
   cellRenderer({ index, key, parent, style }) {
     const campaign = this.state.trendingCampaigns[index]
+    // style.top = this.state.windowWidth < 720 ? index * 350 : style.top
+    console.log(parent)
     return (
       <CellMeasurer
         cache={cache}
@@ -178,12 +180,14 @@ class Home extends React.Component {
   render (){
     const columnCount = this.state.windowWidth < 720 ? 1 : 2
     const width = this.state.windowWidth < 720 ? 300 : 605
-
+    const spacer = this.state.windowWidth < 720 ? 0 : 5
+    const mobileHeight = this.state.windowWidth < 720 ? this.state.trendingCampaigns.length * 350 : 0
+    
     const cellPositioner = createMasonryCellPositioner({
       cellMeasurerCache: cache,
       columnCount,
       columnWidth: defaultWidth,
-      spacer: 5
+      spacer 
     })
     return (
       <div className='home_container'>
@@ -200,16 +204,16 @@ class Home extends React.Component {
                   </div>
                   <div className='grid_section'>
                     <Masonry
-                      autoHeight
+                      autoHeight={true}
                       cellCount={this.state.trendingCampaigns.length}
                       cellMeasurerCache={cache}
                       cellPositioner={cellPositioner}
                       cellRenderer={this.cellRenderer}
                       scrollTop={scrollTop}
-                      height={height}
+                      height={mobileHeight || height}
                       width={width}
                       onScroll={this._onScroll}
-                      style={{margin: 'auto'}}
+                      style={{marginLeft: 'auto', marginRight: 'auto'}}
                       overscanByPixels={300}
                       tabIndex={null}
                     />

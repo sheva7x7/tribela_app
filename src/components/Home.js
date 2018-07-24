@@ -6,10 +6,7 @@ import { bindActionCreators } from 'redux'
 import {Link} from 'react-router-dom'
 import {
   WindowScroller,
-  CellMeasurer,
-  CellMeasurerCache,
-  createMasonryCellPositioner,
-  Masonry
+  Grid
 } from 'react-virtualized'
 import axios from 'axios'
 import { TRIBELA_URL } from '../utils/constants'
@@ -46,19 +43,10 @@ const calcTimeSince = date => {
   return `just now by`
 }
 
-const defaultHeight = 350
-const defaultWidth = 300
-
-const cache = new CellMeasurerCache({
-  defaultHeight,
-  defaultWidth,
-  fixedWidth: true
-})
-
 class Home extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState){
-    if (prevState.trendingCampaigns.length !== nextProps.trendingCampaigns.length){
+    if (prevState.trendingCampaigns.length < nextProps.trendingCampaigns.length){
       return {
         trendingCampaigns: nextProps.trendingCampaigns
       }
@@ -79,6 +67,7 @@ class Home extends React.Component {
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
     this._onScroll = this._onScroll.bind(this)
     this._loadMoreData = _.debounce(this._loadMoreData.bind(this), 1000, {leading: true})
+    this.overscanIndicesGetter = this.overscanIndicesGetter.bind(this)
   }
 
   componentDidMount() {
@@ -101,12 +90,14 @@ class Home extends React.Component {
     }
     return axios.post(`${TRIBELA_URL}/trendingcampaigns`, postData)
                 .then((res) => {
-                  console.log(res.data)
                   if (res.data.length > 0){
-                    const trendingCampaigns = this.state.trendingCampaigns.concat(res.data)
+                    const campaigns = this.state.trendingCampaigns.concat(res.data)
+                    console.log(campaigns, res.data.length, this.state.trendingCampaigns)
                     this.setState({
-                      trendingCampaigns,
+                      trendingCampaigns: campaigns,
                       loadingData: false
+                    }, () => {
+                      this.gridRef.forceUpdate()
                     })
                   } else {
                     this.setState({
@@ -127,18 +118,19 @@ class Home extends React.Component {
                 })
   }
 
-  cellRenderer({ index, key, parent, style }) {
+  cellRenderer({ columnIndex, key, rowIndex, style }) {
+    const columnCount = this.state.windowWidth < 720 ? 1 : 2
+    const index = rowIndex * columnCount + columnIndex
     const campaign = this.state.trendingCampaigns[index]
-    // style.top = this.state.windowWidth < 720 ? index * 350 : style.top
-    console.log(parent)
+    const divStyle = _.assign({}, style)
+    if (columnCount > 1 && columnIndex === 0) {
+      divStyle.marginRight = 2.5
+    }
+    if (columnCount > 1 && columnIndex === 1) {
+      divStyle.marginLeft = 2.5
+    }
     return (
-      <CellMeasurer
-        cache={cache}
-        index={index}
-        key={key}
-        parent={parent}
-      >
-      <div style={style} >
+      <div style={divStyle} key={key}>
         <Link to={`/campaign/${campaign.id}`} className='tile'>
           <img src={campaign.featured_image} className='tile_image' />
           <div className='tile_content'>
@@ -167,8 +159,21 @@ class Home extends React.Component {
             </div>
           </Link>
         </div>
-      </CellMeasurer>
     )
+  }
+
+  overscanIndicesGetter ({
+    direction,          // One of "horizontal" or "vertical"
+    cellCount,          // Number of rows or columns in the current axis
+    scrollDirection,    // 1 (forwards) or -1 (backwards)
+    overscanCellsCount, // Maximum number of cells to over-render in either direction
+    startIndex,         // Begin of range of visible cells
+    stopIndex           // End of range of visible cells
+  }) {
+    return {
+      overscanStartIndex: Math.max(0, startIndex - 3),
+      overscanStopIndex: Math.min(cellCount - 1, stopIndex + 3)
+    }
   }
 
   _onScroll({scrollTop, scrollHeight}) {
@@ -179,16 +184,8 @@ class Home extends React.Component {
 
   render (){
     const columnCount = this.state.windowWidth < 720 ? 1 : 2
-    const width = this.state.windowWidth < 720 ? 300 : 605
     const spacer = this.state.windowWidth < 720 ? 0 : 5
-    const mobileHeight = this.state.windowWidth < 720 ? this.state.trendingCampaigns.length * 350 : 0
-    
-    const cellPositioner = createMasonryCellPositioner({
-      cellMeasurerCache: cache,
-      columnCount,
-      columnWidth: defaultWidth,
-      spacer 
-    })
+    const width = this.state.windowWidth < 720 ? this.state.windowWidth : 720
     return (
       <div className='home_container'>
         <div className='home_frame'>
@@ -203,20 +200,22 @@ class Home extends React.Component {
                     </p>
                   </div>
                   <div className='grid_section'>
-                    <Masonry
-                      autoHeight={true}
-                      cellCount={this.state.trendingCampaigns.length}
-                      cellMeasurerCache={cache}
-                      cellPositioner={cellPositioner}
-                      cellRenderer={this.cellRenderer}
-                      scrollTop={scrollTop}
-                      height={mobileHeight || height}
-                      width={width}
-                      onScroll={this._onScroll}
-                      style={{marginLeft: 'auto', marginRight: 'auto'}}
-                      overscanByPixels={300}
-                      tabIndex={null}
-                    />
+                      <Grid
+                        autoHeight={true}
+                        rowCount={this.state.trendingCampaigns.length / columnCount}
+                        columnCount={columnCount}
+                        cellRenderer={this.cellRenderer}
+                        scrollTop={scrollTop}
+                        width={width}
+                        height={1000}
+                        rowHeight={350}
+                        columnWidth={300}
+                        onScroll={this._onScroll}
+                        overscanIndicesGetter={this.overscanIndicesGetter}
+                        tabIndex={null}
+                        containerStyle={{marginRight: 'auto', marginLeft: 'auto'}}
+                        ref={ref => this.gridRef = ref}
+                      />
                   </div>
                 </div>
               </div>

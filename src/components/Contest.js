@@ -153,7 +153,6 @@ class Contest extends React.Component {
     console.log(option, this.state.user, this.state.voted)
     if (this.state.user.loggedIn){
       if (!this.state.voted){
-        console.log(option)
         this.voting(option)
       }
     } else {
@@ -184,7 +183,7 @@ class Contest extends React.Component {
             {
               this.state.campaign.options.map((option, i) => (
                 <div className={`voting_option ${winningOptionClass(this.state.campaign.expiration_time, i, this.state.campaign.options)}`} onClick={() => {this._vote(option)}}>
-                  <img src='../assets/option_1.png' />
+                  <img src={`../assets/option_${option.option_no}.png`} />
                   <p className='contest_option_text'>
                     {option.description}
                   </p>

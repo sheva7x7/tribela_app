@@ -6,14 +6,15 @@ import { bindActionCreators } from 'redux'
 import styles from './styles/app.less'
 import CloseIcon from 'material-ui/svg-icons/navigation/close'
 import * as userActions from '../actions/user'
+import _ from 'lodash'
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
 import {validateEmail, validatePassword} from '../utils/helper'
 
 class App extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState){
-    console.log(nextProps.user)
-    if (prevState.user !== nextProps.user){
+    if (!_.isEqual(prevState.user, nextProps.user)){
+      console.log(nextProps.user)
       return {
         user: nextProps.user
       }
@@ -23,7 +24,7 @@ class App extends React.Component {
 
   constructor(props) {
     super(props)
-
+    console.log(this.props)
     this.state = {}
     this.state.openedModel = null
     this.state.loginEmail = ''
@@ -36,6 +37,7 @@ class App extends React.Component {
     this.handleModalCloseRequest = this.handleModalCloseRequest.bind(this)
     this._submitLogIn = this._submitLogIn.bind(this)
     this._submitSignUp = this._submitSignUp.bind(this)
+    this._logout = this._logout.bind(this)
   }
 
 	componentWillMount() {
@@ -64,12 +66,16 @@ class App extends React.Component {
       alert("You have entered an invalid email address!")
     }
     else if (this.state.signUpPassword !== this.state.signUpPasswordVerify){
-      alert('passwords do not match!')
+      alert('Passwords do not match!')
     } else if (!validatePassword(this.state.signUpPassword)){
-      alert('password is not secure')
+      alert('Password is not secure')
     }else {
       this.props.actions.userRegister({email: this.state.signUpEmail, password: this.state.signUpPassword}, this.handleModalCloseRequest)
     }
+  }
+
+  _logout() {
+    this.props.actions.userLogOut()
   }
 
  	render() {
@@ -91,10 +97,15 @@ class App extends React.Component {
               {
                 this.state.user.loggedIn ? 
                 <Nav pullRight>
-                  <NavItem eventKey={2} href="/profile">
+                  <NavItem eventKey={1} href="/profile">
                     Profile
                   </NavItem>
-                  <NavItem eventKey={2} href="http://tribela.io">
+                  <NavItem eventKey={2} onClick={() => {
+                    this._logout()
+                  }} >
+                    Log Out
+                  </NavItem>
+                  <NavItem eventKey={3} href="http://tribela.io">
                     About Us
                   </NavItem>
                 </Nav>:
@@ -107,7 +118,7 @@ class App extends React.Component {
                   }}>
                     Sign Up
                   </NavItem>
-                  <NavItem eventKey={1} onClick={() => {
+                  <NavItem eventKey={2} onClick={() => {
                     console.log(this.state)
                     if (this.state.openedModel === null) {
                       this.setState({openedModel: 'login'})
@@ -115,7 +126,7 @@ class App extends React.Component {
                   }}>
                     Log In
                   </NavItem>
-                  <NavItem eventKey={2} href="http://tribela.io">
+                  <NavItem eventKey={3} href="http://tribela.io">
                     About Us
                   </NavItem>
                 </Nav>

@@ -71,7 +71,6 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    console.log('Will Mount')
     this.props.actions.getTrendingCampaigns({offset: 0})
     window.addEventListener('resize', this.updateWindowDimensions)
   }
@@ -233,7 +232,7 @@ Home.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    users: state.users,
+    user: state.user,
     trendingCampaigns: state.campaigns.trendingCampaigns
   }
 }

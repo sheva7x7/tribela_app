@@ -16,6 +16,17 @@ export default function (state = initialState.user, action) {
         ...action.user
       }
 
+    case types.USER_USERNAME_UPDATE:
+      return {
+        ...state,
+        ...action.user
+      }
+    
+    case types.USER_LOGOUT:
+      return {
+        
+      }
+
     default: 
       return state
   }

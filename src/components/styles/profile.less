@@ -1,0 +1,75 @@
+@import './colors';
+
+.profile_frame {
+  background-color: @white;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 100vh;
+  overflow: scroll;
+}
+
+.profile_container {
+  .profile_title {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    p {
+      font-size: 30px;
+    }
+  }
+  .profile_icon {
+    width: 100px;
+    display: block;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .password-fields {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .form_field {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    img, .div_placeholder {
+      margin-left: 10px;
+      margin-right: 10px;
+      width: 20px;
+    }
+    label {
+      color: @tribela;
+      width: 150px;
+      text-align: right;
+    }
+    input {
+      width: 200px;
+      border-radius: 20px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    input:focus {
+      outline: none;
+    }
+    .confirm_placeholder {
+      width: 100px;
+      padding-left: 10px;
+    }
+    .confirm_button {
+      color: @light_blue;
+      cursor: pointer;
+    }
+  }
+}
+
+@media only screen and (min-width: 720px) {
+  .profile_frame {
+    width: 720px;
+  }
+}

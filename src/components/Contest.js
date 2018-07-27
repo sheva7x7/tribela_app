@@ -33,7 +33,7 @@ const winningOptionClass = (date, index, options) => {
 
 class Contest extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState){
-    if (prevState.user !== nextProps.user){
+    if (!_.isEqual(prevState.user, nextProps.user)){
       return {
         user: nextProps.user
       }
@@ -69,12 +69,6 @@ class Contest extends React.Component {
   componentWillUnmount() {
     if (!_.isEmpty(this.state.intervalId)){
       clearInterval(this.state.intervalId)
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    console.log(this.props.location, prevProps.location)
-    if (this.props.location !== prevProps.location) {
     }
   }
 
@@ -182,7 +176,7 @@ class Contest extends React.Component {
           <div className='voting_section'>
             {
               this.state.campaign.options.map((option, i) => (
-                <div className={`voting_option ${winningOptionClass(this.state.campaign.expiration_time, i, this.state.campaign.options)}`} onClick={() => {this._vote(option)}}>
+                <div key={i} className={`voting_option ${winningOptionClass(this.state.campaign.expiration_time, i, this.state.campaign.options)}`} onClick={() => {this._vote(option)}}>
                   <img src={`../assets/option_${option.option_no}.png`} />
                   <p className='contest_option_text'>
                     {option.description}

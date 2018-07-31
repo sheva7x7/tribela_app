@@ -1,4 +1,13 @@
 @import './colors';
+@import '~slick-carousel/slick/slick-theme';
+@import '~slick-carousel/slick/slick';
+
+html, body {
+  ::-webkit-scrollbar { 
+    display: none; 
+  }
+  -ms-overflow-style: none;
+}
 
 body {
   font-family: Futura, "Trebuchet MS", sans-serif;
@@ -6,7 +15,7 @@ body {
   background: -moz-linear-gradient(@stuff_war_blue_black, @stuff_war_black);  
   background: -o-linear-gradient(@stuff_war_blue_black, @stuff_war_black); 
   background: linear-gradient(@stuff_war_blue_black, @stuff_war_black); 
-  overflow: scroll;
+  overflow: auto;
 }
 
 .navbar {

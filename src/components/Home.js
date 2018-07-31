@@ -8,6 +8,7 @@ import {
   WindowScroller,
   Grid
 } from 'react-virtualized'
+import Slider from "react-slick"
 import axios from 'axios'
 import { TRIBELA_URL } from '../utils/constants'
 import * as campaignsActions from '../actions/campaigns' 
@@ -191,7 +192,27 @@ class Home extends React.Component {
           <WindowScroller>
             {({ height, isScrolling, registerChild, scrollTop }) => (
               <div>
-                <img width='100%' src='./assets/stuff_war.png'/>
+                <Slider 
+                  dots={true}
+                  arrows={false}
+                  autoplay={true}
+                  fade={true}
+                  customPaging={ i => (
+                    <div className='carousel_paging'>
+                      {i + 1}
+                    </div>
+                  )}
+                >
+                  <div>
+                    <img width='100%' src='http://img.stuffwar.com/gallery/Designarena.jpg' />
+                  </div>
+                  <div>
+                    <img width='100%' src='http://img.stuffwar.com/gallery/stuffwar.jpg' />
+                  </div>
+                  <div>
+                    <img width='100%' src='http://img.stuffwar.com/gallery/tribelasite.jpg' />
+                  </div>
+                </Slider>
                 <div className='grid_container'>
                   <div className='grid_title'>
                     <p>

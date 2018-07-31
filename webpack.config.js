@@ -37,6 +37,14 @@ module.exports = {
         }]
       },
       {
+        test: /\.(otf|eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader',
+        query: {
+          outputPath: 'fonts/',
+          publicPath: '../fonts/' // That's the important part
+        }
+      },
+      {
         test: /\.js$/,
         include: path.resolve(__dirname, 'src'),
         use: {
@@ -59,7 +67,7 @@ module.exports = {
           {
             loader: "less-loader"
           }]
-        }
+      }
     ]
   },
   plugins: [

@@ -1,5 +1,21 @@
 @import './colors';
 
+.carousel_paging {
+  text-align: center;
+  color: @light_blue;
+  width: 20px;
+  &:before {
+    opacity: 1;
+    background-color: @stuff_war_black;
+  }
+}
+
+.slick-dots {
+  bottom: 25px;
+  right: 10px;
+  text-align: right;
+}
+
 .home_frame {
   background-color: @white;
   margin-left: auto;
@@ -16,6 +32,10 @@
 
 .tile {
   width: 300px;
+  text-decoration: 'none';
+  &:focus, &:hover, &:visited, &:link, &:active {
+    text-decoration: none;
+  }
   p {
     margin-bottom: 0px;
   }

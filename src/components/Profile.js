@@ -138,11 +138,16 @@ class Profile extends React.Component {
                 New Password
               </label>
               <img src='/assets/edit.png' />
+              <div>
               <input type='password' name='new-password' value={this.state.newPassword} onChange={(event) => {
                 this.setState({
                   newPassword: event.target.value
                 })
               }} />
+              <div className='password_prompt'>
+                * At least one Uppercase alphabet, one number and one special character in your password
+              </div>
+              </div>
               <div className='confirm_placeholder'/>
             </div>
             <div className='form_field'>

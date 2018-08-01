@@ -146,7 +146,7 @@ class App extends React.Component {
           >
             <div className='modal_form'>
                <CloseIcon className='form_close_icon' onClick={this.handleModalCloseRequest} style={{color: '#cccccc'}}/>
-              <div>
+              <div className='modal_title'>
                 Sign Up
               </div>
               <div className='form_field'>
@@ -168,6 +168,9 @@ class App extends React.Component {
                     signUpPassword: event.target.value
                   })
                 }}/>
+                <div className='password_prompt'>
+                  * At least one Uppercase alphabet, one number and one special character in your password
+                </div>
               </div>
               <div className='form_field'>
                 <label htmlFor='repeat-password'>
@@ -196,7 +199,7 @@ class App extends React.Component {
           >
             <div className='modal_form'>
                <CloseIcon className='form_close_icon' onClick={this.handleModalCloseRequest} style={{color: '#cccccc'}}/>
-              <div>
+              <div className='modal_title'>
                 Login
               </div>
               <div className='form_field'>

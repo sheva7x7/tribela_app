@@ -196,22 +196,19 @@ class Home extends React.Component {
                   dots={true}
                   arrows={false}
                   autoplay={true}
-                  fade={true}
-                  customPaging={ i => (
-                    <div className='carousel_paging'>
-                      {i + 1}
-                    </div>
-                  )}
                 >
-                  <div>
+                  <Link to='/' className='image_container'>
+                    <div className='overlay' />
                     <img width='100%' src='http://img.stuffwar.com/gallery/Designarena.jpg' />
-                  </div>
-                  <div>
+                  </Link>
+                  <Link to='/' className='image_container'>
+                    <div className='overlay' />
                     <img width='100%' src='http://img.stuffwar.com/gallery/stuffwar.jpg' />
-                  </div>
-                  <div>
+                  </Link>
+                  <a href='http://tribela.io' className='image_container'>
+                    <div className='overlay' />
                     <img width='100%' src='http://img.stuffwar.com/gallery/tribelasite.jpg' />
-                  </div>
+                  </a>
                 </Slider>
                 <div className='grid_container'>
                   <div className='grid_title'>

@@ -1,19 +1,35 @@
 @import './colors';
 
-.carousel_paging {
-  text-align: center;
-  color: @light_blue;
-  width: 20px;
-  &:before {
-    opacity: 1;
-    background-color: @stuff_war_black;
+.slick-dots {
+  bottom: 10px;
+  li{
+    button {
+      &:before {
+        color: @light_grey;
+        opacity: 0.5;
+      }
+    }
+    &.slick-active {
+      button {
+        &:before {
+          color: @tribela;
+        }
+      }
+    }
   }
 }
 
-.slick-dots {
-  bottom: 25px;
-  right: 10px;
-  text-align: right;
+.image_container {
+  position: relative;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .home_frame {

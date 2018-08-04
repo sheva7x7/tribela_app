@@ -160,7 +160,9 @@ class Contest extends React.Component {
             console.log(err)
           })
     }else {
-
+      this.setState({
+        sliderIndex: 0
+      })
     }
   }
   
@@ -240,7 +242,7 @@ class Contest extends React.Component {
                 min={0}
                 max={100}
                 orientation='horizontal'
-                disabled={this.state.sliderIndex === 100}
+                disabled={this.state.sliderIndex === 100 || this.state.votingOption === ''}
                 value={this.state.sliderIndex} 
                 onAfterChange={(value) => {
                   const sliderIndex = value > 49 ? 100: 0
@@ -251,7 +253,7 @@ class Contest extends React.Component {
                 }}
               />
               <div className='slider_label'>
-                {this.state.sliderIndex > 49 ? 'You have voted!': 'Slide to vote'}
+                {this.state.sliderIndex > 49 ? 'You have voted!':(this.state.votingOption === '' ? 'Select an option' : 'Slide to vote')}
               </div>
             </div>:
             <div/>

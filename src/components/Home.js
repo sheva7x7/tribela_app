@@ -70,12 +70,14 @@ class Home extends React.Component {
     this._onScroll = this._onScroll.bind(this)
     this._loadMoreData = _.debounce(this._loadMoreData.bind(this), 1000, {leading: true})
     this.overscanIndicesGetter = this.overscanIndicesGetter.bind(this)
+    this.updateOrientationChange = _.debounce(this.updateOrientationChange.bind(this), 100)
   }
 
   componentDidMount() {
     console.log('mount')
     this.props.actions.getTrendingCampaigns({offset: 0})
     window.addEventListener('resize', this.updateWindowDimensions)
+    window.addEventListener('orientationchange', this.updateOrientationChange)
   }
 
   updateWindowDimensions() {
@@ -86,9 +88,19 @@ class Home extends React.Component {
     })
   }
 
+  updateOrientationChange() {
+    console.log(window.orientation, window.innerWidth)
+    this.setState({ 
+      windowWidth: window.innerWidth, 
+      windowHeight: window.innerHeight,
+      columnCount: window.innerWidth < 720 ? 1 : 2
+    })
+  }
+
   componentWillUnmount() {
     console.log('unmount')
     window.removeEventListener('resize', this.updateWindowDimensions)
+    window.removeEventListener('orientationchange', this.updateOrientationChange)
   }
 
   _loadMoreData(){

@@ -61,6 +61,7 @@ class Home extends React.Component {
     this.state = {}
     this.state.windowHeight = window.innerHeight
     this.state.windowWidth = window.innerWidth
+    this.state.columnCount = window.innerWidth < 720 ? 1 : 2
     this.state.trendingCampaigns = this.props.trendingCampaigns
     this.state.dataEndReached = false
     this.state.loadingData = false
@@ -72,12 +73,22 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
+    console.log('mount')
     this.props.actions.getTrendingCampaigns({offset: 0})
     window.addEventListener('resize', this.updateWindowDimensions)
   }
 
   updateWindowDimensions() {
-    this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight })
+    this.setState({ 
+      windowWidth: window.innerWidth, 
+      windowHeight: window.innerHeight,
+      columnCount: window.innerWidth < 720 ? 1 : 2
+    })
+  }
+
+  componentWillUnmount() {
+    console.log('unmount')
+    window.removeEventListener('resize', this.updateWindowDimensions)
   }
 
   _loadMoreData(){
@@ -119,14 +130,13 @@ class Home extends React.Component {
   }
 
   cellRenderer({ columnIndex, key, rowIndex, style }) {
-    const columnCount = this.state.windowWidth < 720 ? 1 : 2
-    const index = rowIndex * columnCount + columnIndex
+    const index = rowIndex * this.state.columnCount + columnIndex
     const campaign = this.state.trendingCampaigns[index]
     const divStyle = _.assign({}, style)
-    if (columnCount > 1 && columnIndex === 0) {
+    if (this.state.columnCount > 1 && columnIndex === 0) {
       divStyle.marginRight = 2.5
     }
-    if (columnCount > 1 && columnIndex === 1) {
+    if (this.state.columnCount > 1 && columnIndex === 1) {
       divStyle.marginLeft = 2.5
     }
     return (
@@ -183,8 +193,6 @@ class Home extends React.Component {
   }
 
   render (){
-    const columnCount = this.state.windowWidth < 720 ? 1 : 2
-    const spacer = this.state.windowWidth < 720 ? 0 : 5
     const width = this.state.windowWidth < 720 ? this.state.windowWidth : 720
     return (
       <div className='home_container'>
@@ -219,8 +227,8 @@ class Home extends React.Component {
                   <div className='grid_section'>
                       <Grid
                         autoHeight={true}
-                        rowCount={this.state.trendingCampaigns.length / columnCount}
-                        columnCount={columnCount}
+                        rowCount={this.state.trendingCampaigns.length / this.state.columnCount}
+                        columnCount={this.state.columnCount}
                         cellRenderer={this.cellRenderer}
                         scrollTop={scrollTop}
                         width={width}

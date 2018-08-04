@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add slick-carousel -S
+  /usr/local/bin/node /usr/local/bin/yarn remove react-slider react-create-class
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin
@@ -40,6 +40,7 @@ npm manifest:
       "css-loader": "^0.28.11",
       "dotenv": "^6.0.0",
       "extract-text-webpack-plugin": "^3.0.2",
+      "file-loader": "^1.1.11",
       "html-webpack-plugin": "^3.2.0",
       "less": "^3.0.4",
       "less-loader": "^4.1.0",
@@ -54,6 +55,7 @@ npm manifest:
       "babel-polyfill": "^6.26.0",
       "connect-history-api-fallback": "^1.5.0",
       "copy-webpack-plugin": "^4.5.1",
+      "create-react-class": "^15.6.3",
       "express": "^4.16.3",
       "lodash": "^4.17.10",
       "material-ui": "^0.20.1",
@@ -69,10 +71,12 @@ npm manifest:
       "react-router-dom": "^4.3.1",
       "react-router-redux": "^5.0.0-alpha.9",
       "react-slick": "^0.23.1",
+      "react-slider": "^0.11.2",
       "react-virtualized": "^9.20.1",
       "redux": "^4.0.0",
       "redux-thunk": "^2.3.0",
-      "reselect": "^3.0.1"
+      "reselect": "^3.0.1",
+      "slick-carousel": "^1.8.1"
     }
   }
 
@@ -1906,6 +1910,14 @@ Lockfile:
       safe-buffer "^5.0.1"
       sha.js "^2.4.8"
   
+  create-react-class@^15.6.3:
+    version "15.6.3"
+    resolved "http://registry.npm.taobao.org/create-react-class/download/create-react-class-15.6.3.tgz#2d73237fb3f970ae6ebe011a9e66f46dbca80036"
+    dependencies:
+      fbjs "^0.8.9"
+      loose-envify "^1.3.1"
+      object-assign "^4.1.1"
+  
   cross-spawn@^5.0.1:
     version "5.1.0"
     resolved "http://registry.npm.taobao.org/cross-spawn/download/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -2703,6 +2715,18 @@ Lockfile:
       setimmediate "^1.0.5"
       ua-parser-js "^0.7.9"
   
+  fbjs@^0.8.9:
+    version "0.8.17"
+    resolved "http://registry.npm.taobao.org/fbjs/download/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
+    dependencies:
+      core-js "^1.0.0"
+      isomorphic-fetch "^2.1.1"
+      loose-envify "^1.0.0"
+      object-assign "^4.1.0"
+      promise "^7.1.1"
+      setimmediate "^1.0.5"
+      ua-parser-js "^0.7.18"
+  
   figures@^1.7.0:
     version "1.7.0"
     resolved "http://registry.npm.taobao.org/figures/download/figures-1.7.0.tgz#cbe1e3affcf1cd44b80cadfed28dc793a9701d2e"
@@ -2715,6 +2739,13 @@ Lockfile:
     resolved "http://registry.npm.taobao.org/figures/download/figures-2.0.0.tgz#3ab1a2d2a62c8bfb431a0c94cb797a2fce27c962"
     dependencies:
       escape-string-regexp "^1.0.5"
+  
+  file-loader@^1.1.11:
+    version "1.1.11"
+    resolved "http://registry.npm.taobao.org/file-loader/download/file-loader-1.1.11.tgz#6fe886449b0f2a936e43cabaac0cdbfb369506f8"
+    dependencies:
+      loader-utils "^1.0.2"
+      schema-utils "^0.4.5"
   
   filename-regex@^2.0.0:
     version "2.0.1"
@@ -5631,6 +5662,10 @@ Lockfile:
       lodash.debounce "^4.0.8"
       resize-observer-polyfill "^1.5.0"
   
+  react-slider@^0.11.2:
+    version "0.11.2"
+    resolved "http://registry.npm.taobao.org/react-slider/download/react-slider-0.11.2.tgz#ae014e1454c3cdd5f28b5c2495b2a08abd9971e6"
+  
   react-transition-group@^1.2.1:
     version "1.2.1"
     resolved "http://registry.npm.taobao.org/react-transition-group/download/react-transition-group-1.2.1.tgz#e11f72b257f921b213229a774df46612346c7ca6"
@@ -6221,6 +6256,10 @@ Lockfile:
     version "0.0.4"
     resolved "http://registry.npm.taobao.org/slice-ansi/download/slice-ansi-0.0.4.tgz#edbf8903f66f7ce2f8eafd6ceed65e264c831b35"
   
+  slick-carousel@^1.8.1:
+    version "1.8.1"
+    resolved "http://registry.npm.taobao.org/slick-carousel/download/slick-carousel-1.8.1.tgz#a4bfb29014887bb66ce528b90bd0cda262cc8f8d"
+  
   slide@^1.1.5:
     version "1.1.6"
     resolved "http://registry.npm.taobao.org/slide/download/slide-1.1.6.tgz#56eb027d65b4d2dce6cb2e2d32c4d4afc9e1d707"
@@ -6698,7 +6737,7 @@ Lockfile:
     version "0.0.6"
     resolved "http://registry.npm.taobao.org/typedarray/download/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   
-  ua-parser-js@^0.7.9:
+  ua-parser-js@^0.7.18, ua-parser-js@^0.7.9:
     version "0.7.18"
     resolved "http://registry.npm.taobao.org/ua-parser-js/download/ua-parser-js-0.7.18.tgz#a7bfd92f56edfb117083b69e31d2aa8882d4b1ed"
   
@@ -7279,14 +7318,10 @@ Lockfile:
       yeoman-environment "^2.0.5"
 
 Trace: 
-  Error: https://registry.npm.taobao.org/slick-carousel: ESOCKETTIMEDOUT
-      at ClientRequest.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:133061:19)
-      at Object.onceWrapper (events.js:314:30)
-      at emitNone (events.js:105:13)
-      at ClientRequest.emit (events.js:207:7)
-      at TLSSocket.emitTimeout (_http_client.js:722:34)
-      at Object.onceWrapper (events.js:314:30)
-      at emitNone (events.js:105:13)
-      at TLSSocket.emit (events.js:207:7)
-      at TLSSocket.Socket._onTimeout (net.js:402:8)
-      at ontimeout (timers.js:469:11)
+  Error: This module isn't specified in a manifest.
+      at new MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
+      at Object.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:60445:15)
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:98:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:109:13
+      at <anonymous>

@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
+import ReactSlider from 'react-slider'
 import moment from 'moment'
 import axios from 'axios' 
 import { TRIBELA_URL } from '../utils/constants'
@@ -44,7 +45,6 @@ class Contest extends React.Component {
   constructor(props){
     super(props)
 
-    console.log(this.props)
     const id = this.props.match.params.id
     this.state = {}
     this.state.campaign = {}
@@ -52,13 +52,17 @@ class Contest extends React.Component {
     this.state.intervalId = ''
     this.state.loading = true
     this.state.user = this.props.user
-    this.state.voted = false
+    this.state.votedOption = ''
+    this.state.sliderIndex = 0
+    this.state.votingOption = ''
 
     this.timer = this.timer.bind(this)
     this._vote = this._vote.bind(this)
     this.retrieveCampaign = this.retrieveCampaign.bind(this)
     this.retrieveVoted = this.retrieveVoted.bind(this)
     this.voting = this.voting.bind(this)
+    this.resetState = this.resetState.bind(this)
+    console.log(this.state)
   }
 
   componentDidMount() {
@@ -70,6 +74,23 @@ class Contest extends React.Component {
     if (!_.isEmpty(this.state.intervalId)){
       clearInterval(this.state.intervalId)
     }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(!prevState.user.loggedIn && this.state.user.loggedIn){
+      this.retrieveVoted()
+    }
+    if(prevState.user.loggedIn && !this.state.user.loggedIn){
+      this.resetState()
+    }
+  }
+
+  resetState(){
+    this.setState({
+      votedOption: '',
+      sliderIndex: 0,
+      votingOption: ''
+    })
   }
 
   retrieveCampaign() {
@@ -106,30 +127,41 @@ class Contest extends React.Component {
           .then((res) => {
             console.log(res.data)
             this.setState({
-              voted: res.data
+              votedOption: res.data.option_id || ''
             })
+            if (res.data.option_id) {
+              this.setState({
+                sliderIndex: 100,
+                votingOption: ''
+              })
+            }
           })
           .catch((err) => {
             console.log(err)
           })
   }
 
-  voting(option) {
-    const data = {
-      vote: {
-        voter_id: this.state.user.id,
-        campaign_id: this.state.campaign.id,
-        option_id: option.id
+  voting() {
+    if (this.state.votingOption !== ''){
+      const data = {
+        vote: {
+          voter_id: this.state.user.id,
+          campaign_id: this.state.campaign.id,
+          option_id: this.state.votingOption
+        }
       }
+      console.log(data)
+      axios.post(`${TRIBELA_URL}/voting`, data)
+          .then((res) => {
+            this.setState({voted: true})
+          })
+          .catch(err => {
+            this.setState({voted: false})
+            console.log(err)
+          })
+    }else {
+
     }
-    axios.post(`${TRIBELA_URL}/voting`, data)
-        .then((res) => {
-          this.setState({voted: true})
-        })
-        .catch(err => {
-          this.setState({voted: false})
-          console.log(err)
-        })
   }
   
   timer() {
@@ -144,10 +176,15 @@ class Contest extends React.Component {
   }
 
   _vote(option) {
-    console.log(option, this.state.user, this.state.voted)
+    console.log(option, this.state.user)
+    if (calcTimeLeft(this.state.campaign.expiration_time) === 'Completed'){
+      return
+    }
     if (this.state.user.loggedIn){
-      if (!this.state.voted){
-        this.voting(option)
+      if (this.state.votedOption === ''){
+        this.setState({
+          votingOption: option.id
+        })
       }
     } else {
       alert('Please login before voting')
@@ -177,7 +214,9 @@ class Contest extends React.Component {
             {
               this.state.campaign.options.map((option, i) => (
                 <div key={i} className={`voting_option ${winningOptionClass(this.state.campaign.expiration_time, i, this.state.campaign.options)}`} onClick={() => {this._vote(option)}}>
-                  <img src={`../assets/option_${option.option_no}.png`} />
+                  <div className='option_image_container'>
+                    <img className={this.state.votedOption === option.id || this.state.votingOption === option.id ? `vote_option_selected_image` : 'vote_option_image'} src={this.state.votedOption === option.id || this.state.votingOption === option.id ? `../assets/option_${option.option_no}.png` : `../assets/option_${option.option_no}_prevote.png`} />
+                  </div>
                   <p className='contest_option_text'>
                     {option.description}
                   </p>
@@ -192,6 +231,31 @@ class Contest extends React.Component {
               ))
             }
           </div>
+          {
+            this.state.user.loggedIn && calcTimeLeft(this.state.campaign.expiration_time) !== 'Completed' ?
+            <div>
+              <ReactSlider 
+                type='range' 
+                className='confirm_slider' 
+                min={0}
+                max={100}
+                orientation='horizontal'
+                disabled={this.state.sliderIndex === 100}
+                value={this.state.sliderIndex} 
+                onAfterChange={(value) => {
+                  const sliderIndex = value > 49 ? 100: 0
+                  this.setState({sliderIndex})
+                  if (sliderIndex > 49){
+                    this.voting()
+                  }
+                }}
+              />
+              <div className='slider_label'>
+                {this.state.sliderIndex > 49 ? 'You have voted!': 'Slide to vote'}
+              </div>
+            </div>:
+            <div/>
+          }
           <div className='vote_count_section'>
             <img src='../assets/votecount.png' />
             <p className='vote_count_text'>

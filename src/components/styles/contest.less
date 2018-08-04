@@ -33,7 +33,41 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  // height: 200px;
+  min-height: 250px;
+}
+
+.confirm_slider {
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  height: 10px;
+  align-self: center;
+  background-color: @light_grey;
+  border-radius:3px;
+  .handle {
+    font-size: 0.9em;
+    text-align: center;
+    background-color: @white;
+    color: @dark_cobalt_blue;
+    cursor: pointer;
+    outline: none;
+    top: -3px;
+    left: -8px;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    line-height: 16px;
+    box-shadow: 2px 2px @light_grey;
+  }
+  .handle.active {
+    background-color: @tribela;
+  }
+}
+
+.slider_label {
+  text-align: center;
+  margin-top: 10px;
 }
 
 .voting_option {
@@ -42,16 +76,30 @@
   padding-left: 30px;
   padding-right: 30px;
   align-items: center;
-  img {
-    width: 100px;
-  }
   cursor: pointer;
+  .option_image_container {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .vote_option_selected_image {
+      height: 90px;
+    }
+    .vote_option_image {
+      height: 48px;
+    }
+  }
 }
 
 .voting_option.voting_option_big {
-  height: 300;
-  img {
-    width: 120px;
+  .option_image_container {
+    height: 150px;
+  }
+  .vote_option_image {
+    height: 72px;
+  }
+  .vote_option_selected_image {
+    height: 135px;
   }
   p {
     font-size: 1.2em;

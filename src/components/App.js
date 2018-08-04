@@ -169,7 +169,7 @@ class App extends React.Component {
                   })
                 }}/>
                 <div className='password_prompt'>
-                  * At least one Uppercase alphabet, one number and one special character in your password
+                  * Include 1 uppercase, number and symbol
                 </div>
               </div>
               <div className='form_field'>

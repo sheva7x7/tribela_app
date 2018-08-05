@@ -8,6 +8,7 @@ import App from "./containers/App"
 import Home from "./components/Home"
 import Contest from './components/Contest'
 import Profile from './components/Profile'
+import Trending from './components/Trending'
 
 class PrivateRouteContainer extends React.Component {
   render() {
@@ -44,6 +45,7 @@ const router = (
     <App path="/">
       <Route exact path="/" component={Home}/>
       <Route path="/campaign/:id" component={Contest}/>
+      <Route path='/trending' component={Trending}/>
       <PrivateRoute path="/profile" component={Profile}/>
     </App>
   </ConnectedRouter>

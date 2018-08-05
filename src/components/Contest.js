@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
+import Linkify from 'react-linkify'
 import ReactSlider from 'react-slider'
 import moment from 'moment'
 import axios from 'axios' 
@@ -62,12 +63,13 @@ class Contest extends React.Component {
     this.retrieveVoted = this.retrieveVoted.bind(this)
     this.voting = this.voting.bind(this)
     this.resetState = this.resetState.bind(this)
-    console.log(this.state)
+    this.updateNoOfViews = this.updateNoOfViews.bind(this)
   }
 
   componentDidMount() {
     console.log('Campaign: mounting', this.props.match.params.id)
     this.retrieveCampaign()
+    this.updateNoOfViews()
   }
 
   componentWillUnmount() {
@@ -83,6 +85,15 @@ class Contest extends React.Component {
     if(prevState.user.loggedIn && !this.state.user.loggedIn){
       this.resetState()
     }
+  }
+
+  updateNoOfViews() {
+    const data = {
+      campaign: {
+        id: this.props.match.params.id
+      }
+    }
+    axios.post(`${TRIBELA_URL}/campaignviews`, data)
   }
 
   resetState(){
@@ -211,9 +222,9 @@ class Contest extends React.Component {
             </h3>
           </div>
           <div className='contest_description'>
-            <p>
+            <Linkify>
               {this.state.campaign.description}
-            </p>
+            </Linkify>
           </div>
           <div className='voting_section'>
             {

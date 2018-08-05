@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn remove react-slider react-create-class
+  /usr/local/bin/node /usr/local/bin/yarn add react-linkify -S
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin
@@ -7318,10 +7318,14 @@ Lockfile:
       yeoman-environment "^2.0.5"
 
 Trace: 
-  Error: This module isn't specified in a manifest.
-      at new MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
-      at Object.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:60445:15)
-      at Generator.next (<anonymous>)
-      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:98:30)
-      at /usr/local/lib/node_modules/yarn/lib/cli.js:109:13
-      at <anonymous>
+  Error: https://registry.npm.taobao.org/react-linkify: ESOCKETTIMEDOUT
+      at ClientRequest.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:133061:19)
+      at Object.onceWrapper (events.js:314:30)
+      at emitNone (events.js:105:13)
+      at ClientRequest.emit (events.js:207:7)
+      at TLSSocket.emitTimeout (_http_client.js:722:34)
+      at Object.onceWrapper (events.js:314:30)
+      at emitNone (events.js:105:13)
+      at TLSSocket.emit (events.js:207:7)
+      at TLSSocket.Socket._onTimeout (net.js:402:8)
+      at ontimeout (timers.js:469:11)

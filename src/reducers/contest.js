@@ -4,11 +4,13 @@ import _ from 'lodash'
 
 export default function(state = initialState.campaigns, action) {
   switch (action.type){
-    case types.TRENDING_CAMPAIGNS:
-      console.log({
+    case types.FEATURED_CAMPAIGNS:
+      return {
         ...state,
-        trendingCampaigns: action.trendingCampaigns
-      })
+        featuredCampaigns: action.featuredCampaigns
+      }
+
+    case types.TRENDING_CAMPAIGNS:
       return {
         ...state,
         trendingCampaigns: action.trendingCampaigns

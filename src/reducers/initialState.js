@@ -3,7 +3,8 @@ const initialState = {
     
   },
   campaigns: {
-    trendingCampaigns: []
+    trendingCampaigns: [],
+    featuredCampaigns: [],
   }
 }
 

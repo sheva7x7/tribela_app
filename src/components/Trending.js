@@ -14,7 +14,7 @@ import { TRIBELA_URL } from '../utils/constants'
 import * as campaignsActions from '../actions/campaigns' 
 import { quantityFormat } from '../utils/helper'
 
-import './styles/home.less'
+import './styles/trending.less'
 
 const calcTimeSince = date => {
   const now = moment()
@@ -44,12 +44,13 @@ const calcTimeSince = date => {
   return `just now by`
 }
 
-class Home extends React.Component {
+class Trending extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState){
-    if (prevState.featuredCampaigns.length < nextProps.featuredCampaigns.length){
+    console.log(prevState.trendingCampaigns, nextProps.trendingCampaigns)
+    if (prevState.trendingCampaigns.length < nextProps.trendingCampaigns.length){
       return {
-        featuredCampaigns: nextProps.featuredCampaigns
+        trendingCampaigns: nextProps.trendingCampaigns
       }
     }
     return null
@@ -62,7 +63,7 @@ class Home extends React.Component {
     this.state.windowHeight = window.innerHeight
     this.state.windowWidth = window.innerWidth
     this.state.columnCount = window.innerWidth < 720 ? 1 : 2
-    this.state.featuredCampaigns = this.props.featuredCampaigns
+    this.state.trendingCampaigns = this.props.trendingCampaigns
     this.state.dataEndReached = false
     this.state.loadingData = false
     this.cellRenderer = this.cellRenderer.bind(this)
@@ -75,7 +76,7 @@ class Home extends React.Component {
 
   componentDidMount() {
     console.log('mount')
-    this.props.actions.getFeaturedCampaigns({offset: 0})
+    this.props.actions.getTrendingCampaigns({offset: 0})
     window.addEventListener('resize', this.updateWindowDimensions)
     window.addEventListener('orientationchange', this.updateOrientationChange)
   }
@@ -109,15 +110,15 @@ class Home extends React.Component {
       loadingData: true
     })
     const postData = {
-      offset: this.state.featuredCampaigns.length
+      offset: this.state.trendingCampaigns.length
     }
-    return axios.post(`${TRIBELA_URL}/featuredcampaigns`, postData)
+    return axios.post(`${TRIBELA_URL}/trendingcampaigns`, postData)
                 .then((res) => {
                   if (res.data.length > 0){
-                    const campaigns = this.state.featuredCampaigns.concat(res.data)
-                    console.log(campaigns, res.data.length, this.state.featuredCampaigns)
+                    const campaigns = this.state.trendingCampaigns.concat(res.data)
+                    console.log(campaigns, res.data.length, this.state.trendingCampaigns)
                     this.setState({
-                      featuredCampaigns: campaigns,
+                      trendingCampaigns: campaigns,
                       loadingData: false
                     }, () => {
                       this.gridRef.forceUpdate()
@@ -143,7 +144,7 @@ class Home extends React.Component {
 
   cellRenderer({ columnIndex, key, rowIndex, style }) {
     const index = rowIndex * this.state.columnCount + columnIndex
-    const campaign = this.state.featuredCampaigns[index]
+    const campaign = this.state.trendingCampaigns[index]
     const divStyle = _.assign({}, style)
     if (this.state.columnCount > 1 && columnIndex === 0) {
       divStyle.marginRight = 2.5
@@ -207,39 +208,21 @@ class Home extends React.Component {
   render (){
     const width = this.state.windowWidth < 720 ? this.state.windowWidth : 720
     return (
-      <div className='home_container'>
-        <div className='home_frame'>
+      <div className='trending_container'>
+        <div className='trending_frame'>
           <WindowScroller>
             {({ height, isScrolling, registerChild, scrollTop }) => (
               <div>
-                <Slider 
-                  dots={true}
-                  arrows={false}
-                  autoplay={true}
-                >
-                  <Link to='/' className='image_container'>
-                    <div className='overlay' />
-                    <img width='100%' src='http://img.stuffwar.com/gallery/Designarena.jpg' />
-                  </Link>
-                  <Link to='/' className='image_container'>
-                    <div className='overlay' />
-                    <img width='100%' src='http://img.stuffwar.com/gallery/stuffwar.jpg' />
-                  </Link>
-                  <a href='http://tribela.io' className='image_container'>
-                    <div className='overlay' />
-                    <img width='100%' src='http://img.stuffwar.com/gallery/tribelasite.jpg' />
-                  </a>
-                </Slider>
                 <div className='grid_container'>
                   <div className='grid_title'>
                     <p>
-                      Open Campaigns
+                      Trending Campaigns
                     </p>
                   </div>
                   <div className='grid_section'>
                       <Grid
                         autoHeight={true}
-                        rowCount={this.state.featuredCampaigns.length / this.state.columnCount}
+                        rowCount={this.state.trendingCampaigns.length / this.state.columnCount}
                         columnCount={this.state.columnCount}
                         cellRenderer={this.cellRenderer}
                         scrollTop={scrollTop}
@@ -264,14 +247,14 @@ class Home extends React.Component {
   }
 }
 
-Home.propTypes = {
-	featuredCampaigns: PropTypes.array
+Trending.propTypes = {
+	trendingCampaigns: PropTypes.array
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user,
-    featuredCampaigns: state.campaigns.featuredCampaigns
+    trendingCampaigns: state.campaigns.trendingCampaigns
   }
 }
 
@@ -284,4 +267,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home)
+)(Trending)

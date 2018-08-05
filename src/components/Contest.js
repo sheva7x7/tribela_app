@@ -150,13 +150,16 @@ class Contest extends React.Component {
           option_id: this.state.votingOption
         }
       }
-      console.log(data)
+      this.setState({votedOption: this.state.votingOption})
       axios.post(`${TRIBELA_URL}/voting`, data)
           .then((res) => {
-            this.setState({voted: true})
           })
           .catch(err => {
-            this.setState({voted: false})
+            this.setState({
+              votedOption: '',
+              sliderIndex: 0,
+              votingOption: 0
+            })
             console.log(err)
           })
     }else {

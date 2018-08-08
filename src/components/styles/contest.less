@@ -2,148 +2,193 @@
 
 .contest_container {
   min-height: 100vh;
-}
 
-.contest_image {
-  width: 100vw;
-  overflow: hidden;
-}
-
-.contest_frame {
-  background-color: @white;
-  margin-left: auto;
-  margin-right: auto;
-  min-height: 100vh;
-}
-
-.contest_title {
-  padding: 10px 30px;
-  text-align: center;
-}
-
-.contest_description {
-  text-align: center;
-  padding-left: 30px;
-  padding-right: 30px;
-}
-
-.voting_section {
-  display: flex;
-  flex-direction: row;
-  min-height: 250px;
-}
-
-.confirm_slider {
-  margin-left: auto;
-  margin-right: auto;
-  width: 300px;
-  height: 24px;
-  align-self: center;
-  background-color: @light_grey;
-  border-radius:12px;
-  .handle {
-    font-size: 0.9em;
-    text-align: center;
-    background-color: @white;
-    color: @dark_cobalt_blue;
-    cursor: pointer;
-    outline: none;
-    top: 2px;
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    line-height: 20px;
-    box-shadow: 1px 1px 1px 1px @light_grey;
-  }
-  .handle.active {
-    background-color: @tribela;
-  }
-}
-
-.slider_label {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.voting_option {
-  display: flex;
-  flex-direction: column;
-  padding-left: 30px;
-  padding-right: 30px;
-  text-align: center;
-  width: 50%;
-  cursor: pointer;
-  .option_image_container {
-    height: 150px;
+  .contest_image {
+    width: 100vw;
+    height: 100vw;
+    overflow: hidden;
+    position: relative;
+    background-size: 100vw 100vw;
+    background-repeat: no-repeat;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    .vote_option_selected_image {
-      height: 90px;
+    justify-content: space-between;
+    flex-direction: column;
+    color: @white;
+    padding: 10px 0px;
+    .contest_image_overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0, 0.9);
+      z-index: 1;
     }
-    .vote_option_image {
-      height: 48px;
+    div {
+      z-index: 2;
     }
   }
-}
-
-.voting_option.voting_option_big {
-  .option_image_container {
-    height: 150px;
+  
+  .contest_frame {
+    background-color: @white;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 100vh;
   }
-  .vote_option_image {
-    height: 72px;
-  }
-  .vote_option_selected_image {
-    height: 135px;
-  }
-  p {
-    font-size: 1.2em;
+  
+  .contest_title {
+    padding: 10px 30px;
     text-align: center;
   }
-}
-
-.contest_option_text {
-  margin-top: 10px;
-}
-
-.timer_section, .vote_count_section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 200px;
-  justify-content: center;
-}
-
-.vote_count_section {
-  img {
-    width: 100px;
+  
+  .contest_description {
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 30px;
   }
-}
 
-.timer_text, .vote_count_text {
-  margin-top: 20px;
-  font-size: 1.2em;
+  .contest_info {
+    margin-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .contest_info_clock, .contest_info_views {
+      margin-left: 10px;
+      margin-right: 10px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: 11px;
+      .creation_time_text {
+        color: @light_grey;
+      }
+      p {
+        margin: 0px 0px 0px 5px;
+      }
+    }
+  }
+  
+  .voting_section {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .confirm_slider {
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 24px;
+    align-self: center;
+    background-color: @light_grey;
+    border-radius:12px;
+    .handle {
+      font-size: 0.9em;
+      text-align: center;
+      background-color: @white;
+      color: @dark_cobalt_blue;
+      cursor: pointer;
+      outline: none;
+      top: 2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      line-height: 20px;
+      box-shadow: 1px 1px 1px 1px @light_grey;
+    }
+    .handle.active {
+      background-color: @tribela;
+    }
+  }
+  
+  .slider_label {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .voting_option {
+    display: flex;
+    flex-direction: column;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-align: center;
+    width: 50%;
+    cursor: pointer;
+    .option_image_container {
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .vote_option_selected_image {
+        height: 90px;
+      }
+      .vote_option_image {
+        height: 48px;
+      }
+    }
+  }
+  
+  .voting_option.voting_option_big {
+    .vote_option_image {
+      height: 64px;
+    }
+    .vote_option_selected_image {
+      height: 120px;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.2em;
+      text-align: center;
+    }
+  }
+  
+  .contest_option_text {
+    margin-top: 10px;
+  }
+  
+  .timer_section, .vote_count_section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 200px;
+    justify-content: center;
+  }
+  
+  .vote_count_section {
+    img {
+      width: 100px;
+    }
+  }
+  
+  .timer_text, .vote_count_text {
+    margin-top: 20px;
+    font-size: 1.2em;
+  }
 }
 
 @media only screen and (min-width: 720px) {
-  .contest_frame {
-    width: 720px;
-  }
-
-  .contest_image {
-    width: 720px;
-    height: 180px;
-    img {
-      object-fit: cover;
+  .contest_container{
+    .contest_frame {
+      width: 720px;
     }
-  }
 
-  .contest_image:hover {
-    height: 720px;
-    img {
-      object-fit: cover;
+    .contest_image {
+      width: 720px;
+      height: 720px;
+      background-size: 720px 720px;
+      img {
+        object-fit: cover;
+      }
     }
+
+    // .contest_image:hover {
+    //   height: auto;
+    //   img {
+    //     object-fit: cover;
+    //   }
+    // }
   }
 }
 

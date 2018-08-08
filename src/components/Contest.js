@@ -6,7 +6,7 @@ import Linkify from 'react-linkify'
 import ReactSlider from 'react-slider'
 import moment from 'moment'
 import axios from 'axios' 
-import { TRIBELA_URL } from '../utils/constants'
+import { TRIBELA_URL, STUFF_WAR_URL } from '../utils/constants'
 import _ from 'lodash'
 
 import { getPath } from '../selectors'
@@ -23,6 +23,34 @@ const calcTimeLeft = date => {
     return 'Completed'
   }
   return `${moment.duration(timeLeft).get('days')} D, ${moment.duration(timeLeft).get('hours')} H, ${moment.duration(timeLeft).get('minutes')} M, ${moment.duration(timeLeft).get('seconds')} S`
+}
+
+const calcTimeSince = date => {
+  const now = moment()
+  const creationTime = moment(date)
+  const timeSince = now.diff(creationTime)
+  if (moment.duration(timeSince)._milliseconds <= 0){
+    return 'error'
+  }
+  if(moment.duration(timeSince).get('days') > 0){
+    if (moment.duration(timeSince).get('days') === 1){
+      return '1 day ago by'
+    }
+    return `${moment.duration(timeSince).get('days')} days ago by`
+  }
+  if(moment.duration(timeSince).get('hours') > 0){
+    if (moment.duration(timeSince).get('hours') === 1){
+      return '1 hour ago by'
+    }
+    return `${moment.duration(timeSince).get('hours')} hour ago by`
+  }
+  if(moment.duration(timeSince).get('minutes') > 0){
+    if (moment.duration(timeSince).get('minutes') === 1){
+      return '1 minute ago by'
+    }
+    return `${moment.duration(timeSince).get('minutes')} minutes ago by`
+  }
+  return `just now by`
 }
 
 const winningOptionClass = (date, index, options) => {
@@ -213,65 +241,91 @@ class Contest extends React.Component {
       <div/> :
       <div className='contest_container'>
         <div className='contest_frame'>
-          <div className='contest_image'>
-            <img src={this.state.campaign.featured_image} width='100%' height='100%'/>
-          </div>
-          <div className='contest_title'> 
-            <h3>
-              {this.state.campaign.title}
-            </h3>
+          <div className='contest_image' style={{backgroundImage: `url(${this.state.campaign.featured_image})`}} >
+            <div className='contest_image_overlay' />
+            <div className='contest_title'> 
+              <h3>
+                {this.state.campaign.title}
+              </h3>
+            </div>
+            <div className='voting_section'>
+              {
+                this.state.campaign.options.map((option, i) => (
+                  <div key={i} className={`voting_option ${winningOptionClass(this.state.campaign.expiration_time, i, this.state.campaign.options)}`} onClick={() => {this._vote(option)}}>
+                    <div className='option_image_container'>
+                      <img className={this.state.votedOption === option.id || this.state.votingOption === option.id ? `vote_option_selected_image` : 'vote_option_image'} src={this.state.votedOption === option.id || this.state.votingOption === option.id ? `../assets/option_${option.option_no}.png` : `../assets/option_${option.option_no}_prevote.png`} />
+                    </div>
+                    <p className='contest_option_text'>
+                      {option.description}
+                    </p>
+                    {
+                      calcTimeLeft(this.state.campaign.expiration_time) === 'Completed' ? 
+                      <p>
+                        {thousandSeparator(option.vote_count)} votes
+                      </p>:
+                      null
+                    }
+                  </div>
+                ))
+              }
+            </div>
+            {
+              this.state.user.loggedIn && calcTimeLeft(this.state.campaign.expiration_time) !== 'Completed' ?
+              <div>
+                <ReactSlider 
+                  type='range' 
+                  className='confirm_slider' 
+                  min={0}
+                  max={100}
+                  orientation='horizontal'
+                  disabled={this.state.sliderIndex === 100 || this.state.votingOption === ''}
+                  value={this.state.sliderIndex} 
+                  onAfterChange={(value) => {
+                    const sliderIndex = value > 49 ? 100: 0
+                    this.setState({sliderIndex})
+                    if (sliderIndex > 49){
+                      this.voting()
+                    }
+                  }}
+                />
+                <div className='slider_label'>
+                  {this.state.sliderIndex > 49 ? 'You have voted!':(this.state.votingOption === '' ? 'Select an option' : 'Slide to vote')}
+                </div>
+              </div>:
+              <div/>
+            }
           </div>
           <div className='contest_description'>
             <Linkify>
               {this.state.campaign.description}
             </Linkify>
           </div>
-          <div className='voting_section'>
-            {
-              this.state.campaign.options.map((option, i) => (
-                <div key={i} className={`voting_option ${winningOptionClass(this.state.campaign.expiration_time, i, this.state.campaign.options)}`} onClick={() => {this._vote(option)}}>
-                  <div className='option_image_container'>
-                    <img className={this.state.votedOption === option.id || this.state.votingOption === option.id ? `vote_option_selected_image` : 'vote_option_image'} src={this.state.votedOption === option.id || this.state.votingOption === option.id ? `../assets/option_${option.option_no}.png` : `../assets/option_${option.option_no}_prevote.png`} />
-                  </div>
-                  <p className='contest_option_text'>
-                    {option.description}
-                  </p>
-                  {
-                    calcTimeLeft(this.state.campaign.expiration_time) === 'Completed' ? 
-                    <p>
-                      {thousandSeparator(option.vote_count)} votes
-                    </p>:
-                    null
-                  }
-                </div>
-              ))
-            }
+          <div className='contest_info'>
+            <div className='contest_info_clock'>
+              <img src='./assets/timeleft.png' height='20px' />
+              <p className='creation_time_text'>
+                {calcTimeSince(this.state.campaign.creation_time)}
+              </p>
+              <p>
+                {this.state.campaign.creator}
+              </p>
+            </div>
+            <div 
+              className="fb-share-button" 
+              data-href={`${STUFF_WAR_URL}campaign/${this.props.match.params.id}`}
+              data-layout="button_count" 
+              data-size="small" 
+              data-mobile-iframe="true"
+            >
+              <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F${STUFF_WAR_URL}campaign/${this.props.match.params.id}%2F&amp;src=sdkpreparse`} className="fb-xfbml-parse-ignore"></a>
+            </div>
+            <div className='contest_info_views'>
+              <img src='./assets/view.png' height='20px' />
+              <p>
+                {this.state.campaign.no_of_views}
+              </p>
+            </div>
           </div>
-          {
-            this.state.user.loggedIn && calcTimeLeft(this.state.campaign.expiration_time) !== 'Completed' ?
-            <div>
-              <ReactSlider 
-                type='range' 
-                className='confirm_slider' 
-                min={0}
-                max={100}
-                orientation='horizontal'
-                disabled={this.state.sliderIndex === 100 || this.state.votingOption === ''}
-                value={this.state.sliderIndex} 
-                onAfterChange={(value) => {
-                  const sliderIndex = value > 49 ? 100: 0
-                  this.setState({sliderIndex})
-                  if (sliderIndex > 49){
-                    this.voting()
-                  }
-                }}
-              />
-              <div className='slider_label'>
-                {this.state.sliderIndex > 49 ? 'You have voted!':(this.state.votingOption === '' ? 'Select an option' : 'Slide to vote')}
-              </div>
-            </div>:
-            <div/>
-          }
           <div className='vote_count_section'>
             <img src='../assets/votecount.png' />
             <p className='vote_count_text'>

@@ -4,6 +4,15 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import Linkify from 'react-linkify'
 import ReactSlider from 'react-slider'
+import {
+  FacebookShareButton, 
+  FacebookIcon,
+  FacebookShareCount,
+  TwitterShareButton,
+  TwitterIcon,
+  WhatsappShareButton,
+  WhatsappIcon
+} from 'react-share'
 import moment from 'moment'
 import axios from 'axios' 
 import { TRIBELA_URL, STUFF_WAR_URL } from '../utils/constants'
@@ -310,15 +319,35 @@ class Contest extends React.Component {
                 {this.state.campaign.creator}
               </p>
             </div>
-            <div 
-              className="fb-share-button" 
-              data-href={`${STUFF_WAR_URL}campaign/${this.props.match.params.id}`}
-              data-layout="button_count" 
-              data-size="small" 
-              data-mobile-iframe="true"
+            <FacebookShareButton
+              url={`${STUFF_WAR_URL}campaign/${this.props.match.params.id}`}
+              quote={this.state.campaign.title}
+              className='share_icon'
             >
-              <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F${STUFF_WAR_URL}campaign/${this.props.match.params.id}%2F&amp;src=sdkpreparse`} className="fb-xfbml-parse-ignore"></a>
-            </div>
+              <FacebookIcon
+                size={20}
+                round />
+            </FacebookShareButton>
+            <TwitterShareButton
+              url={`${STUFF_WAR_URL}campaign/${this.props.match.params.id}`}
+              title={this.state.campaign.title}
+              hashtags={this.state.campaign.options.map(option => option.description.replace(' ', ''))}
+              className='share_icon'
+            >
+              <TwitterIcon
+                size={20}
+                round />
+            </TwitterShareButton>
+            <WhatsappShareButton
+              url={`${STUFF_WAR_URL}campaign/${this.props.match.params.id}`}
+              title={this.state.campaign.title}
+              separator=' - '
+              className='share_icon'
+            >
+              <WhatsappIcon
+                size={20}
+                round />
+            </WhatsappShareButton>
             <div className='contest_info_views'>
               <img src='./assets/view.png' height='20px' />
               <p>

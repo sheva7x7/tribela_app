@@ -153,7 +153,7 @@ class Home extends React.Component {
     }
     return (
       <div style={divStyle} key={key}>
-        <Link to={`/campaign/${campaign.id}`} className='tile'>
+        <Link to={{pathname :`/campaign/${campaign.id}`, campaign}} className='tile'>
           <img src={campaign.featured_image} className='tile_image' />
           <div className='tile_content'>
             <div className='tile_title'>
@@ -228,6 +228,10 @@ class Home extends React.Component {
                   <a href='http://tribela.io' className='image_container'>
                     <div className='overlay' />
                     <img width='100%' src='http://img.stuffwar.com/gallery/tribelasite.jpg' />
+                  </a>
+                  <a href='http://tribela.io/faq' className='image_container'>
+                    <div className='overlay' />
+                    <img width='100%' src='http://img.stuffwar.com/gallery/FAQ.jpg' />
                   </a>
                 </Slider>
                 <div className='grid_container'>

@@ -35,6 +35,31 @@
     margin-right: auto;
     min-height: 100vh;
   }
+
+  .contest_panel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 0px;
+    div {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      p {
+        margin: 0px 0px 0px 5px;
+        color: @light_grey;
+      }
+    }
+    .contest_panel_selected {
+      p {
+        color: @dark_cobalt_blue
+      }
+    }
+    .contest_panel_option_image, .contest_panel_vote_image {
+      height: 30px;
+    }
+  }
   
   .contest_title {
     padding: 10px 30px;
@@ -50,7 +75,7 @@
   }
 
   .contest_info {
-    margin-top: 30px;
+    margin-top: 10px;
     padding-left: 30px;
     padding-right: 30px;
     display: flex;

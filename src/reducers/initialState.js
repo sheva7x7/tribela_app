@@ -5,6 +5,7 @@ const initialState = {
   campaigns: {
     trendingCampaigns: [],
     featuredCampaigns: [],
+    votedCampaigns: []
   }
 }
 

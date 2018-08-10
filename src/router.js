@@ -38,7 +38,7 @@ class PrivateRouteContainer extends React.Component {
 
 const PrivateRoute = connect(state => ({
   isAuthenticated: state.user.loggedIn
-}))(PrivateRouteContainer)
+}), null, null, {pure: false})(PrivateRouteContainer)
 
 const router = (
   <ConnectedRouter onUpdate={() => window.scrollTo(0, 0)} history={history}>

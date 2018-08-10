@@ -16,6 +16,18 @@ export default function(state = initialState.campaigns, action) {
         trendingCampaigns: action.trendingCampaigns
       }
 
+    case types.VOTED_CAMPAIGNS:
+      return {
+        ...state,
+        votedCampaigns: action.votedCampaigns
+      }
+
+    case types.USER_LOGOUT:
+      return {
+        ...state,
+        votedCampaigns: []
+      }
+
     default: 
       return state
   }

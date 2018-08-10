@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
+import {Link} from 'react-router-dom'
 import styles from './styles/app.less'
 import CloseIcon from 'material-ui/svg-icons/navigation/close'
 import * as userActions from '../actions/user'
+import * as campaignActions from '../actions/campaigns'
 import _ from 'lodash'
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
 import {validateEmail, validatePassword} from '../utils/helper'
@@ -38,10 +40,27 @@ class App extends React.Component {
     this._submitLogIn = this._submitLogIn.bind(this)
     this._submitSignUp = this._submitSignUp.bind(this)
     this._logout = this._logout.bind(this)
+    this.getVotedCampaigns = this.getVotedCampaigns.bind(this)
   }
 
-	componentWillMount() {
-		this.props.onCreate()
+	// componentWillMount() {
+	// 	this.props.onCreate()
+  // }
+
+  componentDidMount() {
+    this.getVotedCampaigns()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(!prevState.user.loggedIn && this.state.user.loggedIn){
+      this.getVotedCampaigns()
+    }
+  }
+
+  getVotedCampaigns() {
+    if (this.state.user.loggedIn){
+      this.props.campaignActions.getVotedCampaigns(this.state.user.id)
+    }
   }
 
   handleModalCloseRequest() {
@@ -56,7 +75,7 @@ class App extends React.Component {
       alert("You have entered an invalid email address!")
     }
     else {
-      this.props.actions.userLogin({email: this.state.loginEmail, password: this.state.loginPassword}, this.handleModalCloseRequest)
+      this.props.userActions.userLogin({email: this.state.loginEmail, password: this.state.loginPassword}, this.handleModalCloseRequest)
     }
   }
 
@@ -70,12 +89,12 @@ class App extends React.Component {
     } else if (!validatePassword(this.state.signUpPassword)){
       alert('Password is not secure')
     }else {
-      this.props.actions.userRegister({email: this.state.signUpEmail, password: this.state.signUpPassword}, this.handleModalCloseRequest)
+      this.props.userActions.userRegister({email: this.state.signUpEmail, password: this.state.signUpPassword}, this.handleModalCloseRequest)
     }
   }
 
   _logout() {
-    this.props.actions.userLogOut()
+    this.props.userActions.userLogOut()
   }
 
  	render() {
@@ -84,21 +103,23 @@ class App extends React.Component {
           <Navbar inverse collapseOnSelect>
             <Navbar.Header>
               <Navbar.Brand>
-                <a href="/"><img src="./assets/logo_no_bg.png"  width='24px'/></a>
+                <Link to='/'>
+                  <img src="./assets/logo_no_bg.png"  width='24px'/>
+                </Link>
               </Navbar.Brand>
               <Navbar.Toggle />
             </Navbar.Header>
             <Navbar.Collapse>
               <Nav>
-                <NavItem eventKey={1} href="/trending">
-                  Trending
+                <NavItem componentClass={Link} href='/trending' to="/trending" eventKey={1}>
+                    Trending
                 </NavItem>
               </Nav>
               {
                 this.state.user.loggedIn ? 
                 <Nav pullRight>
-                  <NavItem eventKey={1} href="/profile">
-                    Profile
+                  <NavItem componentClass={Link} href='/profile' to="/profile" eventKey={1}>
+                      Profile
                   </NavItem>
                   <NavItem eventKey={2} onClick={() => {
                     this._logout()
@@ -246,7 +267,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-		actions: bindActionCreators(userActions, dispatch)
+    userActions: bindActionCreators(userActions, dispatch),
+    campaignActions: bindActionCreators(campaignActions, dispatch)
 	}
 }
 

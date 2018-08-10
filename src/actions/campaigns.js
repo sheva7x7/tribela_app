@@ -48,3 +48,28 @@ function getTrendingCampaignsDispatch(data) {
     trendingCampaigns: data
   }
 }
+
+export function getVotedCampaigns(user_id) {
+  return function(dispatch) {
+    const postData = {
+      vote: {
+        voter_id: user_id
+      }
+    }
+    return axios.post(`${TRIBELA_URL}/votedcampaigns`, postData)
+                .then((res) => {
+                  console.log(res.data)
+                  dispatch(getVotedCampaignsDispatch(res.data))
+                })
+                .catch((err) => {
+                  console.log(err)
+                })
+  }
+}
+
+function getVotedCampaignsDispatch(data) {
+  return {
+    type: types.VOTED_CAMPAIGNS,
+    votedCampaigns: data
+  }
+}

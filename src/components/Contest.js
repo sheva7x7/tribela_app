@@ -13,6 +13,7 @@ import {
   WhatsappShareButton,
   WhatsappIcon
 } from 'react-share'
+import {withRouter} from 'react-router-dom'
 import moment from 'moment'
 import axios from 'axios' 
 import { TRIBELA_URL, STUFF_WAR_URL } from '../utils/constants'
@@ -70,6 +71,18 @@ const winningOptionClass = (date, index, options) => {
   return ''
 }
 
+const getOptionId = (votedCampaigns, campaign_id) => {
+  console.log(votedCampaigns, campaign_id)
+  const campaigns = votedCampaigns.filter(campaign => campaign.campaign_id == campaign_id)
+  console.log(campaigns)
+  if (campaigns.length === 0){
+    return ''
+  }
+  else {
+    return campaigns[0].option_id
+  }
+}
+
 class Contest extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState){
     if (!_.isEqual(prevState.user, nextProps.user)){
@@ -85,14 +98,15 @@ class Contest extends React.Component {
 
     const id = this.props.match.params.id
     this.state = {}
-    this.state.campaign = {}
+    this.state.campaign = this.props.history.location.campaign || {}
     this.state.timeLeft = 'expired'
     this.state.intervalId = ''
-    this.state.loading = true
+    this.state.loading = !this.props.history.location.campaign && true
     this.state.user = this.props.user
-    this.state.votedOption = ''
-    this.state.sliderIndex = 0
+    this.state.votedOption = getOptionId(this.props.votedCampaigns, id)
+    this.state.sliderIndex = getOptionId(this.props.votedCampaigns, id) === '' ? 0 : 100
     this.state.votingOption = ''
+    this.state.panelOption = 'vote'
 
     this.timer = this.timer.bind(this)
     this._vote = this._vote.bind(this)
@@ -104,7 +118,7 @@ class Contest extends React.Component {
   }
 
   componentDidMount() {
-    console.log('Campaign: mounting', this.props.match.params.id)
+    window.scrollTo(0,0)
     this.retrieveCampaign()
     this.updateNoOfViews()
   }
@@ -250,6 +264,20 @@ class Contest extends React.Component {
       <div/> :
       <div className='contest_container'>
         <div className='contest_frame'>
+          <div className='contest_panel'>
+            <div >
+              <img src='./assets/option1gray.png' className='contest_panel_option_image' />
+            </div>
+            <div className={this.state.panelOption === 'vote' ? 'contest_panel_selected': ''}>
+              <img src='./assets/voteicon.png' className='contest_panel_vote_image'/>
+              <p>
+                Vote
+              </p>
+            </div>
+            <div>
+              <img src='./assets/option1gray.png' className='contest_panel_option_image' />
+            </div>
+          </div>
           <div className='contest_image' style={{backgroundImage: `url(${this.state.campaign.featured_image})`}} >
             <div className='contest_image_overlay' />
             <div className='contest_title'> 
@@ -262,7 +290,7 @@ class Contest extends React.Component {
                 this.state.campaign.options.map((option, i) => (
                   <div key={i} className={`voting_option ${winningOptionClass(this.state.campaign.expiration_time, i, this.state.campaign.options)}`} onClick={() => {this._vote(option)}}>
                     <div className='option_image_container'>
-                      <img className={this.state.votedOption === option.id || this.state.votingOption === option.id ? `vote_option_selected_image` : 'vote_option_image'} src={this.state.votedOption === option.id || this.state.votingOption === option.id ? `../assets/option_${option.option_no}.png` : `../assets/option_${option.option_no}_prevote.png`} />
+                      <img className={this.state.votedOption === option.id || this.state.votingOption === option.id ? `vote_option_selected_image` : 'vote_option_image'} src={this.state.votedOption === option.id || this.state.votingOption === option.id ? `./assets/option_${option.option_no}.png` : `./assets/option_${option.option_no}_prevote.png`} />
                     </div>
                     <p className='contest_option_text'>
                       {option.description}
@@ -303,11 +331,6 @@ class Contest extends React.Component {
               </div>:
               <div/>
             }
-          </div>
-          <div className='contest_description'>
-            <Linkify>
-              {this.state.campaign.description}
-            </Linkify>
           </div>
           <div className='contest_info'>
             <div className='contest_info_clock'>
@@ -355,6 +378,11 @@ class Contest extends React.Component {
               </p>
             </div>
           </div>
+          <div className='contest_description'>
+            <Linkify>
+              {this.state.campaign.description}
+            </Linkify>
+          </div>
           <div className='vote_count_section'>
             <img src='../assets/votecount.png' />
             <p className='vote_count_text'>
@@ -376,7 +404,8 @@ class Contest extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     location: getPath(state),
-    user: state.user
+    user: state.user,
+    votedCampaigns: state.campaigns.votedCampaigns
   }
 }
 

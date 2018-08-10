@@ -25,7 +25,7 @@ class Profile extends React.Component {
 
   constructor(props){
     super(props)
-    console.log(this.props)
+    
     this.state = {}
     this.state.user = this.props.user
     this.state.username = this.state.user.username
@@ -39,10 +39,6 @@ class Profile extends React.Component {
 
   componentDidMount() {
     this.props.actions.retrieveUserProfile(this.state.user.user_id)
-  }
-
-  componentWillUnmount() {
-
   }
 
   _changeUsername() {

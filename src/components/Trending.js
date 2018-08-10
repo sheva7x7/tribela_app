@@ -154,7 +154,7 @@ class Trending extends React.Component {
     }
     return (
       <div style={divStyle} key={key}>
-        <Link to={`/campaign/${campaign.id}`} className='tile'>
+        <Link to={{pathname :`/campaign/${campaign.id}`, campaign}} className='tile'>
           <img src={campaign.featured_image} className='tile_image' />
           <div className='tile_content'>
             <div className='tile_title'>

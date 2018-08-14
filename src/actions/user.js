@@ -14,7 +14,7 @@ export function userLogin(data, callback) {
     return axios.post(`${TRIBELA_URL}/login`, userData)
                 .then((res) => {
                   if (_.isEmpty(res.data)){
-                    alert('Username or Password Error')
+                    alert('Username or password is incorrect!')
                   }
                   else {
                     const user = _.assign(res.data, {
@@ -50,11 +50,6 @@ export function userRegister(data, callback) {
     }
     return axios.post(`${TRIBELA_URL}/newuser`, userData)
                 .then((res) => {
-                  const user = _.assign({
-                    email: data.email,
-                    loggedIn: true
-                  })
-                  dispatch(userRegisterDispatch(user))
                   callback()
                 })
                 .catch((err) => {
@@ -64,10 +59,44 @@ export function userRegister(data, callback) {
   }
 }
 
-function userRegisterDispatch(user) {
-  return {
-    type: types.USER_REGISTER,
-    user
+export function userVerification(data, callback){
+  return function(dispatch) {
+    const userData = {
+      user: {
+        login_id: data.email,
+        password: data.password,
+        validation_string: data.validation_string
+      }
+    }
+    return axios.post(`${TRIBELA_URL}/verifyUser`, userData)
+                .then((res) => {
+                  if (_.isEmpty(res.data)){
+                    alert('Username or password is incorrect!')
+                  }
+                  else {
+                    const user = _.assign(res.data, {
+                      loggedIn: true
+                    })
+                    dispatch(userLoginDispatch(user))
+                    localStorage.setItem('user', JSON.stringify(user))
+                    callback()
+                  }
+                })
+                .catch((err) => {
+                  console.log(err)
+                  if (err.response.status === 422) {
+                    alert('User already verified!')
+                  }
+                  else if (err.response.status === 401) {
+                    alert('Your verification link is wrong please check again!')
+                  }
+                  else if (err.response.status === 403) {
+                    alert('Username or password is incorrect!')
+                  }
+                  else {
+                    alert('Login failed')
+                  }
+                })
   }
 }
 

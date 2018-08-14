@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import styles from './styles/app.less'
 import CloseIcon from 'material-ui/svg-icons/navigation/close'
 import * as userActions from '../actions/user'
@@ -41,11 +41,8 @@ class App extends React.Component {
     this._submitSignUp = this._submitSignUp.bind(this)
     this._logout = this._logout.bind(this)
     this.getVotedCampaigns = this.getVotedCampaigns.bind(this)
+    this._routeToVerication = this._routeToVerication.bind(this)
   }
-
-	// componentWillMount() {
-	// 	this.props.onCreate()
-  // }
 
   componentDidMount() {
     this.getVotedCampaigns()
@@ -69,6 +66,12 @@ class App extends React.Component {
     })
   }
 
+  _routeToVerication() {
+    this.handleModalCloseRequest()
+    console.log(this.props.history)
+    this.props.history.push("/emailverification")
+  }
+
   _submitLogIn(event) {
     event.preventDefault()
     if (!validateEmail(this.state.loginEmail)){
@@ -89,7 +92,7 @@ class App extends React.Component {
     } else if (!validatePassword(this.state.signUpPassword)){
       alert('Password is not secure')
     }else {
-      this.props.userActions.userRegister({email: this.state.signUpEmail, password: this.state.signUpPassword}, this.handleModalCloseRequest)
+      this.props.userActions.userRegister({email: this.state.signUpEmail, password: this.state.signUpPassword}, this._routeToVerication)
     }
   }
 

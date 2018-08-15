@@ -261,7 +261,11 @@ class Contest extends React.Component {
   render() {
     return (
       this.state.loading ?
-      <div/> :
+      <div className='contest_container'>
+        <div className='contest_frame'>
+          <div className='loading'/>
+        </div>
+      </div> :
       <div className='contest_container'>
         <div className='contest_frame'>
           <div className='contest_panel'>

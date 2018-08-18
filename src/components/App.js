@@ -62,7 +62,12 @@ class App extends React.Component {
 
   handleModalCloseRequest() {
     this.setState({
-      openedModel: null
+      openedModel: null,
+      loginEmail: '',
+      loginPassword: '',
+      signUpEmail: '',
+      signUpPassword: '',
+      signUpPasswordVerify: ''
     })
   }
 
@@ -115,7 +120,7 @@ class App extends React.Component {
             <Navbar.Collapse>
               <Nav>
                 <NavItem componentClass={Link} href='/trending' to="/trending" eventKey={1}>
-                    Trending
+                  Trending
                 </NavItem>
               </Nav>
               {

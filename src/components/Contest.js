@@ -279,7 +279,7 @@ class Contest extends React.Component {
               </p>
             </div>
             <div>
-              <img src='./assets/option1gray.png' className='contest_panel_option_image' />
+              <img src='./assets/option2gray.png' className='contest_panel_option_image' />
             </div>
           </div>
           <div className='contest_image' style={{backgroundImage: `url(${this.state.campaign.featured_image})`}} >

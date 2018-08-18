@@ -49,11 +49,19 @@ class Profile extends React.Component {
   }
 
   _changePassword() {
-    if (this.state.newPassword !== this.state.confirmPassword){
-      alert('Passwords do not match')
+    if (this.state.currentPassword === '') {
+      alert('Please enter current password!')
+    }
+    else if (this.state.newPassword === ''){
+      alert('Please enter new password!')
+    }else if(this.state.confirmPassword === ''){
+      alert('Please confirm your new password!')
+    }
+    else if (this.state.newPassword !== this.state.confirmPassword){
+      alert('Passwords do not match!')
     }
     else if (!validatePassword(this.state.newPassword)) {
-      alert('Password is not secure')
+      alert('Password is not secure!')
     } else {
       const data = {
         user: {
@@ -67,8 +75,13 @@ class Profile extends React.Component {
             console.log(res.data)
             if (res.data.rowCount) {
               alert('Password changed!')
+              this.setState({
+                currentPassword: '',
+                confirmPassword: '',
+                newPassword: ''
+              })
             }else {
-              alert('Please enter the correct current password')
+              alert('Current password is wrong!')
             }
           })
           .catch((err) => {
@@ -157,13 +170,9 @@ class Profile extends React.Component {
                 })
               }}/>
               <div className='confirm_placeholder'>
-                {
-                  !_.isEmpty(this.state.currentPassword) && !_.isEmpty(this.state.newPassword) && !_.isEmpty(this.state.confirmPassword) ? 
-                  <div className='confirm_button' onClick={this._changePassword} >
-                    Confirm
-                  </div>:
-                  <div />
-                }
+                <div className='confirm_button' onClick={this._changePassword} >
+                  Confirm
+                </div>
               </div>
             </div>
           </div>

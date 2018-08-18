@@ -1,3 +1,4 @@
 {
-  "baseUrl": "https://tribela-api.herokuapp.com/"
+  "baseUrl": "https://api.stuffwar.com/",
+  "STUFFWAR_URL": "https://www.stuffwar.com/"
 }

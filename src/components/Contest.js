@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import Linkify from 'react-linkify'
 import ReactSlider from 'react-slider'
+import {Helmet} from 'react-helmet'
 import {
   FacebookShareButton, 
   FacebookIcon,
@@ -267,6 +268,13 @@ class Contest extends React.Component {
         </div>
       </div> :
       <div className='contest_container'>
+        <Helmet>
+          <meta property="og:title" content={`${this.state.campaign.title}`}/>
+          <meta property="og:type" content="article" />
+          <meta property="og:description" content={`${this.state.campaign.description}`}/>
+          <meta property="og:image" content={`${this.state.campaign.featured_image}`} />
+          <meta property="og:url" content={`${STUFF_WAR_URL}campaign/${this.props.match.params.id}`} />
+        </Helmet>
         <div className='contest_frame'>
           <div className='contest_panel'>
             <div >
@@ -358,7 +366,7 @@ class Contest extends React.Component {
             <TwitterShareButton
               url={`${STUFF_WAR_URL}campaign/${this.props.match.params.id}`}
               title={this.state.campaign.title}
-              hashtags={this.state.campaign.options.map(option => option.description.replace(' ', ''))}
+              hashtags={this.state.campaign.options.map(option => option.description.replace(/[^a-zA-Z0-9]|\s/g, ''))}
               className='share_icon'
             >
               <TwitterIcon

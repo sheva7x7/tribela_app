@@ -94,7 +94,7 @@ class Profile extends React.Component {
     return (
       <div className='profile_container'>
         <div className='profile_frame'>
-          <img width='100%' src='./assets/stuff_war.png'/>
+          <img width='100%' src='./assets/profile_banner.png'/>
           <div className='profile_title'>
             <p>
               My Profile

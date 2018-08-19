@@ -10,7 +10,6 @@ export function getFeaturedCampaigns(data) {
     }
     return axios.post(`${TRIBELA_URL}/featuredcampaigns`, postData)
                 .then((res) => {
-                  console.log(res.data)
                   dispatch(getFeaturedCampaignsDispatch(res.data))
                 })
                 .catch((err) => {
@@ -33,7 +32,6 @@ export function getTrendingCampaigns(data) {
     }
     return axios.post(`${TRIBELA_URL}/trendingcampaigns`, postData)
                 .then((res) => {
-                  console.log(res.data)
                   dispatch(getTrendingCampaignsDispatch(res.data))
                 })
                 .catch((err) => {
@@ -58,7 +56,6 @@ export function getVotedCampaigns(user_id) {
     }
     return axios.post(`${TRIBELA_URL}/votedcampaigns`, postData)
                 .then((res) => {
-                  console.log(res.data)
                   dispatch(getVotedCampaignsDispatch(res.data))
                 })
                 .catch((err) => {

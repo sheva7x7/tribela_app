@@ -112,7 +112,7 @@ class App extends React.Component {
             <Navbar.Header>
               <Navbar.Brand>
                 <Link to='/'>
-                  <img src="./assets/logo_no_bg.png"  width='24px'/>
+                  <img src="./assets/SW_logo.png"  width='24px'/>
                 </Link>
               </Navbar.Brand>
               <Navbar.Toggle />

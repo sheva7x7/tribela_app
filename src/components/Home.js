@@ -151,6 +151,9 @@ class Home extends React.Component {
     if (this.state.columnCount > 1 && columnIndex === 1) {
       divStyle.marginLeft = 2.5
     }
+    if (index >= this.state.featuredCampaigns.length) {
+      return null
+    }
     return (
       <div style={divStyle} key={key}>
         <Link to={{pathname :`/campaign/${campaign.id}`, campaign}} className='tile'>
@@ -219,10 +222,6 @@ class Home extends React.Component {
                 >
                   <Link to='/' className='image_container'>
                     <div className='overlay' />
-                    <img width='100%' src='http://img.stuffwar.com/gallery/Designarena.jpg' />
-                  </Link>
-                  <Link to='/' className='image_container'>
-                    <div className='overlay' />
                     <img width='100%' src='http://img.stuffwar.com/gallery/stuffwar.jpg' />
                   </Link>
                   <a href='http://tribela.io' className='image_container'>
@@ -243,7 +242,7 @@ class Home extends React.Component {
                   <div className='grid_section'>
                       <Grid
                         autoHeight={true}
-                        rowCount={this.state.featuredCampaigns.length / this.state.columnCount}
+                        rowCount={Math.ceil(this.state.featuredCampaigns.length / this.state.columnCount)}
                         columnCount={this.state.columnCount}
                         cellRenderer={this.cellRenderer}
                         scrollTop={scrollTop}

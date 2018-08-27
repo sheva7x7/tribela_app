@@ -21,8 +21,156 @@
   }
 }
 
+.gallery_modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: black;
+}
+
+.gallery_modal {
+  padding: 0;
+  .modal_gallery_holder {
+    position: absolute;
+    top: 100px;
+    left: 10vw;
+    right: 10vw;
+    bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .slick-dots {
+    bottom: 10px;
+    li{
+      margin: 0px 3px;
+      button {
+        &:before {
+          color: @light_grey;
+          opacity: 0.5;
+          font-size: 12px;
+        }
+      }
+      &.slick-active {
+        button {
+          &:before {
+            color: @tribela;
+          }
+        }
+      }
+    }
+  }
+}
+
 .contest_container {
   min-height: 100vh;
+
+  .option_panel{
+    .option_info_section {
+      .option_gallery {
+        padding: 0 30px;
+        background-color: black;
+      }
+      .option_gallery_image {
+        padding: 10px;
+        outline: none;
+        img {
+          width: 80px;
+        }
+      }
+      .option_description {
+        text-align: center;
+        padding: 30px;
+        white-space: pre-wrap;
+      }
+    }
+    .option_comments_section {
+      padding-bottom: 20px;
+      .comment_reply_section{
+        margin: 10px 30px 20px 30px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        .comment_reply_button {
+          img {
+            height: 30px;
+          }
+        }
+        .comment_reply_textarea {
+          resize: none;
+          flex: 1;
+          margin-right: 10px;
+          height: 30px;
+          line-height: 30px;
+          border-radius: 15px;
+          padding: 0px 15px;
+          border: 1px solid @light_grey;
+          &:focus {
+            outline: none
+          }
+        }
+      }
+      .option_comment {
+        margin: 10px 30px 0px 30px;
+        box-shadow: 1px 1px 2px 2px @light_grey;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        .comment_header {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          .comment_header_left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            .comment_date {
+              color: @light_grey;
+              font-size: 9px;
+            }
+            .comment_creator {
+              font-size: 18px;
+              font-weight: 500;
+            }
+          }
+          .comment_option_image {
+            height: 40px;
+          }
+        }
+        .comment_body {
+          white-space: pre-wrap;
+          margin: 10px 0px;
+        }
+        .comment_footer {
+          margin-top: 10px;
+          display: flex;
+          flex-direction: row;
+          .comment_buttons {
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            margin-right: 10px;
+            width: 80px;
+            border: 1px solid @light_grey;
+            height: 20px;
+            border-radius: 10px;
+            align-items: center;
+            padding-left: 10px;
+            font-size: 9px;
+            text-align: center;
+            justify-content: center;
+            img {
+              height: 12px;
+              position: absolute;
+              left: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
 
   .contest_image {
     width: 100vw;
@@ -61,18 +209,19 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 5px 0px;
     div {
       flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 5px 0px;
       p {
         margin: 0px 0px 0px 5px;
         color: @light_grey;
       }
     }
     .contest_panel_selected {
+      border-bottom: 2px solid @tribela;
       p {
         color: @dark_cobalt_blue
       }
@@ -93,6 +242,7 @@
     padding-right: 30px;
     margin-top: 30px;
     font-size: 1.2em;
+    white-space: pre-wrap;
   }
 
   .contest_info {
@@ -233,13 +383,17 @@
         object-fit: cover;
       }
     }
+  }
+}
 
-    // .contest_image:hover {
-    //   height: auto;
-    //   img {
-    //     object-fit: cover;
-    //   }
-    // }
+@media only screen and (min-width: 720px) {
+  .gallery_modal {
+    .modal_gallery_holder {
+      top: 100px;
+      left: 30%;
+      right: 30%;
+      bottom: 100px;
+    }
   }
 }
 

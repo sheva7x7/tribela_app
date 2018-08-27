@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {Link, Redirect} from 'react-router-dom'
 import styles from './styles/app.less'
+import {Checkbox} from 'react-bootstrap'
 import CloseIcon from 'material-ui/svg-icons/navigation/close'
 import * as userActions from '../actions/user'
 import * as campaignActions from '../actions/campaigns'
@@ -35,6 +36,8 @@ class App extends React.Component {
     this.state.signUpPassword = ''
     this.state.signUpPasswordVerify = ''
     this.state.user = this.props.user
+    this.state.mailingListCheckbox = true
+    this.state.consentCheckbox = true
 
     this.handleModalCloseRequest = this.handleModalCloseRequest.bind(this)
     this._submitLogIn = this._submitLogIn.bind(this)
@@ -83,13 +86,20 @@ class App extends React.Component {
       alert("You have entered an invalid email address!")
     }
     else {
-      this.props.userActions.userLogin({email: this.state.loginEmail, password: this.state.loginPassword}, this.handleModalCloseRequest)
+      this.props.userActions.userLogin(
+        {email: this.state.loginEmail, password: this.state.loginPassword, mailingList: this.state.mailingListCheckbox}, 
+        this.handleModalCloseRequest
+      )
     }
   }
 
   _submitSignUp(event) {
     event.preventDefault()
-    if (!validateEmail(this.state.signUpEmail)){
+    console.log(this.state.consentCheckbox, this.state.mailingListCheckbox)
+    if (!this.state.consentCheckbox) {
+      alert('You have to consent the use of your submitted information in order to sign up to Stuff War')
+    }
+    else if (!validateEmail(this.state.signUpEmail)){
       alert("You have entered an invalid email address!")
     }
     else if (this.state.signUpPassword !== this.state.signUpPasswordVerify){
@@ -210,6 +220,32 @@ class App extends React.Component {
                     signUpPasswordVerify: event.target.value
                   })
                 }}/>
+              </div>
+              <div className='form_checkbox'>
+                <Checkbox 
+                  checked={this.state.mailingListCheckbox} 
+                  inline
+                  onChange={evt => {
+                    this.setState({
+                      mailingListCheckbox: evt.target.checked
+                    })
+                  }}
+                >
+                  I wish to subsribe to Stuff War mailing list
+                </Checkbox>
+              </div>
+              <div className='form_checkbox'>
+                <Checkbox 
+                  checked={this.state.consentCheckbox} 
+                  inline
+                  onChange={evt => {
+                    this.setState({
+                      consentCheckbox: evt.target.checked
+                    })
+                  }}
+                >
+                  I consent to having my submitted information stored
+                </Checkbox>
               </div>
               <div className='form_button'>
                 <input type='submit' value='Join' onClick={this._submitSignUp}/>

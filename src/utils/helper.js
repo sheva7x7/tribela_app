@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const quantityFormat = num => {
   if (num < 1000) return num
   if (num < 1000000) return `${Math.floor(num / 1000)}K`
@@ -21,4 +23,32 @@ export const validatePassword = password => {
     return true
   }
   return false
+}
+
+export const calcTimeSince = date => {
+  const now = moment()
+  const creationTime = moment(date)
+  const timeSince = now.diff(creationTime)
+  if (moment.duration(timeSince)._milliseconds <= 0){
+    return 'error'
+  }
+  if(moment.duration(timeSince).get('days') > 0){
+    if (moment.duration(timeSince).get('days') === 1){
+      return '1 day ago by'
+    }
+    return `${moment.duration(timeSince).get('days')} days ago by`
+  }
+  if(moment.duration(timeSince).get('hours') > 0){
+    if (moment.duration(timeSince).get('hours') === 1){
+      return '1 hour ago by'
+    }
+    return `${moment.duration(timeSince).get('hours')} hour ago by`
+  }
+  if(moment.duration(timeSince).get('minutes') > 0){
+    if (moment.duration(timeSince).get('minutes') === 1){
+      return '1 minute ago by'
+    }
+    return `${moment.duration(timeSince).get('minutes')} minutes ago by`
+  }
+  return `just now by`
 }

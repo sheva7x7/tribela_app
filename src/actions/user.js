@@ -45,7 +45,8 @@ export function userRegister(data, callback) {
       user: {
         login_id: data.email,
         email: data.email,
-        password: data.password
+        password: data.password,
+        mailing_list: data.mailingList
       }
     }
     return axios.post(`${TRIBELA_URL}/newuser`, userData)

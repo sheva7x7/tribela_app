@@ -427,7 +427,10 @@ class Contest extends React.Component {
     const campaign_comments = this.state.campaign_comments[panelOptionObj.id]
     const option_gallery = campaign_info.option_gallery
     return (
-      <div className='option_panel' >
+      <div className='option_panel' > 
+      {
+        _.isEmpty(campaign_info) ?
+        null:
         <Modal
           ref='gallery_modal'
           id='gallery)modal'
@@ -455,6 +458,7 @@ class Contest extends React.Component {
             </Slider>
           </div>
         </Modal>
+      }
       {
         _.isEmpty(campaign_info) ?
         null:

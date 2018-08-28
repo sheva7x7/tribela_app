@@ -106,6 +106,7 @@ class Contest extends React.Component {
     this.openGalleryModal = this.openGalleryModal.bind(this)
     this.handleModalCloseRequest = this.handleModalCloseRequest.bind(this)
     this.loadMoreComments = _.debounce(this.loadMoreComments.bind(this), 1000, {leading: true})
+    this.retrievePanelInfo = this.retrievePanelInfo.bind(this)
   }
 
   componentDidMount() {
@@ -115,6 +116,9 @@ class Contest extends React.Component {
     window.addEventListener('scroll', this.trackScrolling)
     this.retrieveCampaign()
     this.updateNoOfViews()
+    if (this.props.history.location.campaign){
+      this.retrievePanelInfo()
+    }
   }
 
   componentWillUnmount() {
@@ -149,23 +153,27 @@ class Contest extends React.Component {
       this.resetState()
     }
     if(!prevState.campaign.options && this.state.campaign.options){
-      const campaign_comments = {}
-      const campaign_info = {}
-      this.state.campaign.options.forEach((option) => {
-        campaign_comments[option.id] = []
-        campaign_info[option.id] = {}
-        this.state.commentsReachedEnd[option.id] = false
-      })
-      this.setState({
-        campaign_comments,
-        campaign_info
-      }, () => {
-        this.state.campaign.options.forEach((option) => {
-          this.retrieveOptionComments(option.id)
-          this.retrieveOptionInfo(option.id)
-        })
-      }) 
+      this.retrievePanelInfo()
     }
+  }
+
+  retrievePanelInfo() {
+    const campaign_comments = {}
+    const campaign_info = {}
+    this.state.campaign.options.forEach((option) => {
+      campaign_comments[option.id] = []
+      campaign_info[option.id] = {}
+      this.state.commentsReachedEnd[option.id] = false
+    })
+    this.setState({
+      campaign_comments,
+      campaign_info
+    }, () => {
+      this.state.campaign.options.forEach((option) => {
+        this.retrieveOptionComments(option.id)
+        this.retrieveOptionInfo(option.id)
+      })
+    }) 
   }
 
   updateNoOfViews() {

@@ -1,0 +1,113 @@
+@import './colors';
+
+.comments_container {
+  min-height: 100vh;
+  .comments_frame {
+    background-color: @white;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 100vh;
+    padding-top: 10px;
+  }
+  .comments_section {
+    margin: 10px;
+    box-shadow: 1px 1px 2px 2px @light_grey;
+    position: relative;
+    .option_image_holder {
+      position: absolute;
+      right: 30px;
+      top: 5px;
+      .comment_option_image {
+        height: 40px;
+      }
+    }
+    .comment_reply_section{
+      margin-top: 10px;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      .comment_reply_button {
+        img {
+          height: 30px;
+        }
+      }
+      .comment_reply_textarea {
+        resize: none;
+        flex: 1;
+        margin-right: 10px;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 15px;
+        padding: 0px 15px;
+        border: 1px solid @light_grey;
+        &:focus {
+          outline: none
+        }
+      }
+    }
+    .comment {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 5px 10px 5px;
+      .comment_header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .comment_header_left {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          .comment_date {
+            color: @light_grey;
+            font-size: 9px;
+          }
+          .comment_creator {
+            font-size: 18px;
+            font-weight: 500;
+          }
+        }
+      }
+      .child_comment {
+        border-left: 1px solid black;
+        padding: 10px 0px 0px 5px;
+      }
+      .comment_body {
+        white-space: pre-wrap;
+        margin-top: 5px;
+      }
+      .comment_footer {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        .comment_buttons {
+          display: flex;
+          flex-direction: row;
+          position: relative;
+          margin-right: 10px;
+          width: 80px;
+          border: 1px solid @light_grey;
+          height: 20px;
+          border-radius: 10px;
+          align-items: center;
+          padding-left: 10px;
+          font-size: 9px;
+          text-align: center;
+          justify-content: center;
+          img {
+            height: 12px;
+            position: absolute;
+            left: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 720px) {
+  .comments_container{
+    .comments_frame {
+      width: 720px;
+    }
+  }
+}

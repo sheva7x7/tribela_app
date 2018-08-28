@@ -14,6 +14,7 @@ import {
   WhatsappShareButton,
   WhatsappIcon
 } from 'react-share'
+import {Link} from 'react-router-dom'
 import Modal from 'react-modal'
 import Slider from 'react-slick'
 import moment from 'moment'
@@ -348,6 +349,7 @@ class Contest extends React.Component {
           .then(res => {
             const myComment = res.data
             myComment.username = this.state.user.username
+            this.commentReplyTextarea.value = ''
             this.setState({
               myComment
             })
@@ -365,7 +367,10 @@ class Contest extends React.Component {
     }
   }
 
-  upvoteComment(comment){
+  upvoteComment(comment, e){
+    e.preventDefault()
+    e.stopPropagation()
+    e.nativeEvent.stopImmediatePropagation()
     const data = {
       comment_id: comment.id,
       voter_id: this.state.user.id
@@ -379,7 +384,10 @@ class Contest extends React.Component {
           })
   }
 
-  downvoteComment(comment){
+  downvoteComment(comment, e){
+    e.preventDefault()
+    e.stopPropagation()
+    e.nativeEvent.stopImmediatePropagation()
     const data = {
       comment_id: comment.id,
       voter_id: this.state.user.id
@@ -502,20 +510,24 @@ class Contest extends React.Component {
         </div>
       }
         <div id='comments_section' className='option_comments_section'>
-          <div className='comment_reply_section'>
-            <TextareaAutosize 
-              className='comment_reply_textarea' 
-              rows={1}
-              innerRef={ref => this.commentReplyTextarea = ref}
-              style={{ maxHeight: 100 }}
-            />
-            <div 
-              className='comment_reply_button'
-              onClick={this.postComment}
-            >
-              <img src='./assets/reply.png' />
-            </div>
-          </div>
+          {
+            this.state.votedOption === panelOptionObj.id ?
+            <div className='comment_reply_section'>
+              <TextareaAutosize 
+                className='comment_reply_textarea' 
+                rows={1}
+                innerRef={ref => this.commentReplyTextarea = ref}
+                style={{ maxHeight: 100 }}
+              />
+              <div 
+                className='comment_reply_button'
+                onClick={this.postComment}
+              >
+                <img src='./assets/reply.png' />
+              </div>
+            </div>:
+            null
+          }
           {
             this.state.myComment ? 
             this.renderComment(this.state.myComment, 'my_comment'):
@@ -531,7 +543,13 @@ class Contest extends React.Component {
 
   renderComment(comment, i) {
     return (
-      <div key={i} className='option_comment'>
+      <Link 
+        to={{
+          pathname: '/comments',
+          state: { root_id: comment.id, option_no: this.state.panelOption }
+        }}
+        key={i} className='option_comment'
+      >
         <div className='comment_header'>
           <div className='comment_header_left'>
             <div className='comment_date'>
@@ -549,13 +567,13 @@ class Contest extends React.Component {
           {comment.body}
         </div>
         <div className='comment_footer'>
-          <div className='comment_buttons' onClick={() => {this.upvoteComment(comment)}}>
+          <div className='comment_buttons' onClick={(e) => {this.upvoteComment(comment, e)}}>
             <img src='./assets/upvote.png' />
             <div>
               {comment.upvote}
             </div>
           </div>
-          <div className='comment_buttons' onClick={() => {this.downvoteComment(comment)}}>
+          <div className='comment_buttons' onClick={(e) => {this.downvoteComment(comment, e)}}>
             <img src='./assets/downvote.png' />
             <div>
               {comment.downvote}
@@ -568,7 +586,7 @@ class Contest extends React.Component {
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     )
   }
 

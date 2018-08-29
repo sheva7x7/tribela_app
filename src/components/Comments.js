@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import moment from 'moment'
+import {withRouter} from 'react-router'
 import axios from 'axios' 
 import * as userActions from '../actions/user'
 import { TRIBELA_URL } from '../utils/constants'
@@ -81,7 +82,12 @@ class Comments extends React.Component {
         })
   }
 
-  postComment(parentComment) {
+  postComment(parentComment, e) {
+    const target = e.target
+    target.classList.add('active_button')
+    setTimeout(() => {
+      target.classList.remove('active_button')
+    }, 100)
     const body = this.commentReplyTextarea.value
     if (!_.isEmpty(body)) {
       const data = {
@@ -118,9 +124,14 @@ class Comments extends React.Component {
   }
 
   upvoteComment(comment, e){
+    const target = e.target
     e.preventDefault()
     e.stopPropagation()
     e.nativeEvent.stopImmediatePropagation()
+    target.classList.add('active_button')
+    setTimeout(() => {
+      target.classList.remove('active_button')
+    }, 100)
     const data = {
       comment_id: comment.id,
       voter_id: this.state.user.id
@@ -136,9 +147,14 @@ class Comments extends React.Component {
   }
 
   downvoteComment(comment, e){
+    const target = e.target
     e.preventDefault()
     e.stopPropagation()
     e.nativeEvent.stopImmediatePropagation()
+    target.classList.add('active_button')
+    setTimeout(() => {
+      target.classList.remove('active_button')
+    }, 100)
     const data = {
       comment_id: comment.id,
       voter_id: this.state.user.id
@@ -196,9 +212,9 @@ class Comments extends React.Component {
           }
           <div 
             className='comment_reply_button'
-            onClick={() => {
+            onClick={(e) => {
               if(this.state.commentInput === comment.id){
-                this.postComment(comment)
+                this.postComment(comment, e)
               }
               else{
                 this.setState({

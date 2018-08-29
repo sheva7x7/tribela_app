@@ -15,20 +15,27 @@
     position: relative;
     .option_image_holder {
       position: absolute;
-      right: 30px;
+      right: 10px;
       top: 5px;
       .comment_option_image {
         height: 40px;
       }
     }
     .comment_reply_section{
-      margin-top: 10px;
+      margin: 10px 0px;
       display: flex;
       flex-direction: row;
       align-items: flex-end;
       .comment_reply_button {
+        opacity: 1;
+        transition: 0.1s ease-in-out;
+        &.active_button {
+          opacity: 0.1;
+          transition: 0.1s ease-in-out;
+        }
         img {
           height: 30px;
+          pointer-events: none;
         }
       }
       .comment_reply_textarea {
@@ -62,14 +69,13 @@
             font-size: 9px;
           }
           .comment_creator {
-            font-size: 18px;
-            font-weight: 500;
+            color: @light_grey;
           }
         }
       }
       .child_comment {
-        border-left: 1px solid black;
-        padding: 10px 0px 0px 5px;
+        border-left: 1px solid @light_grey;
+        padding: 0px 0px 0px 5px;
       }
       .comment_body {
         white-space: pre-wrap;
@@ -93,6 +99,15 @@
           font-size: 9px;
           text-align: center;
           justify-content: center;
+          outline: none;
+          transition: 0.1s ease-in-out;
+          &.active_button {
+            background-color: @tribela;
+            transition: 0.1s ease-in-out;
+          }
+          div, img{
+            pointer-events: none;
+          }
           img {
             height: 12px;
             position: absolute;

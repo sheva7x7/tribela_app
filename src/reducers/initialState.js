@@ -6,7 +6,8 @@ const initialState = {
     trendingCampaigns: [],
     featuredCampaigns: [],
     votedCampaigns: []
-  }
+  },
+  campaignCacheState: {}
 }
 
 const persistedState = {}

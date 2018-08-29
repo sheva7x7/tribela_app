@@ -23,6 +23,7 @@ import { TRIBELA_URL, STUFF_WAR_URL } from '../utils/constants'
 import _ from 'lodash'
 
 import { getPath } from '../selectors'
+import * as campaignsActions from '../actions/campaigns' 
 
 import {thousandSeparator, calcTimeSince} from '../utils/helper'
 
@@ -70,21 +71,30 @@ class Contest extends React.Component {
     super(props)
 
     const id = this.props.match.params.id
-    this.state = {}
-    this.state.campaign = this.props.history.location.campaign || {}
-    this.state.timeLeft = 'expired'
-    this.state.intervalId = ''
-    this.state.loading = !this.props.history.location.campaign && true
-    this.state.user = this.props.user
-    this.state.votedOption = getOptionId(this.props.votedCampaigns, id)
-    this.state.sliderIndex = getOptionId(this.props.votedCampaigns, id) === '' ? 0 : 100
-    this.state.votingOption = ''
-    this.state.panelOption = 'vote'
-    this.state.campaign_info = {}
-    this.state.campaign_comments = {}
-    this.state.windowWidth = window.innerWidth
-    this.state.galleryModalOpened = false
-    this.state.commentsReachedEnd = {}
+    console.log(this.props.campaignCacheState)
+    console.log(!_.isEmpty(this.props.campaignCacheState))
+    console.log(!_.isEmpty(this.props.campaignCacheState) && this.props.campaignCacheState.campaign.id, id)
+    if (!_.isEmpty(this.props.campaignCacheState) && this.props.campaignCacheState.campaign.id == id){
+      this.state = {...this.props.campaignCacheState}
+      console.log(this.state)
+    }
+    else{
+      this.state = {}
+      this.state.campaign = this.props.history.location.campaign || {}
+      this.state.timeLeft = 'expired'
+      this.state.intervalId = ''
+      this.state.loading = !this.props.history.location.campaign && true
+      this.state.user = this.props.user
+      this.state.votedOption = getOptionId(this.props.votedCampaigns, id)
+      this.state.sliderIndex = getOptionId(this.props.votedCampaigns, id) === '' ? 0 : 100
+      this.state.votingOption = ''
+      this.state.panelOption = 'vote'
+      this.state.campaign_info = {}
+      this.state.campaign_comments = {}
+      this.state.windowWidth = window.innerWidth
+      this.state.galleryModalOpened = false
+      this.state.commentsReachedEnd = {}
+    }
 
     this.renderVotePanel = this.renderVotePanel.bind(this)
     this.renderOptionPanel = this.renderOptionPanel.bind(this)
@@ -107,6 +117,7 @@ class Contest extends React.Component {
     this.handleModalCloseRequest = this.handleModalCloseRequest.bind(this)
     this.loadMoreComments = _.debounce(this.loadMoreComments.bind(this), 1000, {leading: true})
     this.retrievePanelInfo = this.retrievePanelInfo.bind(this)
+    this.commentLinkClicked = this.commentLinkClicked.bind(this)
   }
 
   componentDidMount() {
@@ -114,10 +125,14 @@ class Contest extends React.Component {
     window.addEventListener('resize', this.updateWindowDimensions)
     window.addEventListener('orientationchange', this.updateOrientationChange)
     window.addEventListener('scroll', this.trackScrolling)
-    this.retrieveCampaign()
-    this.updateNoOfViews()
-    if (this.props.history.location.campaign){
-      this.retrievePanelInfo()
+    if(_.isEmpty(this.props.campaignCacheState) || this.props.campaignCacheState.campaign.id === this.props.match.params.id){
+      this.retrieveCampaign()
+      this.updateNoOfViews()
+      if (this.props.history.location.campaign){
+        this.retrievePanelInfo()
+      }
+    }else{
+      this.timer()
     }
   }
 
@@ -340,7 +355,12 @@ class Contest extends React.Component {
     }
   }
 
-  postComment() {
+  postComment(e) {
+    const target = e.target
+    target.classList.add('active_button')
+    setTimeout(() => {
+      target.classList.remove('active_button')
+    }, 100)
     const body = this.commentReplyTextarea.value
     if (!_.isEmpty(body)) {
       const panelOptionObj = _.find(this.state.campaign.options, {option_no: this.state.panelOption})
@@ -376,9 +396,14 @@ class Contest extends React.Component {
   }
 
   upvoteComment(comment, e){
+    const target = e.target
     e.preventDefault()
     e.stopPropagation()
     e.nativeEvent.stopImmediatePropagation()
+    target.classList.add('active_button')
+    setTimeout(() => {
+      target.classList.remove('active_button')
+    }, 100)
     const data = {
       comment_id: comment.id,
       voter_id: this.state.user.id
@@ -393,9 +418,14 @@ class Contest extends React.Component {
   }
 
   downvoteComment(comment, e){
+    const target = e.target
     e.preventDefault()
     e.stopPropagation()
     e.nativeEvent.stopImmediatePropagation()
+    target.classList.add('active_button')
+    setTimeout(() => {
+      target.classList.remove('active_button')
+    }, 100)
     const data = {
       comment_id: comment.id,
       voter_id: this.state.user.id
@@ -418,6 +448,14 @@ class Contest extends React.Component {
   handleModalCloseRequest() {
     this.setState({
       galleryModalOpened: false
+    })
+  }
+
+  commentLinkClicked(comment) {
+    this.props.actions.cacheCampaign(this.state)
+    this.props.history.push({
+      pathname: '/comments',
+      state: { root_id: comment.id, option_no: this.state.panelOption }
     })
   }
 
@@ -541,7 +579,7 @@ class Contest extends React.Component {
             null
           }
           {
-            this.state.myComment ? 
+            this.state.myComment && this.state.myComment.option_id === panelOptionObj.id ? 
             this.renderComment(this.state.myComment, 'my_comment'):
             null
           }
@@ -555,12 +593,9 @@ class Contest extends React.Component {
 
   renderComment(comment, i) {
     return (
-      <Link 
-        to={{
-          pathname: '/comments',
-          state: { root_id: comment.id, option_no: this.state.panelOption }
-        }}
+      <div
         key={i} className='option_comment'
+        onClick={() => {this.commentLinkClicked(comment)}}
       >
         <div className='comment_header'>
           <div className='comment_header_left'>
@@ -598,7 +633,7 @@ class Contest extends React.Component {
             </div>
           </div>
         </div>
-      </Link>
+      </div>
     )
   }
 
@@ -768,16 +803,18 @@ const mapStateToProps = (state, ownProps) => {
   return {
     location: getPath(state),
     user: state.user,
-    votedCampaigns: state.campaigns.votedCampaigns
+    votedCampaigns: state.campaigns.votedCampaigns,
+    campaignCacheState: state.campaignCacheState
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    
+    actions: bindActionCreators(campaignsActions, dispatch)
   }
 }
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Contest)

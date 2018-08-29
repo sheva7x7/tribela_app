@@ -70,3 +70,16 @@ function getVotedCampaignsDispatch(data) {
     votedCampaigns: data
   }
 }
+
+export function cacheCampaign(state){
+  return function(dispatch) {
+    dispatch(cacheCampaignDispatch(state))
+  }
+}
+
+function cacheCampaignDispatch(state){
+  return {
+    type: types.CACHE_CAMPAIGN,
+    cacheCampaign: state
+  }
+}

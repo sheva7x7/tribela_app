@@ -73,8 +73,15 @@
         flex-direction: row;
         align-items: flex-end;
         .comment_reply_button {
+          opacity: 1;
+          transition: 0.1s ease-in-out;
+          &.active_button {
+            opacity: 0.1;
+            transition: 0.1s ease-in-out;
+          }
           img {
             height: 30px;
+            pointer-events: none;
           }
         }
         .comment_reply_textarea {
@@ -111,7 +118,7 @@
             }
             .comment_creator {
               font-size: 18px;
-              font-weight: 500;
+              color: @light_grey;
             }
           }
           .comment_option_image {
@@ -140,6 +147,15 @@
             font-size: 9px;
             text-align: center;
             justify-content: center;
+            outline: none;
+            transition: 0.1s ease-in-out;
+            &.active_button {
+              background-color: @tribela;
+              transition: 0.1s ease-in-out;
+            }
+            div, img{
+              pointer-events: none;
+            }
             img {
               height: 12px;
               position: absolute;

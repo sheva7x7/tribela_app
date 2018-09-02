@@ -11,6 +11,10 @@ export const thousandSeparator = num => {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+export const formatDecimal = (num, decimal) => {
+  return Number(Math.round(num * Math.pow(10, decimal)) / Math.pow(10, decimal)).toFixed(decimal)
+}
+
 export const validateEmail = mail => {
   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/.test(mail)){
     return true

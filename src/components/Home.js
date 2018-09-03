@@ -225,7 +225,12 @@ class Home extends React.Component {
                         onScroll={this._onScroll}
                         overscanIndicesGetter={this.overscanIndicesGetter}
                         tabIndex={null}
-                        containerStyle={{marginRight: 'auto', marginLeft: 'auto'}}
+                        containerStyle={{
+                          marginRight: 'auto', 
+                          marginLeft: 'auto', 
+                          width: 300*this.state.columnCount + 5 * (this.state.columnCount - 1),
+                          minWidth: 300*this.state.columnCount + 5 * (this.state.columnCount - 1)
+                        }}
                         ref={ref => this.gridRef = ref}
                       />
                   </div>

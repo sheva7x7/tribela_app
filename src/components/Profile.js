@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import moment from 'moment'
 import axios from 'axios' 
+import {Link} from 'react-router-dom'
 import * as userActions from '../actions/user'
 import { TRIBELA_URL } from '../utils/constants'
 import _ from 'lodash'
@@ -301,7 +302,7 @@ class Profile extends React.Component {
               </div>
               {
                 this.state.myCampaigns.map((campaign, i) => (
-                  <div key={i} className='my_campaigns_row'>
+                  <Link to={{pathname :`/campaign/${campaign.id}`, campaign}} key={i} className='my_campaigns_row'>
                     <div className='my_campaigns_title'>
                       {campaign.title}
                     </div>
@@ -314,7 +315,7 @@ class Profile extends React.Component {
                     <div className='my_campaigns_option'>
                       {getVotedPercentage(campaign, 2)}
                     </div>
-                  </div>
+                  </Link>
                 ))
               }
             </div>

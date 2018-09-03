@@ -14,7 +14,6 @@ import {
   WhatsappShareButton,
   WhatsappIcon
 } from 'react-share'
-import {Link} from 'react-router-dom'
 import Modal from 'react-modal'
 import Slider from 'react-slick'
 import moment from 'moment'

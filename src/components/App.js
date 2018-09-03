@@ -139,6 +139,9 @@ class App extends React.Component {
                   <NavItem componentClass={Link} href='/profile' to="/profile" eventKey={1}>
                       Profile
                   </NavItem>
+                  <NavItem componentClass={Link} href='/wallet' to="/wallet" eventKey={1}>
+                      Wallet
+                  </NavItem>
                   <NavItem eventKey={2} onClick={() => {
                     this._logout()
                   }} >

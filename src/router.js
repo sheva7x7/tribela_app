@@ -11,6 +11,7 @@ import Profile from './components/Profile'
 import Trending from './components/Trending'
 import Verification from './components/Verification'
 import Comments from './components/Comments'
+import Wallet from './components/Wallet'
 
 class PrivateRouteContainer extends React.Component {
   render() {
@@ -52,6 +53,7 @@ const router = (
       <Route path='/emailverification/:validation_string' component={Verification}/>
       <Route path='/comments' component={Comments}/>
       <PrivateRoute path="/profile" component={Profile}/>
+      <PrivateRoute path='/wallet' component={Wallet}/>
     </App>
   </ConnectedRouter>
 );

@@ -1,0 +1,63 @@
+@import './colors';
+
+.wallet_container {
+  .wallet_frame {
+    background-color: @white;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 100vh;
+    overflow: scroll;
+  }
+  .wallet_title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    font-size: 20px;
+    .wallet_balance {
+      font-size: 16px;
+      color: @tribela;
+    }
+  }
+  .wallet_icon {
+    height: 30px;
+    display: block;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .transaction_list {
+    padding: 20px;
+    .transaction_row {
+      padding: 5px;
+      display: flex;
+      flex-direction: row;
+      .transaction_date {
+        flex: 1;
+      }
+      .transaction_points {
+        flex: 1;
+      }
+      .transaction_activity {
+        flex: 3;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    .transaction_row_header {
+      color: @light_grey;
+    }
+    .transaction_row_even {
+      background-color: @light_grey;
+    }
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .wallet_frame {
+    .transaction_list{ 
+      font-size: 9px;
+    }
+  }
+}

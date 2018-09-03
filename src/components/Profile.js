@@ -59,7 +59,7 @@ class Profile extends React.Component {
     this._changePassword = this._changePassword.bind(this)
     this.trackScrolling = this.trackScrolling.bind(this)
     this.loadMyCampaigns = this.loadMyCampaigns.bind(this)
-    this.loadMoreCampaigns = this.loadMoreCampaigns.bind(this)
+    this.loadMoreCampaigns = _.debounce(this.loadMoreCampaigns.bind(this), 1000, {leading: true})
     this.loadMyCampaignCount = this.loadMyCampaignCount.bind(this)
   }
 
@@ -84,7 +84,6 @@ class Profile extends React.Component {
   }
 
   loadMoreCampaigns(){
-    console.log('load more')
     if (!this.state.myCampaignsEndReached){
       this.loadMyCampaigns()
     }
@@ -106,12 +105,16 @@ class Profile extends React.Component {
                 myCampaigns
               })
             }else {
-              this.state.myCampaignsEndReached = true
+              this.setState({
+                myCampaignsEndReached: true
+              })
             }
           })
           .catch((err) => {
             if (err.response.status === 600 ){
-              this.state.myCampaignsEndReached = true
+              this.setState({
+                myCampaignsEndReached: true
+              })
             }
             console.log(err)
           })
@@ -136,7 +139,6 @@ class Profile extends React.Component {
   }
 
   _changeUsername() {
-    console.log(this.state.user)
     if (this.state.username !== this.state.user.username) {
       this.props.actions.updateUsername(this.state.user, this.state.username)
     }

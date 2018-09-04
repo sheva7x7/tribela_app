@@ -70,12 +70,9 @@ class Contest extends React.Component {
     super(props)
 
     const id = this.props.match.params.id
-    console.log(this.props.campaignCacheState)
-    console.log(!_.isEmpty(this.props.campaignCacheState))
-    console.log(!_.isEmpty(this.props.campaignCacheState) && this.props.campaignCacheState.campaign.id, id)
+
     if (!_.isEmpty(this.props.campaignCacheState) && this.props.campaignCacheState.campaign.id == id){
       this.state = {...this.props.campaignCacheState}
-      console.log(this.state)
     }
     else{
       this.state = {}

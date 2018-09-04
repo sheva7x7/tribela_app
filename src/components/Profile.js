@@ -24,7 +24,7 @@ const getVotedOptionIcon = (campaign) => {
 const getVotedPercentage = (campaign, option_no) => {
   const now = moment()
   const expiryTime = moment(campaign.expiration_time)
-  const timeLeft = expiryTime.diff(now)
+  const timeLeft = now.diff(expiryTime)
   if (moment.duration(timeLeft)._milliseconds <= 0){
     return '-'
   }else {
@@ -55,6 +55,7 @@ class Profile extends React.Component {
     this.state.myCampaignsEndReached = false
     this.state.myCampaigns = []
     this.state.totalCampaignCount = 0
+    this.state.myCampaignsLoadStarted = false
 
     this._changeUsername = this._changeUsername.bind(this)
     this._changePassword = this._changePassword.bind(this)
@@ -85,7 +86,7 @@ class Profile extends React.Component {
   }
 
   loadMoreCampaigns(){
-    if (!this.state.myCampaignsEndReached){
+    if (!this.state.myCampaignsEndReached && this.state.myCampaignsLoadStarted){
       this.loadMyCampaigns()
     }
   }
@@ -103,7 +104,8 @@ class Profile extends React.Component {
               const newCampaigns = res.data
               const myCampaigns = this.state.myCampaigns.concat(newCampaigns)
               this.setState({
-                myCampaigns
+                myCampaigns,
+                myCampaignsLoadStarted: true
               })
             }else {
               this.setState({
@@ -129,7 +131,6 @@ class Profile extends React.Component {
     }
     axios.post(`${TRIBELA_URL}/myvotedcampaignscount`, data)
           .then((res) => {
-            console.log(res.data)
             this.setState({
               totalCampaignCount: res.data.count
             })
@@ -169,7 +170,6 @@ class Profile extends React.Component {
       }
       axios.post(`${TRIBELA_URL}/password`, data)
           .then((res) => {
-            console.log(res.data)
             if (res.data.rowCount) {
               alert('Password changed!')
               this.setState({

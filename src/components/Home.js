@@ -204,6 +204,10 @@ class Home extends React.Component {
                     <div className='overlay' />
                     <img width='100%' src='http://img.stuffwar.com/gallery/FAQ.jpg' />
                   </a>
+                  <a href='http://tribela.io/the-currency-of-influence' className='image_container'>
+                    <div className='overlay' />
+                    <img width='100%' src='http://img.stuffwar.com/gallery/influence.jpg' />
+                  </a>
                 </Slider>
                 <div className='grid_container'>
                   <div className='grid_title'>

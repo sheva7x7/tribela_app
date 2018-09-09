@@ -9,7 +9,7 @@ import {
   Grid
 } from 'react-virtualized'
 import Slider from "react-slick"
-import axios from 'axios'
+import axios from '../utils/axios'
 import { TRIBELA_URL } from '../utils/constants'
 import * as campaignsActions from '../actions/campaigns' 
 import { quantityFormat } from '../utils/helper'

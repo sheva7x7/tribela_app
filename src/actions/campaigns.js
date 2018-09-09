@@ -1,6 +1,6 @@
 import types from './index'
 import _ from 'lodash'
-import axios from 'axios'
+import axios from '../utils/axios'
 import { TRIBELA_URL } from '../utils/constants'
 
 export function getFeaturedCampaigns(data) {
@@ -54,6 +54,7 @@ export function getVotedCampaigns(user_id) {
         voter_id: user_id
       }
     }
+    console.log(axios.defaults.headers)
     return axios.post(`${TRIBELA_URL}/votedcampaigns`, postData)
                 .then((res) => {
                   dispatch(getVotedCampaignsDispatch(res.data))

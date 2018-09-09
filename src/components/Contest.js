@@ -17,7 +17,7 @@ import {
 import Modal from 'react-modal'
 import Slider from 'react-slick'
 import moment from 'moment'
-import axios from 'axios' 
+import axios from '../utils/axios'
 import { TRIBELA_URL, STUFF_WAR_URL } from '../utils/constants'
 import _ from 'lodash'
 

@@ -1,6 +1,6 @@
 import types from './index'
 import _ from 'lodash'
-import axios from 'axios'
+import axios from '../utils/axios'
 import { TRIBELA_URL } from '../utils/constants'
 
 export function userLogin(data, callback) {
@@ -13,6 +13,7 @@ export function userLogin(data, callback) {
     }
     return axios.post(`${TRIBELA_URL}/login`, userData)
                 .then((res) => {
+                  console.log(res.data)
                   if (_.isEmpty(res.data)){
                     alert('Username or password is incorrect!')
                   }
@@ -20,8 +21,14 @@ export function userLogin(data, callback) {
                     const user = _.assign(res.data, {
                       loggedIn: true
                     })
-                    dispatch(userLoginDispatch(user))
+                    const token = user.token
+                    delete user.token
                     localStorage.setItem('user', JSON.stringify(user))
+                    localStorage.setItem('token', JSON.stringify(token))
+                    axios.defaults.headers.common = {
+                      token
+                    }
+                    dispatch(userLoginDispatch(user))
                     callback()
                   }
                 })
@@ -78,8 +85,14 @@ export function userVerification(data, callback){
                     const user = _.assign(res.data, {
                       loggedIn: true
                     })
-                    dispatch(userLoginDispatch(user))
+                    const token = user.token
+                    delete user.token
                     localStorage.setItem('user', JSON.stringify(user))
+                    localStorage.setItem('token', JSON.stringify(token))
+                    axios.defaults.headers.common = {
+                      token
+                    }
+                    dispatch(userLoginDispatch(user))
                     callback()
                   }
                 })
@@ -103,7 +116,9 @@ export function userVerification(data, callback){
 
 export function userLogOut() {
   return function(dispatch) {
+    delete axios.defaults.headers.common["token"]
     localStorage.removeItem('user')
+    localStorage.removeItem('token')
     dispatch(dispatchUserLogout())
   }
 }

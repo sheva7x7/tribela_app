@@ -133,20 +133,28 @@ class App extends React.Component {
                   Trending
                 </NavItem>
               </Nav>
+              <Nav>
+                <NavItem componentClass={Link} href='/hof' to="/hof" eventKey={2}>
+                  Hall Of Fame
+                </NavItem>
+              </Nav>
               {
                 this.state.user.loggedIn ? 
                 <Nav pullRight>
-                  <NavItem componentClass={Link} href='/profile' to="/profile" eventKey={1}>
-                      Profile
-                  </NavItem>
-                  <NavItem componentClass={Link} href='/wallet' to="/wallet" eventKey={1}>
-                      Wallet
-                  </NavItem>
-                  <NavItem eventKey={2} onClick={() => {
-                    this._logout()
-                  }} >
-                    Log Out
-                  </NavItem>
+                  <NavDropdown title='Acount' id='app_account_dropdown'>
+                    <NavItem className='app_nav_dropdown_item' componentClass={Link} href='/profile' to="/profile" eventKey={1}>
+                        Profile
+                    </NavItem>
+                    <NavItem className='app_nav_dropdown_item' componentClass={Link} href='/wallet' to="/wallet" eventKey={1}>
+                        Wallet
+                    </NavItem>
+                    <MenuItem divider/>
+                    <NavItem className='app_nav_dropdown_item' eventKey={2} onClick={() => {
+                      this._logout()
+                    }} >
+                      Log Out
+                    </NavItem>
+                  </NavDropdown>
                   <NavItem eventKey={3} href="http://tribela.io">
                     About Us
                   </NavItem>

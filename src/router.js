@@ -9,6 +9,7 @@ import Home from "./components/Home"
 import Contest from './components/Contest'
 import Profile from './components/Profile'
 import Trending from './components/Trending'
+import Hof from './components/Hof'
 import Verification from './components/Verification'
 import Comments from './components/Comments'
 import Wallet from './components/Wallet'
@@ -49,6 +50,7 @@ const router = (
       <Route exact path="/" component={Home}/>
       <Route path="/campaign/:id" component={Contest}/>
       <Route path='/trending' component={Trending}/>
+      <Route path='/hof' component={Hof}/>
       <Route exact path='/emailverification' component={Verification}/>
       <Route path='/emailverification/:validation_string' component={Verification}/>
       <Route path='/comments' component={Comments}/>

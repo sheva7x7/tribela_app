@@ -8,7 +8,6 @@ import {
   WindowScroller,
   Grid
 } from 'react-virtualized'
-import Slider from "react-slick"
 import axios from '../utils/axios'
 import { TRIBELA_URL } from '../utils/constants'
 import * as campaignsActions from '../actions/campaigns' 
@@ -44,16 +43,7 @@ const calcTimeSince = date => {
   return `just now by`
 }
 
-class Trending extends React.Component {
-
-  static getDerivedStateFromProps(nextProps, prevState){
-    if (prevState.trendingCampaigns.length < nextProps.trendingCampaigns.length){
-      return {
-        trendingCampaigns: nextProps.trendingCampaigns
-      }
-    }
-    return null
-  }
+class Hof extends React.Component {
   
   constructor(props){
     super(props)
@@ -62,7 +52,7 @@ class Trending extends React.Component {
     this.state.windowHeight = window.innerHeight
     this.state.windowWidth = window.innerWidth
     this.state.columnCount = window.innerWidth < 720 ? 1 : 2
-    this.state.trendingCampaigns = this.props.trendingCampaigns
+    this.state.hofCampaigns = []
     this.state.dataEndReached = false
     this.state.loadingData = false
     this.cellRenderer = this.cellRenderer.bind(this)
@@ -71,10 +61,11 @@ class Trending extends React.Component {
     this._loadMoreData = _.debounce(this._loadMoreData.bind(this), 1000, {leading: true})
     this.overscanIndicesGetter = this.overscanIndicesGetter.bind(this)
     this.updateOrientationChange = _.debounce(this.updateOrientationChange.bind(this), 100)
+    this.retrieveHofCampaigns = this.retrieveHofCampaigns.bind(this)
   }
 
   componentDidMount() {
-    this.props.actions.getTrendingCampaigns({offset: 0})
+    this.retrieveHofCampaigns()
     window.addEventListener('resize', this.updateWindowDimensions)
     window.addEventListener('orientationchange', this.updateOrientationChange)
   }
@@ -101,18 +92,22 @@ class Trending extends React.Component {
   }
 
   _loadMoreData(){
+    this.retrieveHofCampaigns()
+  }
+
+  retrieveHofCampaigns() {
     this.setState({
       loadingData: true
     })
     const postData = {
-      offset: this.state.trendingCampaigns.length
+      offset: this.state.hofCampaigns.length
     }
-    return axios.post(`${TRIBELA_URL}/trendingcampaigns`, postData)
+    return axios.post(`${TRIBELA_URL}/hofcampaigns`, postData)
                 .then((res) => {
                   if (res.data.length > 0){
-                    const campaigns = this.state.trendingCampaigns.concat(res.data)
+                    const campaigns = this.state.hofCampaigns.concat(res.data)
                     this.setState({
-                      trendingCampaigns: campaigns,
+                      hofCampaigns: campaigns,
                       loadingData: false
                     }, () => {
                       this.gridRef.forceUpdate()
@@ -138,7 +133,7 @@ class Trending extends React.Component {
 
   cellRenderer({ columnIndex, key, rowIndex, style }) {
     const index = rowIndex * this.state.columnCount + columnIndex
-    const campaign = this.state.trendingCampaigns[index]
+    const campaign = this.state.hofCampaigns[index]
     const divStyle = _.assign({}, style)
     if (this.state.columnCount > 1 && columnIndex === 0) {
       divStyle.marginRight = 2.5
@@ -210,13 +205,13 @@ class Trending extends React.Component {
                 <div className='grid_container'>
                   <div className='grid_title'>
                     <p>
-                      Trending Campaigns
+                      Hall Of Fame
                     </p>
                   </div>
                   <div className='grid_section'>
                       <Grid
                         autoHeight={true}
-                        rowCount={this.state.trendingCampaigns.length / this.state.columnCount}
+                        rowCount={this.state.hofCampaigns.length / this.state.columnCount}
                         columnCount={this.state.columnCount}
                         cellRenderer={this.cellRenderer}
                         scrollTop={scrollTop}
@@ -246,24 +241,12 @@ class Trending extends React.Component {
   }
 }
 
-Trending.propTypes = {
-	trendingCampaigns: PropTypes.array
-}
-
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user,
-    trendingCampaigns: state.campaigns.trendingCampaigns
+    user: state.user
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-		actions: bindActionCreators(campaignsActions, dispatch)
-	}
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Trending)
+  mapStateToProps
+)(Hof)

@@ -141,7 +141,7 @@ class App extends React.Component {
               {
                 this.state.user.loggedIn ? 
                 <Nav pullRight>
-                  <NavDropdown title='Acount' id='app_account_dropdown'>
+                  <NavDropdown title='Account' id='app_account_dropdown' >
                     <NavItem className='app_nav_dropdown_item' componentClass={Link} href='/profile' to="/profile" eventKey={1}>
                         Profile
                     </NavItem>

@@ -49,6 +49,10 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getVotedCampaigns()
+    const token = JSON.parse(localStorage.getItem('token'))
+    if (!token && this.state.user.loggedIn){
+      this._logout()
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -76,7 +80,6 @@ class App extends React.Component {
 
   _routeToVerication() {
     this.handleModalCloseRequest()
-    console.log(this.props.history)
     this.props.history.push("/emailverification")
   }
 
@@ -95,7 +98,6 @@ class App extends React.Component {
 
   _submitSignUp(event) {
     event.preventDefault()
-    console.log(this.state.consentCheckbox, this.state.mailingListCheckbox)
     if (!this.state.consentCheckbox) {
       alert('You have to consent the use of your submitted information in order to sign up to Stuff War')
     }

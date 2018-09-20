@@ -1,0 +1,53 @@
+@import './colors';
+
+.article_frame {
+  background-color: @white;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 100vh;
+  overflow: scroll;
+  padding: 0px 20px;
+  .article_title {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    font-size: 20px;
+  }
+  .article_subtitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: @light_grey;
+    text-align: center;
+    font-size: 12px;
+    .article_date {
+      margin-left: 10px;
+    }
+  }
+  .article_header {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0px
+  }
+  .article_body {
+    padding: 10px 0px;
+    .article_image {
+      display: block;
+      margin: 20px auto;
+    }
+  }
+}
+
+@media only screen and (min-width: 720px) {
+  .article_frame {
+    width: 720px;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .article_body {
+    .article_image {
+      max-width: 100%;
+    }
+  }
+}

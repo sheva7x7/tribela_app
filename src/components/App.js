@@ -160,6 +160,9 @@ class App extends React.Component {
                   <NavItem eventKey={3} href="http://tribela.io">
                     About Us
                   </NavItem>
+                  <NavItem componentClass={Link} href='/announcements' to="/announcements" eventKey={1}>
+                    Announcements
+                  </NavItem>
                 </Nav>:
                 <Nav pullRight>
                   <NavItem eventKey={1} onClick={() => {
@@ -180,6 +183,9 @@ class App extends React.Component {
                   </NavItem>
                   <NavItem eventKey={3} href="http://tribela.io">
                     About Us
+                  </NavItem>
+                  <NavItem componentClass={Link} href='/announcements' to="/announcements" eventKey={1}>
+                    Announcements
                   </NavItem>
                 </Nav>
               }

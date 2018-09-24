@@ -77,7 +77,6 @@ class Article extends React.Component {
             preserveChildrenOrder: true,
             explicitChildren: true
           }, (err, result) => {
-            console.log(result.article.$$)
             this.setState({
               xmlDoc: result
             })
@@ -89,22 +88,29 @@ class Article extends React.Component {
 
   renderHeader(node, key) {
     return (
+      this.state.article.thumbnail_url?
       <div key={key} className='article_header'>
-        <div className='article_title'>
-          {
-            node.title
-          }
-        </div>
-        <div className='article_subtitle'>
-          <div className='article_author'>
+        <img src={this.state.article.thumbnail_url} className='article_header_image' />
+        <div className='article_header_captions article_header_absolute'>
+          <div className='article_title'>
             {
-              node.author
+              node.title
             }
           </div>
-          <div className='article_date'>
+          <div className='article_subtitle'>
+            {`Published by ${node.author} on ${moment(this.state.article.publish_time).format('MMM DD, YYYY')} `}
+          </div>
+        </div>
+      </div>:
+      <div key={key} className='article_header'>
+        <div className='article_header_captions'>
+          <div className='article_title'>
             {
-              moment(this.state.article.publish_time).format('YYYY-MM-DD HH:mm')
+              node.title
             }
+          </div>
+          <div className='article_subtitle'>
+            {`Published by ${node.author} on ${moment(this.state.article.publish_time).format('MMM DD, YYYY')} `}
           </div>
         </div>
       </div>

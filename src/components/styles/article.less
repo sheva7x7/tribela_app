@@ -52,6 +52,12 @@
       display: block;
       margin: 20px auto;
     }
+    .article_youtube_iframe {
+      display: block;
+      margin: 20px auto;
+      width: 450px;
+      height: 315px;
+    }
   }
 }
 
@@ -62,9 +68,29 @@
 }
 
 @media only screen and (max-width: 720px) {
-  .article_body {
-    .article_image {
-      max-width: 100%;
+  .article_frame {
+    .article_body {
+      .article_image {
+        max-width: 100%;
+      }
+      .article_youtube_iframe {
+        width: 300px;
+        height: 210px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 340px) {
+  .article_frame {
+    .article_body {
+      .article_image {
+        max-width: 100%;
+      }
+      .article_youtube_iframe {
+        width: 240px;
+        height: 168px;
+      }
     }
   }
 }

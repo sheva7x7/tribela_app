@@ -135,6 +135,10 @@ class Article extends React.Component {
                 return (
                   <img key={i} className='article_image' src={child['$'].src} width={child['$'].width}/>
                 )
+              case 'youtube':
+                return (
+                  <iframe key={i} className='article_youtube_iframe' src={child['$'].src} />
+                )
               default:
                 null
             }

@@ -1,15 +1,10 @@
 import React from "react";
 import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
-import { bindActionCreators } from 'redux'
-import {Link} from 'react-router-dom'
 import Linkify from 'react-linkify'
 import moment from 'moment'
 import axios from '../utils/axios'
-import * as announcementsActions from '../actions/announcements'
 import { TRIBELA_URL } from '../utils/constants'
 import _ from 'lodash'
-import {validateEmail} from '../utils/helper'
 import xml2js from 'xml2js'
 
 import { getPath } from '../selectors'

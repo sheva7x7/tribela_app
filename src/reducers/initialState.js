@@ -7,10 +7,7 @@ const initialState = {
     featuredCampaigns: [],
     votedCampaigns: []
   },
-  campaignCacheState: {},
-  announcements: {
-    articles: []
-  }
+  campaignCacheState: {}
 }
 
 const persistedState = {}

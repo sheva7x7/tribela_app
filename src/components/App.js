@@ -35,6 +35,7 @@ class App extends React.Component {
     this.state.signUpEmail = ''
     this.state.signUpPassword = ''
     this.state.signUpPasswordVerify = ''
+    this.state.referralCode = ''
     this.state.user = this.props.user
     this.state.mailingListCheckbox = true
     this.state.consentCheckbox = true
@@ -89,8 +90,9 @@ class App extends React.Component {
       alert("You have entered an invalid email address!")
     }
     else {
+      const data = {email: this.state.loginEmail, password: this.state.loginPassword, mailingList: this.state.mailingListCheckbox}
       this.props.userActions.userLogin(
-        {email: this.state.loginEmail, password: this.state.loginPassword, mailingList: this.state.mailingListCheckbox}, 
+        data, 
         this.handleModalCloseRequest
       )
     }
@@ -109,7 +111,11 @@ class App extends React.Component {
     } else if (!validatePassword(this.state.signUpPassword)){
       alert('Password is not secure')
     }else {
-      this.props.userActions.userRegister({email: this.state.signUpEmail, password: this.state.signUpPassword}, this._routeToVerication)
+      const data = {email: this.state.signUpEmail, password: this.state.signUpPassword, mailingList: this.state.mailingListCheckbox}
+      if (this.state.referralCode !== '') {
+        data.referral_code = this.state.referralCode
+      }
+      this.props.userActions.userRegister(data, this._routeToVerication)
     }
   }
 
@@ -143,6 +149,9 @@ class App extends React.Component {
               {
                 this.state.user.loggedIn ? 
                 <Nav pullRight>
+                  <NavItem componentClass={Link} href='/announcements' to="/announcements" eventKey={1}>
+                    Announcements
+                  </NavItem>
                   <NavDropdown title='Account' id='app_account_dropdown' >
                     <NavItem className='app_nav_dropdown_item' componentClass={Link} href='/profile' to="/profile" eventKey={1}>
                         Profile
@@ -160,11 +169,11 @@ class App extends React.Component {
                   <NavItem eventKey={3} href="http://tribela.io">
                     About Us
                   </NavItem>
+                </Nav>:
+                <Nav pullRight>
                   <NavItem componentClass={Link} href='/announcements' to="/announcements" eventKey={1}>
                     Announcements
                   </NavItem>
-                </Nav>:
-                <Nav pullRight>
                   <NavItem eventKey={1} onClick={() => {
                     console.log(this.state)
                     if (this.state.openedModel === null) {
@@ -183,9 +192,6 @@ class App extends React.Component {
                   </NavItem>
                   <NavItem eventKey={3} href="http://tribela.io">
                     About Us
-                  </NavItem>
-                  <NavItem componentClass={Link} href='/announcements' to="/announcements" eventKey={1}>
-                    Announcements
                   </NavItem>
                 </Nav>
               }
@@ -237,6 +243,16 @@ class App extends React.Component {
                 <input type='password' name='repeat-password' value={this.state.signUpPasswordVerify} onChange={(event) => {
                   this.setState({
                     signUpPasswordVerify: event.target.value
+                  })
+                }}/>
+              </div>
+              <div className='form_field'>
+                <label htmlFor='referral-code'>
+                  Referral Code
+                </label>
+                <input type='text' name='referral-code' value={this.state.referralCode} onChange={(event) => {
+                  this.setState({
+                    referralCode: event.target.value
                   })
                 }}/>
               </div>

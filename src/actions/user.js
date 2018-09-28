@@ -48,13 +48,12 @@ function userLoginDispatch(user) {
 
 export function userRegister(data, callback) {
   return function(dispatch) {
+    const user = {
+      ...data
+    }
+    user.login_id = data.email
     const userData = {
-      user: {
-        login_id: data.email,
-        email: data.email,
-        password: data.password,
-        mailing_list: data.mailingList
-      }
+      user
     }
     return axios.post(`${TRIBELA_URL}/newuser`, userData)
                 .then((res) => {

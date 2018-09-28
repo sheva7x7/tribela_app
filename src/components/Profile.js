@@ -227,6 +227,14 @@ class Profile extends React.Component {
                 }
               </div>
             </div>
+            <div className='form_field'>
+              <label htmlFor='r_code'>
+                Referral Code
+              </label>
+              <div className='div_placeholder' />
+              <input type='text' name='r_code' value={this.state.user.referral_code} className='r_code_input' readOnly/>
+              <div className='confirm_placeholder'/>
+            </div>
             <div className='password-fields'>
               <div className='form_field'>
                 <label htmlFor='current-password'>

@@ -1,25 +1,34 @@
 import React from "react";
 import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import {Link} from 'react-router-dom'
 import moment from 'moment'
 import axios from '../utils/axios'
-import * as announcementsActions from '../actions/announcements'
 import { TRIBELA_URL } from '../utils/constants'
 import _ from 'lodash'
-import {validateEmail} from '../utils/helper'
 
 import { getPath } from '../selectors'
 
 import './styles/announcements.less'
+
+const formatDate = (date) => {
+  const now = moment()
+  if (now.diff(date, 'days') === 0){
+    return 'Today'
+  }else if (now.diff(date, 'days') === 1){
+    return 'Yesterday'
+  }else {
+    return moment(date).format('MMM DD, YYYY')
+  }
+}
 
 class Announcements extends React.Component {
   constructor(props){
     super(props)
 
     this.state = {}
-    this.state.articles = this.props.announcements.articles
+    this.state.articleData = {}
+    this.state.articleDateKeys = []
 
     this.retrieveAnnouncements = this.retrieveAnnouncements.bind(this)
   }
@@ -31,8 +40,15 @@ class Announcements extends React.Component {
   retrieveAnnouncements() {
     axios.post(`${TRIBELA_URL}/announcements`)
         .then((res) => {
+          const articleData = _.groupBy(res.data, (article, i) => {
+            return moment(article.publish_time).format('YYYY-MM-DD')
+          })
+          const articleDateKeys = _.keys(articleData).sort((a, b)=> {
+            moment(b).diff(moment(a), 'days')
+          })
           this.setState({
-            articles: res.data
+            articleData,
+            articleDateKeys
           })
         })
         .catch((err) => {
@@ -53,22 +69,31 @@ class Announcements extends React.Component {
           </div>
           <div className='announcements_section'>
             {
-              this.state.articles.map((article, i) => (
-                <Link to={`/article/${article.id}`} key={i} className='announcements_row' >
-                  {
-                    article.thumbnail_url ? 
-                    <img src={article.thumbnail_url} className='announcement_thumbnail'/>:
-                    null
-                  }
-                  <div className='announcement_headline'>
-                    <div className='announcement_title'>
-                      {article.title}
-                    </div>
-                    <div className='announcement_summary'>
-                      {article.summary}
-                    </div>
+              this.state.articleDateKeys.map((date, i) => (
+                <div className='announcement_date_section' key={i}>
+                  <div className='announcement_date_text'>
+                    {formatDate(date)}
                   </div>
-                </Link>
+                  {
+                    this.state.articleData[date].map((article, j) => (
+                      <Link to={`/article/${article.id}`} key={j} className='announcements_row' >
+                        {
+                          article.thumbnail_url ? 
+                          <img src={article.thumbnail_url} className='announcement_thumbnail'/>:
+                          null
+                        }
+                        <div className='announcement_headline'>
+                          <div className='announcement_title'>
+                            {article.title}
+                          </div>
+                          <div className='announcement_summary'>
+                            {article.summary}
+                          </div>
+                        </div>
+                      </Link>
+                    ))
+                  }
+                </div>
               ))
             }
           </div>
@@ -81,18 +106,10 @@ class Announcements extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     location: getPath(state),
-    user: state.user,
-    announcements: state.announcements
-  }
-}
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    actions: bindActionCreators(announcementsActions, dispatch)
+    user: state.user
   }
 }
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Announcements)

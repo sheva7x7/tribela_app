@@ -70,7 +70,7 @@ class Contest extends React.Component {
     super(props)
 
     const id = this.props.match.params.id
-
+    console.log(this.props.campaignCacheState)
     if (!_.isEmpty(this.props.campaignCacheState) && this.props.campaignCacheState.campaign.id == id){
       this.state = {...this.props.campaignCacheState}
     }
@@ -121,7 +121,7 @@ class Contest extends React.Component {
     window.addEventListener('resize', this.updateWindowDimensions)
     window.addEventListener('orientationchange', this.updateOrientationChange)
     window.addEventListener('scroll', this.trackScrolling)
-    if(_.isEmpty(this.props.campaignCacheState) || this.props.campaignCacheState.campaign.id === this.props.match.params.id){
+    if(_.isEmpty(this.props.campaignCacheState) || this.props.campaignCacheState.campaign.id !== this.props.match.params.id){
       this.retrieveCampaign()
       this.updateNoOfViews()
       if (this.props.history.location.campaign){

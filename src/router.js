@@ -5,16 +5,48 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { history } from "./store.js"
 import App from "./containers/App"
-import Home from "./components/Home"
-import Contest from './components/Contest'
-import Profile from './components/Profile'
-import Trending from './components/Trending'
-import Hof from './components/Hof'
-import Verification from './components/Verification'
-import Comments from './components/Comments'
-import Wallet from './components/Wallet'
-import Announcements from './components/Announcements.js'
-import Article from './components/Article.js'
+import loadable from 'loadable-components'
+
+const Home = loadable(() => import('./components/Home'), {
+  LoadingComponent: () => null
+})
+const Contest = loadable(() => import('./components/Contest'), {
+  LoadingComponent: () => null
+})
+const Profile = loadable(() => import('./components/Profile'), {
+  LoadingComponent: () => null
+})
+const Trending = loadable(() => import('./components/Trending'), {
+  LoadingComponent: () => null
+})
+const Hof = loadable(() => import('./components/Hof'), {
+  LoadingComponent: () => null
+})
+const Verification = loadable(() => import('./components/Verification'), {
+  LoadingComponent: () => null
+})
+const Comments = loadable(() => import('./components/Comments'), {
+  LoadingComponent: () => null
+})
+const Wallet = loadable(() => import('./components/Wallet'), {
+  LoadingComponent: () => null
+})
+const Announcements = loadable(() => import('./components/Announcements'), {
+  LoadingComponent: () => null
+})
+const Article = loadable(() => import('./components/Article'), {
+  LoadingComponent: () => null
+})
+// import Home from "./components/Home"
+// import Contest from './components/Contest'
+// import Profile from './components/Profile'
+// import Trending from './components/Trending'
+// import Hof from './components/Hof'
+// import Verification from './components/Verification'
+// import Comments from './components/Comments'
+// import Wallet from './components/Wallet'
+// import Announcements from './components/Announcements.js'
+// import Article from './components/Article.js'
 
 class PrivateRouteContainer extends React.Component {
   render() {

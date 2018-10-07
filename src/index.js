@@ -3,15 +3,29 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { AppContainer } from 'react-hot-loader'
 
+import { loadComponents } from 'loadable-components'
+
 import App from './App';
 
+const app = document.getElementById('app')
+
 const render = Component => {
-  ReactDOM.render(
-    <AppContainer>
-      <Component />
-    </AppContainer>,
-    document.getElementById('app')
-  )
+  if (app.hasChildNodes()){
+    loadComponents().then(() => ReactDOM.hydrate(
+      <AppContainer>
+        <Component />
+      </AppContainer>,
+      app
+    ))
+  }
+  else {
+    ReactDOM.render(
+      <AppContainer>
+        <Component />
+      </AppContainer>,
+      app
+    )
+  }
 }
 
 render(App)

@@ -20,6 +20,7 @@ import moment from 'moment'
 import axios from '../utils/axios'
 import { TRIBELA_URL, STUFF_WAR_URL } from '../utils/constants'
 import _ from 'lodash'
+import {Helmet} from "react-helmet"
 
 import { getPath } from '../selectors'
 import * as campaignsActions from '../actions/campaigns' 
@@ -636,6 +637,11 @@ class Contest extends React.Component {
   renderVotePanel() {
     return (
       <div>
+        <Helmet>
+          <meta property="og:title" content={this.state.campaign.title} />
+          <meta property="og:url" content={`${STUFF_WAR_URL}campaign/${this.props.match.params.id}`} />
+          <meta property="og:image" content={this.state.campaign.featured_image} />
+        </Helmet>
         <div className='contest_image' style={{backgroundImage: `url(${this.state.campaign.featured_image})`}} >
           <div className='contest_image_overlay' />
           <div className='contest_title'> 

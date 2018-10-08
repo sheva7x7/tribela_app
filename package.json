@@ -12,7 +12,8 @@
     "yarn": "1.5.1"
   },
   "reactSnap": {
-    "source": "dist"
+    "source": "dist",
+    "waitFor": 5000
   },
   "author": "Tribela",
   "license": "MIT",

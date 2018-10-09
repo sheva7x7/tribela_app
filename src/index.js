@@ -5,7 +5,10 @@ import { AppContainer } from 'react-hot-loader'
 
 import { loadComponents } from 'loadable-components'
 
-import App from './App';
+import App from './App'
+
+import { getState } from 'loadable-components'
+window.snapSaveState = () => getState()
 
 const app = document.getElementById('app')
 

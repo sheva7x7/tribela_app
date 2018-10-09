@@ -5,16 +5,11 @@
   "scripts": {
     "dev": "webpack-dev-server --mode development --open  --hot --host 0.0.0.0",
     "build": "rm -rf dist && webpack --mode production --config webpack.prod.config.js",
-    "postbuild": "react-snap; true",
     "heroku-postbuild": "yarn && yarn run build",
     "start": "node server.js"
   },
   "engines": {
     "yarn": "1.5.1"
-  },
-  "reactSnap": {
-    "source": "dist",
-    "waitFor": 5000
   },
   "author": "Tribela",
   "license": "MIT",
@@ -33,7 +28,6 @@
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
-    "react-snap": "^1.19.0",
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.8.3",

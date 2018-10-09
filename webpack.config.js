@@ -10,8 +10,12 @@ const BabelPluginTransformObjectRestSpread = require('babel-plugin-transform-obj
 const htmlWebpackPlugin = new HtmlWebPackPlugin({
   template: "./src/index.html",
   filename: "./index.html"
-});
-const config = require('./config-dev.json');
+})
+const htmlWebpackPluginCampaign = new HtmlWebPackPlugin({
+  template: "./src/campaign.html",
+  filename: "./campaign.html"
+})
+const config = require('./config-dev.json')
 
 module.exports = {
   devServer: {
@@ -72,6 +76,7 @@ module.exports = {
   },
   plugins: [
     htmlWebpackPlugin,
+    htmlWebpackPluginCampaign,
     new CopyWebpackPlugin([
       { from: 'src/assets', to: 'assets' }
     ]),

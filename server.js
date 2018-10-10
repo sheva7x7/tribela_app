@@ -32,6 +32,14 @@ app.use('/campaign/:id', function(req,res){
             <meta property="og:title" content="${data.title}" />
             <meta property="og:url" content="${config.STUFFWAR_URL}campaign/${req.params.id}" />
             <meta property="og:image" content="${data.featured_image}" />
+            <meta property="og:description" content="${data.description}" />
+
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:site" content="@stuffwar">
+            <meta name="twitter:title" content="${data.title}">
+            <meta name="twitter:description" content="${data.description}" />
+            <meta name="twitter:image" content="${data.featured_image}" />
+
             <link rel="canonical" href="https://www.stuffwar.com">
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
           </head>

@@ -56,3 +56,14 @@ export const calcTimeSince = date => {
   }
   return `just now by`
 }
+
+export const formatDate = (date) => {
+  const now = moment()
+  if (now.diff(date, 'days') === 0){
+    return 'Today'
+  }else if (now.diff(date, 'days') === 1){
+    return 'Yesterday'
+  }else {
+    return moment(date).format('MMM DD, YYYY')
+  }
+}

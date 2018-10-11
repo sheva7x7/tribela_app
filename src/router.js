@@ -13,8 +13,9 @@ import Hof from './components/Hof'
 import Verification from './components/Verification'
 import Comments from './components/Comments'
 import Wallet from './components/Wallet'
-import Announcements from './components/Announcements.js'
-import Article from './components/Article.js'
+import Announcements from './components/Announcements'
+import NewsFeed from './components/NewsFeed'
+import Article from './components/Article'
 
 class PrivateRouteContainer extends React.Component {
   render() {
@@ -57,6 +58,7 @@ const router = (
       <Route path='/emailverification/:validation_string' component={Verification}/>
       <Route path='/comments' component={Comments}/>
       <Route path='/announcements' component={Announcements}/>
+      <Route path='/newsfeed' component={NewsFeed}/>
       <Route exact path="/article/:id" component={Article}/>
       <PrivateRoute path="/profile" component={Profile}/>
       <PrivateRoute path='/wallet' component={Wallet}/>

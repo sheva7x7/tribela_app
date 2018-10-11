@@ -149,9 +149,14 @@ class App extends React.Component {
               {
                 this.state.user.loggedIn ? 
                 <Nav pullRight>
-                  <NavItem componentClass={Link} href='/announcements' to="/announcements" eventKey={1}>
-                    Announcements
-                  </NavItem>
+                  <NavDropdown title='News' id='app_account_dropdown' >
+                    <NavItem componentClass={Link} href='/announcements' to="/announcements" eventKey={1}>
+                      Announcements
+                    </NavItem>
+                    <NavItem componentClass={Link} href='/newsfeed' to="/newsfeed" eventKey={1}>
+                      News Feed
+                    </NavItem>
+                  </NavDropdown>
                   <NavDropdown title='Account' id='app_account_dropdown' >
                     <NavItem className='app_nav_dropdown_item' componentClass={Link} href='/profile' to="/profile" eventKey={1}>
                         Profile
@@ -171,9 +176,14 @@ class App extends React.Component {
                   </NavItem>
                 </Nav>:
                 <Nav pullRight>
-                  <NavItem componentClass={Link} href='/announcements' to="/announcements" eventKey={1}>
-                    Announcements
-                  </NavItem>
+                  <NavDropdown title='News' id='app_account_dropdown' >
+                    <NavItem componentClass={Link} href='/announcements' to="/announcements" eventKey={1}>
+                      Announcements
+                    </NavItem>
+                    <NavItem componentClass={Link} href='/newsfeed' to="/newsfeed" eventKey={1}>
+                      News Feed
+                    </NavItem>
+                  </NavDropdown>
                   <NavItem eventKey={1} onClick={() => {
                     console.log(this.state)
                     if (this.state.openedModel === null) {

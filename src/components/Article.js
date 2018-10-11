@@ -126,6 +126,20 @@ class Article extends React.Component {
                     </p>
                   </Linkify>
                 )
+              case 'heading':
+                return (
+                  <h3 key={i}>
+                    {child['_']}
+                  </h3>
+                )
+              case 'pwomargin':
+                return (
+                  <Linkify key={i} className='article_paragraph_no_margin'>
+                    <p>
+                      {child['_']}
+                    </p>
+                  </Linkify>
+                )
               case 'image':
                 return (
                   <img key={i} className='article_image' src={child['$'].src} width={child['$'].width}/>

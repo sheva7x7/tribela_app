@@ -72,6 +72,7 @@ class Article extends React.Component {
             preserveChildrenOrder: true,
             explicitChildren: true
           }, (err, result) => {
+            console.log(result)
             this.setState({
               xmlDoc: result
             })
@@ -134,8 +135,8 @@ class Article extends React.Component {
                 )
               case 'pwomargin':
                 return (
-                  <Linkify key={i} className='article_paragraph_no_margin'>
-                    <p>
+                  <Linkify key={i} >
+                    <p className='article_paragraph_no_margin'>
                       {child['_']}
                     </p>
                   </Linkify>

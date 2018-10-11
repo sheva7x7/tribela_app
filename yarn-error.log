@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add -S html-meta-tags
+  /usr/local/bin/node /usr/local/bin/yarn start
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin
@@ -21,16 +21,12 @@ npm manifest:
     "scripts": {
       "dev": "webpack-dev-server --mode development --open  --hot --host 0.0.0.0",
       "build": "rm -rf dist && webpack --mode production --config webpack.prod.config.js",
-      "postbuild": "react-snap; true",
       "heroku-postbuild": "yarn && yarn run build",
       "start": "node server.js"
     },
     "engines": {
-      "yarn": "1.5.1"
-    },
-    "reactSnap": {
-      "source": "dist",
-      "waitFor": 5000
+      "yarn": "1.5.1",
+      "node": "10.10.0"
     },
     "author": "Tribela",
     "license": "MIT",
@@ -49,7 +45,6 @@ npm manifest:
       "html-webpack-plugin": "^3.2.0",
       "less": "^3.0.4",
       "less-loader": "^4.1.0",
-      "react-snap": "^1.19.0",
       "style-loader": "^0.21.0",
       "uglifyjs-webpack-plugin": "^1.2.5",
       "webpack": "^4.8.3",
@@ -127,10 +122,6 @@ Lockfile:
   "@sindresorhus/is@^0.7.0":
     version "0.7.0"
     resolved "http://registry.npm.taobao.org/@sindresorhus/is/download/@sindresorhus/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
-  
-  "@types/node@*":
-    version "10.11.4"
-    resolved "https://registry.npmjs.org/@types/node/-/node-10.11.4.tgz#e8bd933c3f78795d580ae41d86590bfc1f4f389d"
   
   "@webassemblyjs/ast@1.4.3":
     version "1.4.3"
@@ -268,12 +259,6 @@ Lockfile:
   acorn@^5.0.0:
     version "5.5.3"
     resolved "http://registry.npm.taobao.org/acorn/download/acorn-5.5.3.tgz#f473dd47e0277a08e28e9bec5aeeb04751f0b8c9"
-  
-  agent-base@^4.1.0:
-    version "4.2.1"
-    resolved "https://registry.npmjs.org/agent-base/-/agent-base-4.2.1.tgz#d89e5999f797875674c07d87f260fc41e83e8ca9"
-    dependencies:
-      es6-promisify "^5.0.0"
   
   ajv-keywords@^3.1.0:
     version "3.2.0"
@@ -467,10 +452,6 @@ Lockfile:
   async-each@^1.0.0:
     version "1.0.1"
     resolved "http://registry.npm.taobao.org/async-each/download/async-each-1.0.1.tgz#19d386a1d9edc6e7c1c85d388aedbcc56d33602d"
-  
-  async-limiter@~1.0.0:
-    version "1.0.0"
-    resolved "https://registry.npmjs.org/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
   
   async@^1.5.0, async@^1.5.2:
     version "1.5.2"
@@ -1569,17 +1550,6 @@ Lockfile:
     version "0.4.2"
     resolved "http://registry.npm.taobao.org/chardet/download/chardet-0.4.2.tgz#b5473b33dc97c424e5d98dc87d55d4d8a29c8bf2"
   
-  cheerio@1.0.0-rc.2:
-    version "1.0.0-rc.2"
-    resolved "https://registry.npmjs.org/cheerio/-/cheerio-1.0.0-rc.2.tgz#4b9f53a81b27e4d5dac31c0ffd0cfa03cc6830db"
-    dependencies:
-      css-select "~1.2.0"
-      dom-serializer "~0.1.0"
-      entities "~1.1.1"
-      htmlparser2 "^3.9.1"
-      lodash "^4.15.0"
-      parse5 "^3.0.1"
-  
   chokidar@^2.0.0, chokidar@^2.0.2:
     version "2.0.3"
     resolved "http://registry.npm.taobao.org/chokidar/download/chokidar-2.0.3.tgz#dcbd4f6cbb2a55b4799ba8a840ac527e5f4b1176"
@@ -1641,12 +1611,6 @@ Lockfile:
     resolved "http://registry.npm.taobao.org/clean-css/download/clean-css-4.1.11.tgz#2ecdf145aba38f54740f26cefd0ff3e03e125d6a"
     dependencies:
       source-map "0.5.x"
-  
-  clean-css@4.2.1, clean-css@4.2.x:
-    version "4.2.1"
-    resolved "https://registry.npmjs.org/clean-css/-/clean-css-4.2.1.tgz#2d411ef76b8569b6d0c84068dabe85b0aa5e5c17"
-    dependencies:
-      source-map "~0.6.0"
   
   clean-webpack-plugin@^0.1.19:
     version "0.1.19"
@@ -1804,10 +1768,6 @@ Lockfile:
     version "2.15.1"
     resolved "http://registry.npm.taobao.org/commander/download/commander-2.15.1.tgz#df46e867d0fc2aec66a34662b406a9ccafff5b0f"
   
-  commander@2.17.x, commander@~2.17.1:
-    version "2.17.1"
-    resolved "https://registry.npmjs.org/commander/-/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
-  
   commander@~2.13.0:
     version "2.13.0"
     resolved "http://registry.npm.taobao.org/commander/download/commander-2.13.0.tgz#6964bca67685df7c1f1430c584f07d7597885b9c"
@@ -1846,7 +1806,7 @@ Lockfile:
     version "0.0.1"
     resolved "http://registry.npm.taobao.org/concat-map/download/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   
-  concat-stream@1.6.2, concat-stream@^1.5.0:
+  concat-stream@^1.5.0:
     version "1.6.2"
     resolved "http://registry.npm.taobao.org/concat-stream/download/concat-stream-1.6.2.tgz#904bdf194cd3122fc675c77fc4ac3d4ff0fd1a34"
     dependencies:
@@ -2037,7 +1997,7 @@ Lockfile:
       postcss-value-parser "^3.3.0"
       source-list-map "^2.0.0"
   
-  css-select@^1.1.0, css-select@~1.2.0:
+  css-select@^1.1.0:
     version "1.2.0"
     resolved "http://registry.npm.taobao.org/css-select/download/css-select-1.2.0.tgz#2b3a110539c5355f1cd8d314623e870b121ec858"
     dependencies:
@@ -2053,20 +2013,6 @@ Lockfile:
       cssesc "^0.1.0"
       fastparse "^1.1.1"
       regexpu-core "^1.0.0"
-  
-  css-tree@1.0.0-alpha.28:
-    version "1.0.0-alpha.28"
-    resolved "https://registry.npmjs.org/css-tree/-/css-tree-1.0.0-alpha.28.tgz#8e8968190d886c9477bc8d61e96f61af3f7ffa7f"
-    dependencies:
-      mdn-data "~1.1.0"
-      source-map "^0.5.3"
-  
-  css-tree@1.0.0-alpha.29:
-    version "1.0.0-alpha.29"
-    resolved "https://registry.npmjs.org/css-tree/-/css-tree-1.0.0-alpha.29.tgz#3fa9d4ef3142cbd1c301e7664c1f352bd82f5a39"
-    dependencies:
-      mdn-data "~1.1.0"
-      source-map "^0.5.3"
   
   css-what@2.1:
     version "2.1.0"
@@ -2119,12 +2065,6 @@ Lockfile:
     dependencies:
       clap "^1.0.9"
       source-map "^0.5.3"
-  
-  csso@~3.5.0:
-    version "3.5.1"
-    resolved "https://registry.npmjs.org/csso/-/csso-3.5.1.tgz#7b9eb8be61628973c1b261e169d2f024008e758b"
-    dependencies:
-      css-tree "1.0.0-alpha.29"
   
   currently-unhandled@^0.4.1:
     version "0.4.1"
@@ -2330,7 +2270,7 @@ Lockfile:
     version "3.3.1"
     resolved "http://registry.npm.taobao.org/dom-helpers/download/dom-helpers-3.3.1.tgz#fc1a4e15ffdf60ddde03a480a9c0fece821dd4a6"
   
-  dom-serializer@0, dom-serializer@~0.1.0:
+  dom-serializer@0:
     version "0.1.0"
     resolved "http://registry.npm.taobao.org/dom-serializer/download/dom-serializer-0.1.0.tgz#073c697546ce0780ce23be4a28e293e40bc30c82"
     dependencies:
@@ -2345,7 +2285,7 @@ Lockfile:
     version "1.2.0"
     resolved "http://registry.npm.taobao.org/domain-browser/download/domain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"
   
-  domelementtype@1, domelementtype@^1.3.0:
+  domelementtype@1:
     version "1.3.0"
     resolved "http://registry.npm.taobao.org/domelementtype/download/domelementtype-1.3.0.tgz#b17aed82e8ab59e52dd9c19b1756e0fc187204c2"
   
@@ -2359,12 +2299,6 @@ Lockfile:
     dependencies:
       domelementtype "1"
   
-  domhandler@^2.3.0:
-    version "2.4.2"
-    resolved "https://registry.npmjs.org/domhandler/-/domhandler-2.4.2.tgz#8805097e933d65e85546f726d60f5eb88b44f803"
-    dependencies:
-      domelementtype "1"
-  
   domutils@1.1:
     version "1.1.6"
     resolved "http://registry.npm.taobao.org/domutils/download/domutils-1.1.6.tgz#bddc3de099b9a2efacc51c623f28f416ecc57485"
@@ -2374,13 +2308,6 @@ Lockfile:
   domutils@1.5.1:
     version "1.5.1"
     resolved "http://registry.npm.taobao.org/domutils/download/domutils-1.5.1.tgz#dcd8488a26f563d61079e48c9f7b7e32373682cf"
-    dependencies:
-      dom-serializer "0"
-      domelementtype "1"
-  
-  domutils@^1.5.1:
-    version "1.7.0"
-    resolved "https://registry.npmjs.org/domutils/-/domutils-1.7.0.tgz#56ea341e834e06e6748af7a1cb25da67ea9f8c2a"
     dependencies:
       dom-serializer "0"
       domelementtype "1"
@@ -2472,7 +2399,7 @@ Lockfile:
     version "2.1.6"
     resolved "http://registry.npm.taobao.org/enquire.js/download/enquire.js-2.1.6.tgz#3e8780c9b8b835084c3f60e166dbc3c2a3c89814"
   
-  entities@^1.1.1, entities@~1.1.1:
+  entities@~1.1.1:
     version "1.1.1"
     resolved "http://registry.npm.taobao.org/entities/download/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
   
@@ -2532,16 +2459,6 @@ Lockfile:
       d "1"
       es5-ext "^0.10.35"
       es6-symbol "^3.1.1"
-  
-  es6-promise@^4.0.3, es6-promise@^4.1.1:
-    version "4.2.5"
-    resolved "https://registry.npmjs.org/es6-promise/-/es6-promise-4.2.5.tgz#da6d0d5692efb461e082c14817fe2427d8f5d054"
-  
-  es6-promisify@^5.0.0:
-    version "5.0.0"
-    resolved "https://registry.npmjs.org/es6-promisify/-/es6-promisify-5.0.0.tgz#5109d62f3e56ea967c4b63505aef08291c8a5203"
-    dependencies:
-      es6-promise "^4.0.3"
   
   es6-symbol@^3.1.1, es6-symbol@~3.1.1:
     version "3.1.1"
@@ -2662,11 +2579,7 @@ Lockfile:
     dependencies:
       homedir-polyfill "^1.0.1"
   
-  express-history-api-fallback@2.2.1:
-    version "2.2.1"
-    resolved "https://registry.npmjs.org/express-history-api-fallback/-/express-history-api-fallback-2.2.1.tgz#3a2ad27f7bebc90fc533d110d7c6d83097bcd057"
-  
-  express@4.16.3, express@^4.16.2, express@^4.16.3:
+  express@^4.16.2, express@^4.16.3:
     version "4.16.3"
     resolved "http://registry.npm.taobao.org/express/download/express-4.16.3.tgz#6af8a502350db3246ecc4becf6b5a34d22f7ed53"
     dependencies:
@@ -2754,15 +2667,6 @@ Lockfile:
       schema-utils "^0.3.0"
       webpack-sources "^1.0.1"
   
-  extract-zip@^1.6.6:
-    version "1.6.7"
-    resolved "https://registry.npmjs.org/extract-zip/-/extract-zip-1.6.7.tgz#a840b4b8af6403264c8db57f4f1a74333ef81fe9"
-    dependencies:
-      concat-stream "1.6.2"
-      debug "2.6.9"
-      mkdirp "0.5.1"
-      yauzl "2.4.1"
-  
   extsprintf@1.3.0:
     version "1.3.0"
     resolved "http://registry.npm.taobao.org/extsprintf/download/extsprintf-1.3.0.tgz#96918440e3041a7a414f8c52e3c574eb3c3e1e05"
@@ -2838,12 +2742,6 @@ Lockfile:
       setimmediate "^1.0.5"
       ua-parser-js "^0.7.18"
   
-  fd-slicer@~1.0.1:
-    version "1.0.1"
-    resolved "https://registry.npmjs.org/fd-slicer/-/fd-slicer-1.0.1.tgz#8b5bcbd9ec327c5041bf9ab023fd6750f1177e65"
-    dependencies:
-      pend "~1.2.0"
-  
   figures@^1.7.0:
     version "1.7.0"
     resolved "http://registry.npm.taobao.org/figures/download/figures-1.7.0.tgz#cbe1e3affcf1cd44b80cadfed28dc793a9701d2e"
@@ -2867,10 +2765,6 @@ Lockfile:
   filename-regex@^2.0.0:
     version "2.0.1"
     resolved "http://registry.npm.taobao.org/filename-regex/download/filename-regex-2.0.1.tgz#c1c4b9bee3e09725ddb106b75c1e301fe2f18b26"
-  
-  filesize@^3.5.11:
-    version "3.6.1"
-    resolved "https://registry.npmjs.org/filesize/-/filesize-3.6.1.tgz#090bb3ee01b6f801a8a8be99d31710b3422bb317"
   
   fill-range@^2.1.0:
     version "2.2.4"
@@ -3339,12 +3233,6 @@ Lockfile:
     version "1.1.1"
     resolved "http://registry.npm.taobao.org/he/download/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
   
-  highland@2.13.0:
-    version "2.13.0"
-    resolved "https://registry.npmjs.org/highland/-/highland-2.13.0.tgz#a4394d8dcb970cd071a79a20f0762b906258dc19"
-    dependencies:
-      util-deprecate "^1.0.2"
-  
   history@^4.7.2:
     version "4.7.2"
     resolved "http://registry.npm.taobao.org/history/download/history-4.7.2.tgz#22b5c7f31633c5b8021c7f4a8a954ac139ee8d5b"
@@ -3407,18 +3295,6 @@ Lockfile:
     version "1.2.1"
     resolved "http://registry.npm.taobao.org/html-entities/download/html-entities-1.2.1.tgz#0df29351f0721163515dfb9e5543e5f6eed5162f"
   
-  html-minifier@3.5.20:
-    version "3.5.20"
-    resolved "https://registry.npmjs.org/html-minifier/-/html-minifier-3.5.20.tgz#7b19fd3caa0cb79f7cde5ee5c3abdf8ecaa6bb14"
-    dependencies:
-      camel-case "3.0.x"
-      clean-css "4.2.x"
-      commander "2.17.x"
-      he "1.1.x"
-      param-case "2.1.x"
-      relateurl "0.2.x"
-      uglify-js "3.4.x"
-  
   html-minifier@^3.2.3:
     version "3.5.16"
     resolved "http://registry.npm.taobao.org/html-minifier/download/html-minifier-3.5.16.tgz#39f5aabaf78bdfc057fe67334226efd7f3851175"
@@ -3442,17 +3318,6 @@ Lockfile:
       tapable "^1.0.0"
       toposort "^1.0.0"
       util.promisify "1.0.0"
-  
-  htmlparser2@^3.9.1:
-    version "3.9.2"
-    resolved "https://registry.npmjs.org/htmlparser2/-/htmlparser2-3.9.2.tgz#1bdf87acca0f3f9e53fa4fcceb0f4b4cbb00b338"
-    dependencies:
-      domelementtype "^1.3.0"
-      domhandler "^2.3.0"
-      domutils "^1.5.1"
-      entities "^1.1.1"
-      inherits "^2.0.1"
-      readable-stream "^2.0.2"
   
   htmlparser2@~3.3.0:
     version "3.3.0"
@@ -3521,13 +3386,6 @@ Lockfile:
   https-browserify@^1.0.0:
     version "1.0.0"
     resolved "http://registry.npm.taobao.org/https-browserify/download/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
-  
-  https-proxy-agent@^2.2.1:
-    version "2.2.1"
-    resolved "https://registry.npmjs.org/https-proxy-agent/-/https-proxy-agent-2.2.1.tgz#51552970fa04d723e04c56d04178c3f92592bbc0"
-    dependencies:
-      agent-base "^4.1.0"
-      debug "^3.1.0"
   
   hyphenate-style-name@^1.0.2:
     version "1.0.2"
@@ -3959,7 +3817,7 @@ Lockfile:
     version "3.0.1"
     resolved "http://registry.npm.taobao.org/isobject/download/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   
-  isomorphic-fetch@^2.1.1, isomorphic-fetch@^2.2.1:
+  isomorphic-fetch@^2.1.1:
     version "2.2.1"
     resolved "http://registry.npm.taobao.org/isomorphic-fetch/download/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
     dependencies:
@@ -4315,10 +4173,6 @@ Lockfile:
     version "4.17.10"
     resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
   
-  lodash@^4.15.0:
-    version "4.17.11"
-    resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
-  
   log-symbols@^1.0.2:
     version "1.0.2"
     resolved "http://registry.npm.taobao.org/log-symbols/download/log-symbols-1.0.2.tgz#376ff7b58ea3086a0f09facc74617eca501e1a18"
@@ -4441,10 +4295,6 @@ Lockfile:
     dependencies:
       hash-base "^3.0.0"
       inherits "^2.0.1"
-  
-  mdn-data@~1.1.0:
-    version "1.1.4"
-    resolved "https://registry.npmjs.org/mdn-data/-/mdn-data-1.1.4.tgz#50b5d4ffc4575276573c4eedb8780812a8419f01"
   
   media-typer@0.3.0:
     version "0.3.0"
@@ -4575,7 +4425,7 @@ Lockfile:
     version "1.6.0"
     resolved "http://registry.npm.taobao.org/mime/download/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
   
-  mime@^2.0.3, mime@^2.1.0:
+  mime@^2.1.0:
     version "2.3.1"
     resolved "http://registry.npm.taobao.org/mime/download/mime-2.3.1.tgz#b1621c54d63b97c47d3cfe7f7215f7d64517c369"
   
@@ -4592,17 +4442,6 @@ Lockfile:
     resolved "http://registry.npm.taobao.org/min-document/download/min-document-2.19.0.tgz#7bd282e3f5842ed295bb748cdd9f1ffa2c824685"
     dependencies:
       dom-walk "^0.1.0"
-  
-  minimalcss@0.7.10:
-    version "0.7.10"
-    resolved "https://registry.npmjs.org/minimalcss/-/minimalcss-0.7.10.tgz#453b642e43065cfebcaf21344171b9c34fb4e00e"
-    dependencies:
-      cheerio "1.0.0-rc.2"
-      css-tree "1.0.0-alpha.28"
-      csso "~3.5.0"
-      filesize "^3.5.11"
-      minimist "^1.2.0"
-      puppeteer "^1.4.0"
   
   minimalistic-assert@^1.0.0:
     version "1.0.1"
@@ -4665,7 +4504,7 @@ Lockfile:
       for-in "^1.0.2"
       is-extendable "^1.0.1"
   
-  mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
+  mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
     version "0.5.1"
     resolved "http://registry.npm.taobao.org/mkdirp/download/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
     dependencies:
@@ -5162,12 +5001,6 @@ Lockfile:
     version "1.0.0"
     resolved "http://registry.npm.taobao.org/parse-passwd/download/parse-passwd-1.0.0.tgz#6d5b934a456993b23d37f40a382d6f1666a8e5c6"
   
-  parse5@^3.0.1:
-    version "3.0.3"
-    resolved "https://registry.npmjs.org/parse5/-/parse5-3.0.3.tgz#042f792ffdd36851551cf4e9e066b3874ab45b5c"
-    dependencies:
-      "@types/node" "*"
-  
   parseurl@~1.3.2:
     version "1.3.2"
     resolved "http://registry.npm.taobao.org/parseurl/download/parseurl-1.3.2.tgz#fc289d4ed8993119460c156253262cdc8de65bf3"
@@ -5243,10 +5076,6 @@ Lockfile:
       ripemd160 "^2.0.1"
       safe-buffer "^5.0.1"
       sha.js "^2.4.8"
-  
-  pend@~1.2.0:
-    version "1.2.0"
-    resolved "https://registry.npmjs.org/pend/-/pend-1.2.0.tgz#7a57eb550a6783f9115331fcf4663d5c8e007a50"
   
   performance-now@^2.1.0:
     version "2.1.0"
@@ -5576,10 +5405,6 @@ Lockfile:
     version "0.5.2"
     resolved "http://registry.npm.taobao.org/process/download/process-0.5.2.tgz#1638d8a8e34c2f440a91db95ab9aeb677fc185cf"
   
-  progress@^2.0.0:
-    version "2.0.0"
-    resolved "https://registry.npmjs.org/progress/-/progress-2.0.0.tgz#8a1be366bf8fc23db2bd23f10c6fe920b4389d1f"
-  
   promise-inflight@^1.0.1:
     version "1.0.1"
     resolved "http://registry.npm.taobao.org/promise-inflight/download/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
@@ -5618,10 +5443,6 @@ Lockfile:
     dependencies:
       forwarded "~0.1.2"
       ipaddr.js "1.6.0"
-  
-  proxy-from-env@^1.0.0:
-    version "1.0.0"
-    resolved "https://registry.npmjs.org/proxy-from-env/-/proxy-from-env-1.0.0.tgz#33c50398f70ea7eb96d21f7b817630a55791c7ee"
   
   prr@~1.0.1:
     version "1.0.1"
@@ -5667,19 +5488,6 @@ Lockfile:
   punycode@^2.1.0:
     version "2.1.1"
     resolved "http://registry.npm.taobao.org/punycode/download/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
-  
-  puppeteer@^1.4.0:
-    version "1.9.0"
-    resolved "https://registry.npmjs.org/puppeteer/-/puppeteer-1.9.0.tgz#56dba79e7ea4faac807877bee3b23d63291fc59e"
-    dependencies:
-      debug "^3.1.0"
-      extract-zip "^1.6.6"
-      https-proxy-agent "^2.2.1"
-      mime "^2.0.3"
-      progress "^2.0.0"
-      proxy-from-env "^1.0.0"
-      rimraf "^2.6.1"
-      ws "^5.1.1"
   
   q@^1.1.2:
     version "1.5.1"
@@ -5951,21 +5759,6 @@ Lockfile:
   react-slider@^0.11.2:
     version "0.11.2"
     resolved "http://registry.npm.taobao.org/react-slider/download/react-slider-0.11.2.tgz#ae014e1454c3cdd5f28b5c2495b2a08abd9971e6"
-  
-  react-snap@^1.19.0:
-    version "1.19.0"
-    resolved "https://registry.npmjs.org/react-snap/-/react-snap-1.19.0.tgz#125883c95434987d78a55a3a72c733227721acb3"
-    dependencies:
-      clean-css "4.2.1"
-      express "4.16.3"
-      express-history-api-fallback "2.2.1"
-      highland "2.13.0"
-      html-minifier "3.5.20"
-      minimalcss "0.7.10"
-      mkdirp "0.5.1"
-      puppeteer "^1.4.0"
-      serve-static "1.13.2"
-      sourcemapped-stacktrace-node "2.1.8"
   
   react-transition-group@^1.2.1:
     version "1.2.1"
@@ -6658,14 +6451,6 @@ Lockfile:
     version "0.6.1"
     resolved "http://registry.npm.taobao.org/source-map/download/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
   
-  sourcemapped-stacktrace-node@2.1.8:
-    version "2.1.8"
-    resolved "https://registry.npmjs.org/sourcemapped-stacktrace-node/-/sourcemapped-stacktrace-node-2.1.8.tgz#96fd64263051e252ce8dabf9801bea29dc7e5990"
-    dependencies:
-      es6-promise "^4.1.1"
-      isomorphic-fetch "^2.2.1"
-      source-map "^0.6.1"
-  
   spdx-correct@^3.0.0:
     version "3.0.0"
     resolved "http://registry.npm.taobao.org/spdx-correct/download/spdx-correct-3.0.0.tgz#05a5b4d7153a195bc92c3c425b69f3b2a9524c82"
@@ -7076,13 +6861,6 @@ Lockfile:
       commander "~2.15.0"
       source-map "~0.6.1"
   
-  uglify-js@3.4.x:
-    version "3.4.9"
-    resolved "https://registry.npmjs.org/uglify-js/-/uglify-js-3.4.9.tgz#af02f180c1207d76432e473ed24a28f4a782bae3"
-    dependencies:
-      commander "~2.17.1"
-      source-map "~0.6.1"
-  
   uglifyjs-webpack-plugin@^1.2.4, uglifyjs-webpack-plugin@^1.2.5:
     version "1.2.5"
     resolved "http://registry.npm.taobao.org/uglifyjs-webpack-plugin/download/uglifyjs-webpack-plugin-1.2.5.tgz#2ef8387c8f1a903ec5e44fa36f9f3cbdcea67641"
@@ -7208,7 +6986,7 @@ Lockfile:
     dependencies:
       kind-of "^6.0.2"
   
-  util-deprecate@^1.0.2, util-deprecate@~1.0.1:
+  util-deprecate@~1.0.1:
     version "1.0.2"
     resolved "http://registry.npm.taobao.org/util-deprecate/download/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   
@@ -7529,12 +7307,6 @@ Lockfile:
       imurmurhash "^0.1.4"
       slide "^1.1.5"
   
-  ws@^5.1.1:
-    version "5.2.2"
-    resolved "https://registry.npmjs.org/ws/-/ws-5.2.2.tgz#dffef14866b8e8dc9133582514d1befaf96e980f"
-    dependencies:
-      async-limiter "~1.0.0"
-  
   xml2js@^0.4.19:
     version "0.4.19"
     resolved "https://registry.npmjs.org/xml2js/-/xml2js-0.4.19.tgz#686c20f213209e94abf0d1bcf1efaa291c7827a7"
@@ -7612,12 +7384,6 @@ Lockfile:
     dependencies:
       minimist "^0.1.0"
   
-  yauzl@2.4.1:
-    version "2.4.1"
-    resolved "https://registry.npmjs.org/yauzl/-/yauzl-2.4.1.tgz#9528f442dab1b2284e58b4379bb194e22e0c4005"
-    dependencies:
-      fd-slicer "~1.0.1"
-  
   yeoman-environment@^2.0.5, yeoman-environment@^2.1.1:
     version "2.1.1"
     resolved "http://registry.npm.taobao.org/yeoman-environment/download/yeoman-environment-2.1.1.tgz#10a045f7fc4397873764882eae055a33e56ee1c5"
@@ -7669,14 +7435,16 @@ Lockfile:
       yeoman-environment "^2.0.5"
 
 Trace: 
-  Error: Missing list of packages to add to your project.
-      at new MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
-      at Object.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:40587:13)
-      at Generator.next (<anonymous>)
-      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:98:30)
-      at /usr/local/lib/node_modules/yarn/lib/cli.js:116:14
-      at new Promise (<anonymous>)
-      at new F (/usr/local/lib/node_modules/yarn/lib/cli.js:23451:28)
-      at Object.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:95:12)
-      at Object.run (/usr/local/lib/node_modules/yarn/lib/cli.js:40599:19)
-      at run (/usr/local/lib/node_modules/yarn/lib/cli.js:89113:20)
+  Error: Command failed.
+  Exit code: 1
+  Command: sh
+  Arguments: -c node server.js
+  Directory: /Users/amomynous/Projects/tribela_app
+  Output:
+  
+      at ProcessTermError.MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
+      at new ProcessTermError (/usr/local/lib/node_modules/yarn/lib/cli.js:226:113)
+      at ChildProcess.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:30281:17)
+      at ChildProcess.emit (events.js:182:13)
+      at maybeClose (internal/child_process.js:962:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:251:5)

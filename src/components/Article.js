@@ -3,8 +3,16 @@ import {connect} from 'react-redux'
 import Linkify from 'react-linkify'
 import moment from 'moment'
 import axios from '../utils/axios'
-import { TRIBELA_URL } from '../utils/constants'
+import { TRIBELA_URL, STUFF_WAR_URL } from '../utils/constants'
 import _ from 'lodash'
+import {
+  FacebookShareButton, 
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  WhatsappShareButton,
+  WhatsappIcon
+} from 'react-share'
 import xml2js from 'xml2js'
 
 import { getPath } from '../selectors'
@@ -162,13 +170,50 @@ class Article extends React.Component {
     return (
       <div className='article_container'>
         <div className='article_frame'>
-        {
-          this.state.xmlDoc.article.$$.map((child, i) => {
-            return child['#name'] === 'header' ? 
-            this.renderHeader(child, i):
-            this.renderBody(child, i)
-          })
-        }
+          {
+            this.state.xmlDoc.article.$$.map((child, i) => {
+              return child['#name'] === 'header' ? 
+              this.renderHeader(child, i):
+              this.renderBody(child, i)
+            })
+          }
+          <div className='article_footer'>
+            <div className='article_footer_text'>
+              <h3>
+                SHARE LEH!
+              </h3>
+            </div>
+            <div className='article_footer_social_icons'>
+              <FacebookShareButton
+                url={`${STUFF_WAR_URL}article/${this.props.match.params.id}`}
+                quote={this.state.article.title}
+                className='share_icon'
+              >
+                <FacebookIcon
+                  size={20}
+                  round />
+              </FacebookShareButton>
+              <TwitterShareButton
+                url={`${STUFF_WAR_URL}article/${this.props.match.params.id}`}
+                title={this.state.article.title}
+                className='share_icon'
+              >
+                <TwitterIcon
+                  size={20}
+                  round />
+              </TwitterShareButton>
+              <WhatsappShareButton
+                url={`${STUFF_WAR_URL}article/${this.props.match.params.id}`}
+                title={this.state.article.title}
+                separator=' - '
+                className='share_icon'
+              >
+                <WhatsappIcon
+                  size={20}
+                  round />
+              </WhatsappShareButton>
+            </div>
+          </div>
         </div>
       </div>
     )

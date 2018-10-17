@@ -25,7 +25,7 @@ app.get('/campaign/:id', function(req,res){
           
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="description" content="Stuff War presents an opinion arena that rewards users for their influence" />
+            <meta name="description" content="${data.description}" />
             
             <base href="/" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -78,7 +78,7 @@ app.get('/article/:id', function(req,res){
           
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="description" content="Stuff War presents an opinion arena that rewards users for their influence" />
+            <meta name="description" content="${data.summary}" />
             
             <base href="/" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />

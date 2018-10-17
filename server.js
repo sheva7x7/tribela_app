@@ -6,6 +6,7 @@ const axios = require('axios')
 const app = express()
 
 const config = process.env.ENV === 'STAGING' ? require('./config-dev.json'): require('./config-prod.json')
+const smRegex = /bot|google|baidu|bing|msn|duckduckbot|teoma|slurp|yandex/i
 
 app.set('port', (process.env.PORT || 3000))
 // app.use(history())
@@ -13,7 +14,7 @@ app.set('port', (process.env.PORT || 3000))
 app.use(express.static(__dirname +'/dist'))
 app.get('/campaign/:id', function(req,res){
   const userAgent = req.get('User-Agent')
-  if (userAgent.startsWith('facebookexternalhit/1.1') || userAgent === 'Facebot' || userAgent.startsWith('Twitterbot')){
+  if (userAgent.startsWith('facebookexternalhit/1.1') || userAgent === 'Facebot' || userAgent.startsWith('Twitterbot') || smRegex.test(userAgent)){
     axios.get(`${config.baseUrl}v1/campaign/${req.params.id}`)
     .then((result) => {
       const data = result.data
@@ -66,7 +67,7 @@ app.get('/article/:id', function(req,res){
       id: req.params.id
     }
   }
-  if (userAgent.startsWith('facebookexternalhit/1.1') || userAgent === 'Facebot' || userAgent.startsWith('Twitterbot')){
+  if (userAgent.startsWith('facebookexternalhit/1.1') || userAgent === 'Facebot' || userAgent.startsWith('Twitterbot') || smRegex.test(userAgent)){
     axios.post(`${config.baseUrl}v1/article`, postData)
     .then((result) => {
       const data = result.data

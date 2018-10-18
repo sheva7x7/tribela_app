@@ -22,7 +22,7 @@ app.get('/campaign/:id', function(req,res){
         <!DOCTYPE html>
           <html lang="en">
           <head>
-            <title>Stuff War123</title>
+            <title>Stuff War - ${data.title}</title>
           
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -75,7 +75,7 @@ app.get('/article/:id', function(req,res){
         <!DOCTYPE html>
           <html lang="en">
           <head>
-            <title>Stuff War123</title>
+            <title>Stuff War - ${data.title}</title>
           
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">

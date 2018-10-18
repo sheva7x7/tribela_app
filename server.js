@@ -113,6 +113,10 @@ app.get('/article/:id', function(req,res){
   
 })
 
+app.get('/sitemap', function(req, res){
+  res.sendFile(path.join(__dirname + '/dist/assets/sitemap.xml'))
+})
+
 app.get('*', function(req, res){
   res.sendFile(path.join(__dirname + '/dist/index.html'))
 })
